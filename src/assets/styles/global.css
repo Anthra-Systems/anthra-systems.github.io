@@ -1,8 +1,43 @@
+/* src/assets/styles/global.css */
+
+@layer base {
+  :root {
+    /* We define the background and primary colors as variables */
+    --anthra-bg: #0a0a0a;
+    --anthra-orange: #ff5a00;
+    --anthra-graphite: #1c1c1c;
+    --anthra-text: #e5e5e5;
+  }
+
+  /* Force the background on the main HTML and Body tags */
+  html, body {
+    background-color: var(--anthra-bg) !important;
+    color: var(--anthra-text) !important;
+  }
+}
+
+/* Force all "Primary" buttons and yellow accents to Electric Orange */
+.bg-yellow-400, .bg-yellow-500, .group-hover\:text-yellow-500, .text-yellow-500 {
+  background-color: var(--anthra-orange) !important;
+  color: var(--anthra-text) !important; /* Makes text readable on orange */
+}
+
+/* Fix for outlines and borders that might still be yellow */
+.border-yellow-500, .focus\:border-yellow-500 {
+  border-color: var(--anthra-orange) !important;
+}
+
+/* Turn off the "Construction" yellow glow some templates have */
+.shadow-yellow-500\/50 {
+  --tw-shadow-color: rgba(255, 90, 0, 0.5) !important;
+}
+
 @import 'tailwindcss';
 @import 'preline/variants.css';
 @plugin '@tailwindcss/forms';
 
 @custom-variant dark (&:is(.dark *));
+
 
 @theme {
   /* https://tailwindcss.com/docs/colors#customizing-your-colors */

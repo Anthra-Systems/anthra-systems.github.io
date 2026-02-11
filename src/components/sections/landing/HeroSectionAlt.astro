@@ -3,15 +3,17 @@
 import GithubBtn from "@components/ui/buttons/GithubBtn.astro";
 
 // Define props from Astro
-const { title, subTitle, url } = Astro.props;
+const { title, subTitle, url, btnTitle: propBtnTitle } = Astro.props;
 
-const btnTitle = Astro.currentLocale === "fr" ? "Continuer avec Github" : "Continue with Github";
+const defaultBtnTitle = Astro.currentLocale === "fr" ? "Continuer avec Github" : "Continue with Github";
+const btnTitle = propBtnTitle ?? defaultBtnTitle;
 
 // Define TypeScript interface for props
 interface Props {
   title: string;
   subTitle?: string;
   url?: string;
+   btnTitle?: string;
 }
 ---
 
@@ -134,12 +136,20 @@ interface Props {
       )
     }
   </div>
-  <!-- Github Button -->
+  <!-- Contact Button -->
+    <!-- Contact Button -->
   {
     url && (
       <div class="mt-8 flex justify-center gap-3">
-        <GithubBtn url={url} title={btnTitle}/>
+        <a
+          href={url}
+          class="inline-flex items-center gap-2 rounded-md bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors duration-150 hover:bg-orange-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+          role="button"
+        >
+          {btnTitle}
+        </a>
       </div>
     )
   }
+
 </section>

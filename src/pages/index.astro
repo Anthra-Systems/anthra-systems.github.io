@@ -10,13 +10,18 @@ import TestimonialsSection from "@components/sections/testimonials/TestimonialsS
 import PricingSection from "@components/sections/pricing/PricingSection.astro";
 import FAQ from "@components/sections/misc/FAQ.astro";
 import AnnouncementBanner from "@components/ui/banners/AnnouncementBanner.astro";
-import heroImage from "@images/hero-image.avif";
+//import heroImage from "@images/hero-image3.png";
+import heroImage from "@images/Anthra-Systems-Logo.png";
+//import heroImage from "@components/Logo.astro";
 import faqs from "@data/faqs.json";
 import features from "@data/features.json";
 import pricing from "@data/pricing.json";
 import featureImage from "@images/features-image.avif";
-import construction from "@images/construction-image.avif";
-import tools from "@images/automated-tools.avif";
+//import construction from "@images/construction-image.avif";
+import edgecomp from "@images/Edge_computing_infrastructure.png";
+//import tools from "@images/automated-tools.avif";
+import tools from "@images/pcb-etching.webp";
+//import dashboard from "@images/dashboard-image.avif";
 import dashboard from "@images/dashboard-image.avif";
 import { partnersData } from "@/data_files/constants";
 
@@ -29,119 +34,136 @@ const avatarSrcs: Array<string> = [
 ---
 
 <MainLayout>
+{/*
   <AnnouncementBanner
     btnId="dismiss-button"
-    btnTitle="Explore ScrewFast on GitHub"
-    url="https://github.com/mearashadowfax/ScrewFast"
+    btnTitle="Contact us for dedicated development support"
+    btnURL="/contact"
   />
+*/}
 
   <HeroSection
-    title=`Equip Your Projects with <span
-        class="text-yellow-500 dark:text-yellow-400">ScrewFast</span>`
-    subTitle="Top-quality hardware tools and expert construction services for every project need."
-    primaryBtn="Start Exploring"
-    primaryBtnURL="/products"
-    secondaryBtn="Contact Sales Team"
+    title=`Engineering <span class="text-[#ff5a00]">Intelligence</span> at the Edge`
+    subTitle="Anthra Systems is a premier R&D lab specializing in Embedded Engineering, IoT Ecosystems, and Edge Intelligence. We turn complex research into field-ready technology."
+    primaryBtn="Explore R&D Pipeline"
+    primaryBtnURL="#"
+    secondaryBtn="Contact our Lab"
     secondaryBtnURL="/contact"
-    withReview={true}
-    avatars={avatarSrcs}
-    rating=`<span class="font-bold">4.8</span> / 5`
-    starCount={4}
-    reviews=`From Over <span class="font-bold">12.8k</span> Reviews`
     src={heroImage}
-    alt="Stack of ScrewFast product boxes containing assorted hardware tools"
+    alt="Advanced electronic systems and neural network visualization"
+    reviews={false}
   />
 
-  <ClientsSection
+  {/*<ClientsSection
     title="Trusted by Industry Leaders"
     subTitle="Experience the reliability chosen by industry giants."
     partners={partnersData}
-  />
+  /> */}
 
-  <FeaturesGeneral
-    title="Meeting Industry Demands"
-    subTitle="At ScrewFast, we tackle the unique challenges encountered in the hardware and construction sectors. From cutting-edge tools to expert services, we're dedicated to helping you overcome obstacles and achieve your goals."
-    src={featureImage}
-    alt="ScrewFast products in floating boxes"
-    features={features}
-  />
+<FeaturesGeneral
+  title="Deep-Technology Engineering"
+  subTitle="Anthra Systems transforms complex engineering challenges into scalable, research-driven solutions across Embedded Systems, IoT, and Applied AI."
+ {/* src={featureImage} */}
+  alt="Anthra Systems R&D Visualization"
+  features={[
+      {
+        heading: "Embedded Intelligence",
+        content: "High-reliability firmware and PCB engineering designed for mission-critical hardware applications.",
+        svg: "processor", // Swapped from dashboard to gear
+      },
+      {
+        heading: "Connected IoT",
+        content: "End-to-end ecosystems for real-time monitoring, secure data ingestion, and remote device management.",
+        svg: "iot", // Swapped from house to cloud
+      },
+      {
+        heading: "Edge AI",
+        content: "Optimized computational intelligence deployed directly at the source to reduce latency and bandwidth.",
+        svg: "cloud", // Swapped from strategy to rocket
+      },
+  ]}
+/>
+
 
   <FeaturesNavs
-    title=`Customize <span class="text-yellow-500 dark:text-yellow-400">ScrewFast</span>'s offerings to perfectly suit your hardware and construction needs.`
+    title=`Customize <span class="text-yellow-500 dark:text-yellow-400">Anthra Systems</span>'s offerings to perfectly suit your hardware and automation needs.`
     tabs={[
       {
-        heading: "Cutting-Edge Tools",
+        heading: "Customized System Design",
         content:
-          "Empower your projects with ScrewFast's cutting-edge tools. Experience enhanced efficiency in construction management with our sophisticated automated solutions.",
+          "Custom-architected system frameworks and device hardware tailored to your specific operational logic with Anthra System's Customized solutions.",
         svg: "tools",
         src: tools,
         alt: "Yellow and black heavy equipment on brown grass field",
         first: true,
       },
       {
-        heading: "Intuitive Dashboards",
+        heading: "Intuitive IoT Dashboards",
         content:
-          "Navigate with ease using ScrewFast's intuitive dashboards. Set up and oversee your projects seamlessly, with user-friendly interfaces designed for quick and effective workflow management.",
+          "Navigate with ease using Anthra's intuitive dashboards. Set up and oversee your projects remotely, with user-friendly interfaces designed for quick and accurate data analysis and automation.",
         svg: "dashboard",
         src: dashboard,
         alt: "A screenshot or graphic representation of the intuitive dashboard",
         second: true,
       },
       {
-        heading: "Robust Features",
+        heading: "Modular System Integration",
         content:
-          "Minimize complexity, maximize productivity. ScrewFast's robust features are engineered to streamline your construction process, delivering results that stand out for their excellence.",
-        svg: "house",
-        src: construction,
+          "High-performance connectivity and scaling for complex infrastructure environments",
+        svg: "aibrain",
+        src: edgecomp,
         alt: "Gray metal building frame near tower crane during daytime",
       },
     ]}
   />
 
   <TestimonialsSection
-    title="Fast-Track Your Projects"
-    subTitle="At ScrewFast, we ensure a swift start with instant account setup. Experience the speed of construction redefined."
+    title="IoT-ify your Systems"
+    subTitle="At Anthra Systems, We turn industrial systems into smart, connected, and real-time decision-making platforms."
     ;
     testimonials={[
       {
         content:
-          "ScrewFast dramatically boosted our project efficiency. Setup was instant, and their rapid response times are phenomenal. Truly a game-changer in hardware and construction support!",
-        author: "Samantha Ruiz",
-        role: "Chief Operating Officer | ConstructIt Inc.",
+          "If you think that the internet has changed your life, think again. The Internet of Things is about to change it all over again!",
+        author: "Brendan O'Brien",
+        role: "Co-founder | Aria Systems",
         avatarSrc:
-          "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?q=80&w=1453&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80",
+          "https://media.licdn.com/dms/image/v2/D4E03AQFobYczNO_MAA/profile-displayphoto-scale_200_200/B4EZkMgfu8IsAY-/0/1756851470147?e=2147483647&v=beta&t=gRpSKim1pACHl0avtJe3xRYRNeMtq7-DOJA4a5s8PCw",
       },
     ]}
     statistics={[
       {
-        count: "70k+",
+        count: "45+",
         description:
-          "customers equipped — from DIY to major construction firms",
+          "Customers equipped — from PCB designing to Edge processing",
       },
       {
-        count: "35%",
+        count: "30%",
         description:
-          "uptick in project efficiency with ScrewFast tools and services",
+          "Uptick in system efficiency using one the edge analysis",
       },
       {
-        count: "15.3%",
+        count: "100+",
         description:
-          "reduction in maintenance costs reported by long-term clients",
+          "Concurrent Device Integrations - Secure, Real-Time IoT Communication",
       },
       {
         count: "2x",
-        description: "quicker assembly using innovative fastening solutions",
+        description: "Productivity - Through IoT & Automation",
       },
     ]}
   />
 
+{/*
   <PricingSection pricing={pricing} />
 
   <FAQ title="Frequently<br />asked questions" faqs={faqs} />
+*/}
 
   <HeroSectionAlt
     title="Let's Build Together"
-    subTitle="ScrewFast is an open-source template, meticulously crafted with Astro, Tailwind CSS, and Preline UI frameworks."
-    url="https://github.com/mearashadowfax/ScrewFast"
+    subTitle="Anthra Systems delivers engineering precision and intelligent connectivity that drive measurable business impact."
+    url="/contact"
+    btnTitle="Contact Us"
   />
 </MainLayout>

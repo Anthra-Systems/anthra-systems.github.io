@@ -1,0 +1,67 @@
+<svg width="500" height="130" viewBox="100 0 600 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="plasmaGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff" />
+      <stop offset="40%" stop-color="#ff5a00" />
+      <stop offset="100%" stop-color="#ff5a00" stop-opacity="0" />
+    </radialGradient>
+
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+
+  <text x="140" y="50" fill="#e5e5e5" font-family="sans-serif" font-size="32" font-weight="300" style="letter-spacing: 0.1em;">ANTHRA</text>
+  <text x="300" y="50" fill="#ff5a00" font-family="sans-serif" font-size="32" font-weight="300" style="letter-spacing: 0.1em;">SYSTEMS</text>
+
+  <g stroke-width="1.5" stroke-linecap="round">
+    <path d="M90 70 H180" stroke="#444" />
+    <path d="M180 70 H520" stroke="#ff5a00" opacity="0.4" />
+    <path d="M180 70 L205 80 H430 L460 70" stroke="#ff5900" stroke-width="1" opacity="0.3" />
+  </g>
+
+  <circle r="2.5" fill="#ffffffff" filter="url(#glow)">
+    <animate id="travel" attributeName="cx" from="90" to="520" dur="1s" begin="0.5s" fill="freeze" />
+    <animate attributeName="cy" from="70" to="70" dur="1s" begin="0.5s" fill="freeze" />
+    <animate attributeName="opacity" values="0;1;1;0" dur="1s" begin="0.5s" keyTimes="0;0.1;0.9;1" fill="freeze" />
+  </circle>
+
+  <circle cx="520" cy="70" r="0" fill="url(#plasmaGradient)" filter="url(#glow)">
+    <animate id="blast" attributeName="r" from="0" to="30" dur="0.4s" begin="travel.end" fill="freeze" />
+    <animate attributeName="opacity" values="1;0" dur="0.4s" begin="travel.end" fill="freeze" />
+  </circle>
+
+  <g stroke="#ff5a00" stroke-width="2" fill="none" filter="url(#glow)">
+    <circle cx="520" cy="70" r="10" opacity="0">
+      <animate attributeName="r" from="10" to="40" dur="0.9s" begin="blast.begin + 0.1s" fill="freeze" />
+      <animate attributeName="opacity" values="0;1;0" dur="0.9s" begin="blast.begin + 0.1s" fill="freeze" />
+    </circle>
+    <circle cx="520" cy="70" r="10" opacity="0">
+      <animate attributeName="r" from="10" to="60" dur="0.9s" begin="blast.begin + 0.2s" fill="freeze" />
+      <animate attributeName="opacity" values="0;1;0" dur="0.9s" begin="blast.begin + 0.2s" fill="freeze" />
+    </circle>
+    <circle cx="520" cy="70" r="10" opacity="0">
+      <animate id="lastBeam" attributeName="r" from="10" to="80" dur="0.9s" begin="blast.begin + 0.5s" fill="freeze" />
+      <animate attributeName="opacity" values="0;1;0" dur="0.9s" begin="blast.begin + 0.5s" fill="freeze" />
+    </circle>
+  </g>
+
+  <g filter="url(#glow)">
+    <circle cx="520" cy="70" r="5" fill="#ff5a00" opacity="0">
+      <animate attributeName="opacity" from="0" to="0.8" dur="0.3s" begin="blast.begin" fill="freeze" />
+      <animate attributeName="r" values="5;6.5;5" dur="2.5s" begin="lastBeam.end" repeatCount="indefinite" />
+    </circle>
+    
+    <circle cx="520" cy="70" r="2" fill="#0f0e0e09" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="blast.begin" fill="freeze" />
+    </circle>
+  </g>
+
+  <circle cx="120" cy="70" r="3.5" stroke="#666" stroke-width="1.5" fill="#0a0a0a" />
+  <circle cx="430" cy="80" r="3.5" stroke="#ff5a00" stroke-width="1.5" fill="#0a0a0a" />
+</svg>
