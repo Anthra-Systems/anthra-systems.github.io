@@ -9,13 +9,11 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
-  site: "https://screwfast.uk",
-  image: {
-    domains: ["images.unsplash.com"],
-  },
-
-  site: 'https://anthra-systems.github.io',
+site: 'https://anthra-systems.github.io',
   base: '/',
+  image: {
+    domains: ["images.unsplash.com", "media.licdn.com"], // Added LinkedIn for your testimonial avatar
+  },
   // i18n: {
   //   defaultLocale: "en",
   //   locales: ["en", "fr"],
