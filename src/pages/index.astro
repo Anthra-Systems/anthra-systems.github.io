@@ -34,16 +34,16 @@ const avatarSrcs: Array<string> = [
 ---
 
 <MainLayout>
-{/*
-  <AnnouncementBanner
-    btnId="dismiss-button"
-    btnTitle="Contact us for dedicated development support"
-    btnURL="/contact"
-  />
-*/}
+  {/*
+    <AnnouncementBanner
+      btnId="dismiss-button"
+      btnTitle="Contact us for dedicated development support"
+      btnURL="/contact"
+    />
+  */}
 
   <HeroSection
-    title={"Engineering <span class="text-[#ff5a00]">Intelligence</span> at the Edge"}
+    title={"Engineering <span class='text-[#ff5a00]'>Intelligence</span> at the Edge"}
     subTitle="Anthra Systems is a premier R&D lab specializing in Embedded Engineering, IoT Ecosystems, and Edge Intelligence. We turn complex research into field-ready technology."
     primaryBtn="Explore R&D Pipeline"
     primaryBtnURL="#"
@@ -65,27 +65,25 @@ const avatarSrcs: Array<string> = [
 <FeaturesGeneral
   title="Deep-Technology Engineering"
   subTitle="Anthra Systems transforms complex engineering challenges into scalable, research-driven solutions across Embedded Systems, IoT, and Applied AI."
-  {/* src={featureImage} */}
   alt="Anthra Systems R&D Visualization"
   features={[
       {
         heading: "Embedded Intelligence",
         content: "High-reliability firmware and PCB engineering designed for mission-critical hardware applications.",
-        svg: "processor", // Swapped from dashboard to gear
+        svg: "processor",
       },
       {
         heading: "Connected IoT",
         content: "End-to-end ecosystems for real-time monitoring, secure data ingestion, and remote device management.",
-        svg: "iot", // Swapped from house to cloud
+        svg: "iot",
       },
       {
         heading: "Edge AI",
         content: "Optimized computational intelligence deployed directly at the source to reduce latency and bandwidth.",
-        svg: "cloud", // Swapped from strategy to rocket
+        svg: "cloud",
       },
   ]}
 />
-
 
   <FeaturesNavs
     title={"Customize <span class='text-yellow-500 dark:text-yellow-400'>Anthra Systems</span>'s offerings to perfectly suit your hardware and automation needs."}
