@@ -9,7 +9,7 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
-site: 'https://anthra-systems.github.io',
+site: 'https://anthrasystems.com',
   base: '/',
   image: {
     domains: ["images.unsplash.com", "media.licdn.com"], // Added LinkedIn for your testimonial avatar
