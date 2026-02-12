@@ -13,6 +13,9 @@ export default defineConfig({
   image: {
     domains: ["images.unsplash.com"],
   },
+
+  site: 'https://anthra-systems.github.io',
+  base: '/',
   // i18n: {
   //   defaultLocale: "en",
   //   locales: ["en", "fr"],
@@ -87,7 +90,7 @@ export default defineConfig({
         {
           icon: "github",
           label: "GitHub",
-          href: "https://github.com/mearashadowfax/ScrewFast",
+          href: "https://github.com/Anthra-Systems/website",
         },
       ],
       disable404Route: true,
@@ -130,3 +133,4 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 });
+
