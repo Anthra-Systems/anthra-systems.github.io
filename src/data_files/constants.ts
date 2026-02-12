@@ -5,8 +5,8 @@ import ogImageSrc from "@images/social.png";
 export const SITE = {
   title: "Anthra Systems",
   tagline: "Where the Spark Meets Purpose",
-  description: "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs. Start exploring and contact our sales team for superior quality and reliability.",
-  description_short: "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs.",
+  description: "Anthra Systems is a premier R&D lab specializing in Embedded Systems, IoT Ecosystems, and Edge AI. We bridge the gap between complex research and field-ready industrial technology, turning raw data into real-time decision-making power.",
+  description_short: "Bridging Hardware Precision with Intelligent Connectivity.",
   url: "https://anthrasystems.com",
   author: "Anthra Systems",
 };
@@ -35,8 +35,8 @@ export const OG = {
   locale: "en_US",
   type: "website",
   url: SITE.url,
-  title: `${SITE.title}: : Hardware Tools & Construction Services`,
-  description: "Equip your projects with ScrewFast's top-quality hardware tools and expert construction services. Trusted by industry leaders, ScrewFast offers simplicity, affordability, and reliability. Experience the difference with user-centric design and cutting-edge tools. Start exploring now!",
+  title: `${SITE.title} | Embedded Engineering & Edge Intelligence`,
+  description: "Accelerate your R&D with Anthra Systems' high-performance embedded systems, IoT ecosystems, and Edge AI solutions. Trusted by innovators, we turn complex engineering challenges into field-ready technology with precision, reliability, and intelligence. Explore our lab's pipeline today.",
   image: ogImageSrc,
 };
 
