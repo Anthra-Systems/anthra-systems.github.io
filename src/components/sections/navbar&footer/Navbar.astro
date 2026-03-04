@@ -28,7 +28,7 @@ const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
     <div class="flex items-center justify-between">
       <!-- Brand logo -->
       <a
-        class="flex-none rounded-lg text-xl font-bold outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden"
+        class="flex-none rounded-lg text-xl font-bold outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200"
         href={homeUrl}
         aria-label="Brand"
       >
@@ -41,7 +41,6 @@ const homeUrl = Astro.currentLocale === "fr" ? "/fr" : "/";
         <div class="hidden md:block">
           <Logo class="w-44 lg:w-52 h-auto" />
         </div>
-
       </a>
       <!-- Collapse toggle for smaller screens -->
       <div class="ml-auto mr-5 md:hidden">
