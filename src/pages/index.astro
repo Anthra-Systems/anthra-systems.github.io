@@ -1,0 +1,572 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "@/layouts/MainLayout.astro";
+import AutomationUseCases from "@components/sections/landing/AutomationUseCases.astro";
+import { partnersData } from "@data/constants";
+import heroIndustry from "@images/hero/industrial-iot-automation-hero.png";
+import heroAutomation from "@images/use-cases/industrial-automation.png";
+import connectedVehicle from "@images/products/connected-vehicle-monitoring.png";
+import edgeVision from "@images/use-cases/edge-ai-vision.png";
+import smartWater from "@images/use-cases/smart-water-pump.png";
+import industrialIot from "@images/use-cases/industrial-iot-data.png";
+import agricultureIrrigation from "@images/use-cases/agriculture-irrigation.png";
+import customRdSupport from "@images/services/custom-rd-support.png";
+
+const metaDescription =
+  "Anthra Systems is an applied engineering and R&D company building intelligent systems across embedded technology, automation, IoT, mechatronics, connected vehicles, and edge AI.";
+
+const heroSlides = [
+  {
+    label: "Industry",
+    image: heroIndustry,
+    alt: "Industrial IoT automation hardware with controllers, dashboard, and field-ready equipment.",
+  },
+  {
+    label: "Infrastructure",
+    image: smartWater,
+    alt: "Water infrastructure monitoring system with pump automation, sensors, controllers, and dashboard visibility.",
+  },
+  {
+    label: "Mobility",
+    image: connectedVehicle,
+    alt: "Connected vehicle monitoring system with telematics, gateway hardware, and fleet intelligence.",
+  },
+  {
+    label: "Agriculture",
+    image: agricultureIrrigation,
+    alt: "Agriculture irrigation automation system with soil sensing, pump control, and farm monitoring.",
+  },
+  {
+    label: "Smart Machines",
+    image: heroAutomation,
+    alt: "Smart machine automation system with control panel, HMI, drives, and field-ready equipment.",
+  },
+  {
+    label: "Edge AI",
+    image: edgeVision,
+    alt: "Edge AI vision system for inspection, detection, alerts, and industrial intelligence.",
+  },
+  {
+    label: "Connected Systems",
+    image: industrialIot,
+    alt: "Connected industrial data system with gateways, dashboards, and live monitoring.",
+  },
+];
+
+const capabilityCards = [
+  {
+    title: "R&D-Led Systems",
+    text: "Problem study, architecture, feasibility, prototypes, and engineering decisions for new physical-world systems.",
+  },
+  {
+    title: "Hardware & Electronics",
+    text: "Controllers, sensor interfaces, power electronics, embedded boards, wiring, enclosures, and application-ready devices.",
+  },
+  {
+    title: "Embedded & Edge Intelligence",
+    text: "Firmware, sensors, data acquisition, edge logic, ML-ready devices, and low-resource deployment.",
+  },
+  {
+    title: "Automation & Control",
+    text: "Control logic, HMI, panels, drives, actuators, safety behavior, and machine integration.",
+  },
+  {
+    title: "Mechatronics",
+    text: "Enclosures, mechanisms, mounting, wiring realities, sensor placement, and field-serviceable builds.",
+  },
+  {
+    title: "Field Deployment",
+    text: "Installation planning, testing, iteration, documentation, support, and robust handover.",
+  },
+];
+
+const processSteps = [
+  ["01", "Study", "Understand the machine, site, constraints, users, and desired outcome."],
+  ["02", "Engineer", "Define system architecture across hardware, software, mechanics, and controls."],
+  ["03", "Prototype", "Build and test the core electronics, logic, sensing, actuation, and interfaces."],
+  ["04", "Deploy", "Install, validate, tune, and prepare the system for real operating conditions."],
+  ["05", "Improve", "Use field feedback, logs, and support cycles to make the system stronger."],
+];
+
+const featuredSolutions = [
+  {
+    title: "Water Quality Monitoring System",
+    text: "Monitor water quality in real time and detect unsafe changes before they become operational problems.",
+    image: smartWater,
+    href: "/solutions/water-quality-monitoring",
+  },
+  {
+    title: "Machine Health & Predictive Maintenance System",
+    text: "Track machine condition, spot early warning signs, and reduce avoidable downtime.",
+    image: industrialIot,
+    href: "/solutions/machine-health-predictive-maintenance",
+  },
+  {
+    title: "Edge AI Vision Inspection System",
+    text: "Use camera-based intelligence to inspect, detect, count, and alert closer to the machine.",
+    image: edgeVision,
+    href: "/solutions/edge-ai-vision-inspection",
+  },
+  {
+    title: "Connected Vehicle Intelligence System",
+    text: "Bring vehicle data, location, diagnostics, and fleet visibility into one connected system.",
+    image: connectedVehicle,
+    href: "/solutions/connected-vehicle-intelligence",
+  },
+  {
+    title: "Smart Irrigation & Fertigation System",
+    text: "Automate farm decisions with soil, pump, flow, and field monitoring built for daily use.",
+    image: agricultureIrrigation,
+    href: "/solutions/smart-irrigation-fertigation",
+  },
+  {
+    title: "Custom Embedded + Mechatronic Prototype",
+    text: "Turn a new product or machine idea into a working prototype that can be tested and improved.",
+    image: customRdSupport,
+    href: "/solutions/custom-embedded-mechatronic-prototype",
+  },
+];
+
+const whyPoints = [
+  {
+    title: "Complete system thinking",
+    text: "We bring hardware, software, mechanics, automation, connectivity, and AI together.",
+  },
+  {
+    title: "Practical engineering approach",
+    text: "We design for real machines, real sites, real users, and real operating conditions.",
+  },
+  {
+    title: "R&D mindset",
+    text: "We explore, prototype, and build solutions for problems that do not always have ready-made answers.",
+  },
+  {
+    title: "Young and ambitious team",
+    text: "We combine practical experience with fresh engineering minds to build bold, useful technology.",
+  },
+  {
+    title: "Built for deployment",
+    text: "Our focus is not only demos; we aim to create systems that can be tested, improved, and deployed.",
+  },
+];
+
+const aiUnikaPartnerLogo = partnersData.find((partner) => partner.aiPartner)?.icon ?? "";
+---
+
+<MainLayout
+  title="Anthra Systems | Engineering Intelligence for the Physical World"
+  customDescription={metaDescription}
+  customOgTitle="Anthra Systems | Engineering Intelligence for the Physical World"
+>
+  <section class="home-hero relative mx-auto flex min-h-[calc(92svh-1.5rem)] max-w-[96rem] items-center overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-[0_30px_100px_rgba(0,0,0,0.42)]" data-hero-root>
+    <div class="absolute inset-0">
+      {
+        heroSlides.map((slide, index) => (
+          <div
+            class:list={[
+              "hero-slide absolute inset-0 transition duration-700",
+              index === 0 ? "opacity-100" : "opacity-0",
+            ]}
+            data-hero-slide
+            data-index={index}
+            aria-hidden={index === 0 ? "false" : "true"}
+          >
+            <Image
+              src={slide.image}
+              alt={slide.alt}
+              class="h-full w-full object-cover"
+              loading={index === 0 ? "eager" : "lazy"}
+              format="avif"
+            />
+          </div>
+        ))
+      }
+      <div class="absolute inset-0 bg-linear-to-r from-black via-black/76 to-black/18"></div>
+      <div class="absolute inset-0 bg-linear-to-t from-black/82 via-transparent to-black/22"></div>
+    </div>
+
+    <div class="relative z-10 grid w-full gap-10 px-5 py-28 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:px-12 xl:px-16">
+      <div class="max-w-3xl self-center">
+        <p class="anthra-kicker">Applied Engineering & R&D</p>
+        <h1 class="anthra-display-title mt-5 text-balance text-4xl text-white sm:text-5xl xl:text-6xl">
+          Engineering <span class="text-[var(--anthra-orange)]">Intelligence</span> for the Physical World
+        </h1>
+        <p class="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-neutral-300 sm:text-lg">
+          We help businesses turn machines, field assets, vehicles,
+          infrastructure, and product ideas into smart, connected, and
+          intelligent systems.
+        </p>
+        <p class="mt-4 max-w-2xl text-pretty text-sm leading-relaxed text-neutral-400 sm:text-base">
+          From concept and design to prototype, automation, data, AI, and
+          deployment, Anthra Systems builds practical technology solutions for
+          real-world challenges.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact" class="anthra-button-primary px-5 py-3 text-center text-sm font-bold">
+            Discuss a Project
+          </a>
+          <a href="/solutions" class="anthra-button-secondary px-5 py-3 text-center text-sm font-bold">
+            Explore Solutions
+          </a>
+        </div>
+      </div>
+
+      <div class="flex min-h-64 items-center justify-start lg:justify-end">
+        <div class="hero-built-for relative w-full max-w-3xl py-8 text-center">
+          <div class="pointer-events-none absolute inset-y-0 left-0 w-full bg-linear-to-r from-black/45 via-black/18 to-transparent blur-2xl lg:bg-linear-to-l"></div>
+          <div class="relative grid h-[24rem] grid-cols-[minmax(7.2rem,auto)_minmax(0,1fr)] items-center gap-1 overflow-visible sm:h-[28rem] sm:grid-cols-[11.4rem_minmax(18rem,1fr)] sm:gap-2 lg:grid-cols-[12.4rem_minmax(24rem,1fr)]">
+            <span class="hero-tab-prefix-static z-20 -translate-y-2 justify-self-end rounded-full border border-white/10 bg-black/45 px-3 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-neutral-200 shadow-[0_14px_45px_rgba(0,0,0,0.28)] backdrop-blur-md sm:px-4 sm:text-sm lg:-translate-y-3">
+              Built for :
+            </span>
+            {
+              heroSlides.map((slide, index) => (
+                <button
+                  type="button"
+                  class:list={[
+                    "hero-tab absolute left-0 top-1/2 grid w-full -translate-y-1/2 grid-cols-[minmax(7.2rem,auto)_minmax(0,1fr)] items-center gap-1 text-left font-extrabold uppercase tracking-tight text-neutral-300 transition duration-700 sm:grid-cols-[11.4rem_minmax(18rem,1fr)] sm:gap-2 lg:grid-cols-[12.4rem_minmax(24rem,1fr)]",
+                    index === 0 ? "opacity-100" : "opacity-0",
+                  ]}
+                  data-hero-tab
+                  data-index={index}
+                >
+                  <span class="hero-tab-label col-start-2 justify-self-start whitespace-nowrap text-left text-xl transition duration-700 sm:text-3xl xl:text-4xl">
+                    {slide.label}
+                  </span>
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <AutomationUseCases />
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
+      <div>
+        <p class="anthra-kicker">Core Engineering Capabilities</p>
+        <h2 class="anthra-section-title mt-4 text-balance text-3xl text-white sm:text-4xl">
+          The engineering depth behind practical business outcomes.
+        </h2>
+      </div>
+      <p class="max-w-3xl text-pretty text-base leading-relaxed text-neutral-400 sm:text-lg">
+        The homepage stays simple, but the work behind each solution is
+        integrated: hardware, software, automation, mechanics, connectivity,
+        testing, and deployment planned together.
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {
+        capabilityCards.map((item) => (
+          <article class="anthra-shell-card group p-5 transition duration-300 hover:-translate-y-1 hover:border-[var(--anthra-orange)]/35 hover:shadow-[0_24px_70px_rgba(255,90,0,0.08)] sm:p-6">
+            <div class="mb-5 h-1 w-12 rounded-full bg-[var(--anthra-orange)]/80"></div>
+            <h3 class="anthra-card-title text-xl text-white">{item.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-neutral-400">{item.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+      <div class="max-w-3xl">
+        <p class="anthra-kicker">Featured Solutions</p>
+        <h2 class="anthra-section-title mt-4 text-balance text-3xl text-white sm:text-4xl">
+          Real-world systems clients can understand quickly.
+        </h2>
+      </div>
+      <a href="/solutions" class="anthra-button-secondary px-5 py-3 text-sm font-bold">
+        View All Solutions
+      </a>
+    </div>
+
+    <div class="grid gap-5 md:grid-cols-2">
+      {
+        featuredSolutions.map((item) => (
+          <a href={item.href} class="group relative min-h-[21rem] overflow-hidden rounded-xl border border-white/10 bg-black shadow-[0_20px_70px_rgba(0,0,0,0.25)]">
+            <Image src={item.image} alt="" class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" loading="lazy" format="avif" />
+            <div class="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+              <h3 class="anthra-card-title text-2xl text-white">{item.title}</h3>
+              <p class="mt-3 max-w-xl text-sm leading-relaxed text-neutral-300">{item.text}</p>
+              <p class="mt-5 text-sm font-bold text-[var(--anthra-orange)]">View Solution</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="mb-10 max-w-3xl">
+      <p class="anthra-kicker">How We Build</p>
+      <h2 class="anthra-section-title mt-4 text-balance text-3xl text-white sm:text-4xl">
+        From uncertain problem to field-ready intelligent system.
+      </h2>
+    </div>
+
+    <div class="grid gap-4 lg:grid-cols-5">
+      {
+        processSteps.map(([number, title, text]) => (
+          <article class="relative overflow-hidden rounded-xl border border-white/10 bg-black/35 p-5 backdrop-blur">
+            <span class="text-5xl font-extrabold tracking-tight text-white/10">{number}</span>
+            <h3 class="anthra-card-title mt-6 text-xl text-white">{title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-neutral-400">{text}</p>
+            <div class="absolute right-5 top-5 h-2 w-2 rounded-full bg-[var(--anthra-orange)]"></div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8" data-reveal-section>
+    <div class="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+      <div>
+        <p class="anthra-kicker">Partners & Collaborations</p>
+        <h2 class="anthra-section-title mt-4 text-balance text-3xl text-white sm:text-4xl">
+          Trusted by Teams Building Real-World Systems
+        </h2>
+        <p class="mt-5 max-w-2xl text-base leading-relaxed text-neutral-400 sm:text-lg">
+          We collaborate with technology teams and engineering partners working
+          on practical AI, automation, IoT, and intelligent systems for
+          real-world applications.
+        </p>
+      </div>
+
+      <article
+        class="partner-card group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-neutral-950/80 p-5 shadow-[0_28px_90px_rgba(0,0,0,0.32)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-[var(--anthra-orange)]/45 hover:shadow-[0_30px_100px_rgba(255,90,0,0.10)] focus:outline-none focus:ring-2 focus:ring-[var(--anthra-orange)]/60 focus:ring-offset-2 focus:ring-offset-neutral-950 sm:p-7"
+        data-partner-url="https://www.aiunika.com/"
+        role="link"
+        tabindex="0"
+        aria-label="Visit Ai Unika Private Limited website"
+      >
+        <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-[var(--anthra-orange)] to-transparent opacity-70"></div>
+        <div class="absolute -right-20 -top-20 h-44 w-44 rounded-full bg-[var(--anthra-orange)]/10 blur-3xl transition duration-300 group-hover:bg-[var(--anthra-orange)]/16"></div>
+
+        <div class="relative flex flex-col gap-5 sm:flex-row sm:items-center">
+          <div class="flex h-28 w-full items-center justify-center rounded-xl border border-white/10 bg-black/50 p-4 sm:w-48">
+            <div class="ai-unika-logo w-full max-w-40" set:html={aiUnikaPartnerLogo} />
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--anthra-orange)]">
+              AI & Edge Intelligence Partner
+            </p>
+            <h3 class="anthra-card-title mt-2 text-2xl text-white">
+              Ai Unika Private Limited
+            </h3>
+          </div>
+        </div>
+
+        <p class="relative mt-6 max-w-2xl text-sm leading-relaxed text-neutral-300 sm:text-base">
+          Collaborating on applied AI, computer vision, edge deployment, and
+          intelligent systems for real-world applications.
+        </p>
+
+        <a href="/contact" class="relative mt-6 inline-flex text-sm font-bold text-[var(--anthra-orange)] transition hover:text-white">
+          Partner With Us
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div>
+        <p class="anthra-kicker">Why Anthra Systems</p>
+        <h2 class="anthra-section-title mt-4 text-balance text-3xl text-white sm:text-4xl">
+          Why Anthra Systems
+        </h2>
+        <p class="mt-5 max-w-2xl text-base leading-relaxed text-neutral-400 sm:text-lg">
+          Anthra Systems is built for clients who need practical technology
+          solutions, not disconnected parts or one-off demonstrations.
+        </p>
+      </div>
+
+      <div class="anthra-shell-card p-5 sm:p-7">
+        <div class="grid gap-4">
+          {
+            whyPoints.map((point, index) => (
+              <div class="flex gap-4 rounded-xl border border-white/10 bg-black/35 p-4">
+                <span class="mt-0.5 text-sm font-extrabold text-[var(--anthra-orange)]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 class="anthra-card-title text-base text-white">{point.title}</h3>
+                  <p class="mt-1 text-sm leading-relaxed text-neutral-300">{point.text}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[92rem] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-neutral-900 via-neutral-950 to-black p-6 shadow-[0_28px_90px_rgba(0,0,0,0.34)] sm:p-10 lg:p-12">
+      <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div>
+          <p class="anthra-kicker">Contact CTA</p>
+          <h2 class="anthra-display-title mt-4 text-balance text-3xl text-white sm:text-4xl">
+            Have a real-world engineering challenge?
+          </h2>
+          <p class="mt-5 max-w-2xl text-base leading-relaxed text-neutral-400 sm:text-lg">
+            Share the machine, process, vehicle, device, or prototype you want
+            to build. Anthra can help define the system and engineer the path
+            from idea to working deployment.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row lg:justify-end">
+          <a href="/contact" class="anthra-button-primary px-5 py-3 text-center text-sm font-bold">
+            Discuss Your Project
+          </a>
+          <a href="/rnd" class="anthra-button-secondary px-5 py-3 text-center text-sm font-bold">
+            Explore R&D
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .home-hero {
+    margin-top: clamp(6rem, 10svh, 7.5rem);
+  }
+
+  @media (max-width: 767px) {
+    .home-hero {
+      min-height: 39rem;
+      margin-top: 5.5rem;
+    }
+  }
+
+  [data-reveal-section] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 700ms ease,
+      transform 700ms ease;
+  }
+
+  [data-reveal-section].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ai-unika-logo :global(svg) {
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+</style>
+
+<script>
+  const heroRoot = document.querySelector("[data-hero-root]");
+
+  if (heroRoot) {
+    const slides = Array.from(heroRoot.querySelectorAll("[data-hero-slide]"));
+    const tabs = Array.from(heroRoot.querySelectorAll("[data-hero-tab]"));
+    let activeIndex = 0;
+    let timer: number | undefined;
+
+    const setActive = (index: number) => {
+      activeIndex = (index + slides.length) % slides.length;
+
+      slides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === activeIndex;
+        slide.classList.toggle("opacity-100", isActive);
+        slide.classList.toggle("opacity-0", !isActive);
+        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+      });
+
+      tabs.forEach((tab, tabIndex) => {
+        const tabElement = tab as HTMLElement;
+        const label = tabElement.querySelector<HTMLElement>(".hero-tab-label");
+        const isActive = tabIndex === activeIndex;
+        const distance = tabIndex - activeIndex;
+        const absDistance = Math.abs(distance);
+        const opacity =
+          absDistance === 0
+            ? 1
+            : absDistance === 1
+              ? 0.52
+              : absDistance === 2
+                ? 0.28
+                : 0.12;
+        const scale =
+          absDistance === 0
+            ? 1
+            : absDistance === 1
+              ? 0.78
+              : absDistance === 2
+                ? 0.64
+                : 0.54;
+        const arcOffset = isActive ? 0.65 : Math.min(absDistance, 3) * 0.26 + 0.35;
+
+        tabElement.style.transform = `translate(${arcOffset}rem, calc(-50% + ${distance * 4.1}rem)) scale(${scale})`;
+        tabElement.style.opacity = `${opacity}`;
+        tabElement.style.pointerEvents = "auto";
+        tabElement.style.zIndex = `${10 - absDistance}`;
+
+        label?.classList.toggle("text-[var(--anthra-orange)]", isActive);
+        label?.classList.toggle("text-neutral-300", !isActive);
+      });
+    };
+
+    const startTimer = () => {
+      window.clearInterval(timer);
+      timer = window.setInterval(() => setActive(activeIndex + 1), 4800);
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => {
+        setActive(index);
+        startTimer();
+      });
+    });
+
+    setActive(0);
+    startTimer();
+  }
+
+  const revealSections = document.querySelectorAll("[data-reveal-section]");
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.18 },
+  );
+
+  revealSections.forEach((section) => revealObserver.observe(section));
+
+  document.querySelectorAll<HTMLElement>("[data-partner-url]").forEach((card) => {
+    const partnerUrl = card.dataset.partnerUrl;
+
+    if (!partnerUrl) return;
+
+    const openPartner = () => {
+      window.open(partnerUrl, "_blank", "noopener,noreferrer");
+    };
+
+    card.addEventListener("click", (event) => {
+      if ((event.target as HTMLElement).closest("a")) return;
+      openPartner();
+    });
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      openPartner();
+    });
+  });
+</script>

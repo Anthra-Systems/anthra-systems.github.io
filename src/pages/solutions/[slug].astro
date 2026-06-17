@@ -1,0 +1,859 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "@/layouts/MainLayout.astro";
+import InteractiveSolutionFlow from "@components/sections/redesign/InteractiveSolutionFlow.astro";
+import Icon from "@components/ui/icons/Icon.astro";
+import { getSolutionBySlug, solutionSlugs, solutions } from "@data/solutions";
+import industrialStage1 from "@images/solution-flows/stages/industrial-stage-1.png";
+import industrialStage2 from "@images/solution-flows/stages/industrial-stage-2.png";
+import industrialStage3 from "@images/solution-flows/stages/industrial-stage-3.png";
+import industrialStage4 from "@images/solution-flows/stages/industrial-stage-4.png";
+import industrialStage5 from "@images/solution-flows/stages/industrial-stage-5.png";
+import waterFieldStage1 from "@images/solution-flows/stages/water-field-stage-1.png";
+import waterFieldStage2 from "@images/solution-flows/stages/water-field-stage-2.png";
+import waterFieldStage3 from "@images/solution-flows/stages/water-field-stage-3.png";
+import waterFieldStage4 from "@images/solution-flows/stages/water-field-stage-4.png";
+import waterFieldStage5 from "@images/solution-flows/stages/water-field-stage-5.png";
+import mobilityStage1 from "@images/solution-flows/stages/mobility-stage-1.png";
+import mobilityStage2 from "@images/solution-flows/stages/mobility-stage-2.png";
+import mobilityStage3 from "@images/solution-flows/stages/mobility-stage-3.png";
+import mobilityStage4 from "@images/solution-flows/stages/mobility-stage-4.png";
+import mobilityStage5 from "@images/solution-flows/stages/mobility-stage-5.png";
+import visionStage1 from "@images/solution-flows/stages/vision-stage-1.png";
+import visionStage2 from "@images/solution-flows/stages/vision-stage-2.png";
+import visionStage3 from "@images/solution-flows/stages/vision-stage-3.png";
+import visionStage4 from "@images/solution-flows/stages/vision-stage-4.png";
+import visionStage5 from "@images/solution-flows/stages/vision-stage-5.png";
+import customRdStage1 from "@images/solution-flows/stages/custom-rd-stage-1.png";
+import customRdStage2 from "@images/solution-flows/stages/custom-rd-stage-2.png";
+import customRdStage3 from "@images/solution-flows/stages/custom-rd-stage-3.png";
+import customRdStage4 from "@images/solution-flows/stages/custom-rd-stage-4.png";
+import customRdStage5 from "@images/solution-flows/stages/custom-rd-stage-5.png";
+
+type DetailCard = { title: string; text: string };
+type FlowStep = { title: string; text: string; icon?: string };
+type WorkflowStep = {
+  phase: "Source" | "Sense / Capture" | "Process" | "Show / Act" | "Outcome";
+  title: string;
+  description: string;
+  visualKey: string;
+  imageCropKey?: string;
+  imageSrc?: string;
+  inputs: string[];
+  outputs: string[];
+  detail: string;
+  configures?: string[];
+};
+
+type FlowConfig = {
+  steps: string[];
+  inputs: string[];
+  outputs: string[];
+  modules: string[];
+  outcomes: string[];
+};
+
+export function getStaticPaths() {
+  return solutionSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const solution = getSolutionBySlug(slug);
+
+if (!solution) {
+  return Astro.redirect("/404");
+}
+
+const flowConfigs: Record<string, FlowConfig> = {
+  "machine-health-predictive-maintenance": {
+    steps: ["Machine Signals", "Vibration / Current / Temperature Monitoring", "Edge Condition Analysis", "Fault Alerts", "Maintenance Action"],
+    inputs: ["Vibration sensor", "Current sensor", "Temperature sensor", "Run-hour signal"],
+    outputs: ["Fault alert", "Maintenance warning", "Trend report", "Service action"],
+    modules: ["Condition Sensors", "Edge Acquisition Unit", "Health Logic", "Alerts & Reports", "Maintenance Dashboard"],
+    outcomes: ["Early warning before failure", "Less unplanned downtime", "Clear machine history"],
+  },
+  "industrial-monitoring-control": {
+    steps: ["Machine / Process Inputs", "Sensors / I/O Capture", "Controller / Gateway", "Live Dashboard / Alerts", "Remote Monitoring / Control"],
+    inputs: ["Machine status", "Pressure", "Temperature", "Digital I/O"],
+    outputs: ["Relay control", "Dashboard alert", "Report", "Remote status"],
+    modules: ["Sensors & Inputs", "Controller / Gateway", "Dashboard / App", "Alerts & Reports", "Control Logic"],
+    outcomes: ["Live process visibility", "Faster fault response", "Remote operational clarity"],
+  },
+  "motor-drive-hmi-control": {
+    steps: ["Operator Input / Machine Requirement", "Switches / Motor Feedback", "Drive Controller", "HMI / Motor Output", "Safe Machine Operation"],
+    inputs: ["Speed command", "Limit switch", "Motor feedback", "Operator panel input"],
+    outputs: ["Motor control", "HMI status", "Alarm", "Safe stop"],
+    modules: ["Drive Controller", "HMI Screens", "Motor Interface", "Panel Wiring", "Safety Logic"],
+    outcomes: ["Smoother machine control", "Clear operator feedback", "Safer operation"],
+  },
+  "machine-data-logger-dashboard": {
+    steps: ["Machine Signals", "Data Logger Inputs", "Local / Cloud Storage", "Dashboard / Reports", "Operational Insights"],
+    inputs: ["Machine I/O", "Energy signal", "Cycle count", "Fault event"],
+    outputs: ["Data log", "Report", "Dashboard chart", "Event history"],
+    modules: ["Data Logger", "Industrial Connectivity", "Storage Layer", "Dashboard", "Report Builder"],
+    outcomes: ["Useful operating history", "Better reporting", "Data-driven decisions"],
+  },
+  "custom-machine-automation": {
+    steps: ["Machine Requirement", "Sensors / Actuators", "Control Logic", "Automation Sequence / HMI", "Operator Feedback"],
+    inputs: ["Proximity sensor", "Limit switch", "Operator input", "Process signal"],
+    outputs: ["Valve actuation", "Relay control", "Motor command", "Operator feedback"],
+    modules: ["Sensor Integration", "Actuator Interface", "Control Logic", "Operator Feedback", "Deployment Support"],
+    outcomes: ["Reduced manual work", "Repeatable machine sequence", "Practical retrofit path"],
+  },
+  "water-quality-monitoring": {
+    steps: ["Water Source / Chamber", "pH / TDS / Turbidity / Chlorine Sensors", "Controller", "Dashboard / Alerts", "Corrective Action"],
+    inputs: ["pH sensor", "TDS sensor", "Turbidity sensor", "Chlorine sensor"],
+    outputs: ["Quality alert", "Trend dashboard", "Report", "Corrective action"],
+    modules: ["Water Sensor Integration", "Controller", "Telemetry", "Dashboard", "Alert Logic"],
+    outcomes: ["Clear water condition visibility", "Faster unsafe-change response", "Reliable quality history"],
+  },
+  "smart-irrigation-fertigation": {
+    steps: ["Soil / Weather / Tank Inputs", "Moisture / Level / Flow Sensing", "Pump / Valve / Dosing Logic", "Field Automation / App Alerts", "Better Irrigation Decisions"],
+    inputs: ["Soil moisture", "Tank level", "Flow sensor", "Weather input"],
+    outputs: ["Pump control", "Valve actuation", "Dosing command", "Mobile alert"],
+    modules: ["Field Sensors", "Pump & Valve Control", "Dosing Logic", "Mobile Dashboard", "Schedule Rules"],
+    outcomes: ["Better water use", "Automated field decisions", "Less manual checking"],
+  },
+  "aquaculture-monitoring": {
+    steps: ["Pond / Tank Sensors", "Water Quality + Aeration Monitoring", "Controller", "Alerts", "Farm Operation Decisions"],
+    inputs: ["pH", "Dissolved oxygen", "Temperature", "Aerator status"],
+    outputs: ["Aeration alert", "Water quality warning", "Farm dashboard", "Action reminder"],
+    modules: ["Water Probes", "Aeration Monitoring", "Controller", "Alerts", "Farm Dashboard"],
+    outcomes: ["Healthier pond visibility", "Earlier issue detection", "Better daily farm decisions"],
+  },
+  "pump-automation-protection": {
+    steps: ["Water Source / Tank Level", "Level / Electrical Sensing", "Pump Controller", "Pump Protection Logic", "Pump Control / Alerts"],
+    inputs: ["Level sensor", "Current input", "Dry-run signal", "Pressure switch"],
+    outputs: ["Pump start/stop", "Dry-run protection", "Fault alert", "Status report"],
+    modules: ["Level Sensing", "Electrical Monitoring", "Pump Controller", "Protection Logic", "Remote Alerts"],
+    outcomes: ["Pump damage prevention", "Less operator dependency", "Clear fault visibility"],
+  },
+  "remote-field-asset-monitoring": {
+    steps: ["Field Asset / Site Inputs", "Sensor Node", "Gateway / Connectivity", "Dashboard", "Remote Alerts / Action"],
+    inputs: ["Tank level", "Battery status", "Equipment status", "Environmental signal"],
+    outputs: ["Remote alert", "Dashboard status", "Maintenance action", "Low-connectivity update"],
+    modules: ["Sensor Node", "Connectivity Layer", "Power Planning", "Dashboard", "Alert Rules"],
+    outcomes: ["Remote site clarity", "Fewer unnecessary visits", "Better asset uptime"],
+  },
+  "connected-vehicle-intelligence": {
+    steps: ["Vehicle Signals + GPS", "Vehicle IoT Gateway", "Telemetry Processing", "Fleet Dashboard", "Alerts / Operations Insight"],
+    inputs: ["GPS", "Vehicle sensor", "Diagnostics", "Usage data"],
+    outputs: ["Fleet alert", "Trip insight", "Usage report", "Operations dashboard"],
+    modules: ["Vehicle Gateway", "GPS & Signals", "Telemetry Processing", "Fleet Dashboard", "Alert Logic"],
+    outcomes: ["Better vehicle visibility", "Smarter fleet decisions", "Improved operations tracking"],
+  },
+  "fleet-tracking-telematics": {
+    steps: ["Vehicle GPS + Usage Data", "Telematics Signal Capture", "Route / Activity Processing", "Fleet Dashboard", "Reports / Alerts"],
+    inputs: ["GPS", "Ignition status", "Trip data", "Usage hours"],
+    outputs: ["Route report", "Fleet alert", "Trip history", "Activity dashboard"],
+    modules: ["Telematics Device", "Map Dashboard", "Route Processing", "Reports", "Alerts"],
+    outcomes: ["Clear trip history", "Better route visibility", "Faster fleet reporting"],
+  },
+  "vehicle-iot-gateway": {
+    steps: ["Vehicle Sensors / GPS / Diagnostics", "CAN / GPIO / GPS Capture", "Vehicle Gateway Processing", "Cloud / Dashboard", "Connected Vehicle Functions"],
+    inputs: ["GPS", "CAN/GPIO", "Diagnostics", "Sensor input"],
+    outputs: ["Connected data", "Dashboard status", "Device command", "Diagnostics report"],
+    modules: ["Embedded Gateway", "Vehicle Interfaces", "Connectivity", "Edge Logic", "Dashboard Integration"],
+    outcomes: ["One vehicle data bridge", "Faster prototype integration", "Connected feature foundation"],
+  },
+  "driver-vehicle-monitoring": {
+    steps: ["Camera / Vehicle Data", "Edge Monitoring Unit", "Safety / Behavior Detection", "Alerts", "Driver / Fleet Action"],
+    inputs: ["Camera feed", "Vehicle state", "GPS", "Safety event"],
+    outputs: ["Safety alert", "Incident log", "Driver feedback", "Fleet action"],
+    modules: ["Camera / Sensor Inputs", "Edge Monitoring", "Safety Logic", "Alert Workflow", "Fleet Dashboard"],
+    outcomes: ["Earlier safety awareness", "Incident visibility", "Better driver operations"],
+  },
+  "cold-chain-transport-monitoring": {
+    steps: ["Cargo / Container", "Temperature + Location Logging", "Gateway Processing", "Live Dashboard", "Condition Alerts"],
+    inputs: ["Temperature sensor", "Humidity sensor", "GPS", "Door event"],
+    outputs: ["Condition alert", "Trip report", "Temperature log", "Cargo action"],
+    modules: ["Cargo Sensors", "Gateway", "Location Tracking", "Dashboard", "Condition Reports"],
+    outcomes: ["Protected sensitive cargo", "Auditable trip records", "Faster condition response"],
+  },
+  "edge-ai-vision-inspection": {
+    steps: ["Inspection Point", "Camera Feed Capture", "Edge AI Model", "Alert / Reject / Report", "Dashboard"],
+    inputs: ["Camera feed", "Lighting setup", "Product view", "Inspection trigger"],
+    outputs: ["Reject signal", "Defect alert", "Inspection report", "Dashboard event"],
+    modules: ["Camera Setup", "Edge AI Model", "Inspection Logic", "Machine Signal Output", "Dashboard"],
+    outcomes: ["More consistent inspection", "Local decisions", "Clear defect history"],
+  },
+  "object-detection-counting": {
+    steps: ["Scene / Object Flow", "Camera Feed Capture", "Object Detection Model", "Local Decision", "Dashboard / Alerts"],
+    inputs: ["Camera feed", "Zone definition", "Object classes", "Counting trigger"],
+    outputs: ["Count result", "Class alert", "Local decision", "Dashboard metric"],
+    modules: ["Camera Pipeline", "Detection Model", "Counting Logic", "Event Storage", "Dashboard"],
+    outcomes: ["Automated counting", "Faster visibility", "Less manual observation"],
+  },
+  "safety-monitoring-camera": {
+    steps: ["Site Safety Zone", "Camera Feed Capture", "Safety Rule Detection", "Alert Output", "Safety Action"],
+    inputs: ["Camera feed", "Zone boundary", "PPE rule", "Risk event"],
+    outputs: ["Buzzer/light alert", "Safety notification", "Event clip", "Action record"],
+    modules: ["Camera Setup", "Safety Rules", "Edge Analytics", "Alert Output", "Event Dashboard"],
+    outcomes: ["Earlier safety response", "Better event records", "Reduced monitoring burden"],
+  },
+  "smart-surveillance-analytics": {
+    steps: ["Camera Network", "Video Stream Capture", "Edge Analytics / Event Detection", "Alerts", "Monitoring Dashboard"],
+    inputs: ["Camera streams", "Motion events", "Zone rules", "Schedule rules"],
+    outputs: ["Event alert", "Searchable history", "Monitoring view", "Operations action"],
+    modules: ["Camera Integration", "Analytics Engine", "Event Rules", "Notifications", "Monitoring Dashboard"],
+    outcomes: ["Smarter camera monitoring", "Useful event filtering", "Faster operational response"],
+  },
+  "low-power-tinyml-detection": {
+    steps: ["Low-Power Sensor Input", "Compact Signal Capture", "TinyML Model on Device", "Event Trigger", "Minimal Data Transmission"],
+    inputs: ["Compact sensor", "Battery signal", "Motion/audio/vibration", "Wake trigger"],
+    outputs: ["Local detection", "Event trigger", "Minimal packet", "Low-power alert"],
+    modules: ["Sensor Interface", "TinyML Firmware", "Power Logic", "Event Trigger", "Connectivity"],
+    outcomes: ["Always-on detection", "Lower data use", "Battery-friendly intelligence"],
+  },
+  "intelligent-product-rd": {
+    steps: ["Problem / Product Idea", "Requirement + Signal Study", "Concept Architecture", "Prototype Build", "Testing / Iteration"],
+    inputs: ["Client idea", "Use condition", "User need", "Technical constraint"],
+    outputs: ["Concept architecture", "Prototype plan", "Feasibility result", "Next-build direction"],
+    modules: ["Problem Study", "Architecture", "Prototype Planning", "Testing", "Iteration Support"],
+    outcomes: ["Reduced technical uncertainty", "Clearer product path", "Practical prototype direction"],
+  },
+  "custom-embedded-mechatronic-prototype": {
+    steps: ["Problem Requirement", "Sensor / Actuator / Mechanism Design", "Embedded Control", "Prototype Testing", "Iteration"],
+    inputs: ["Sensor need", "Actuator requirement", "Mechanism constraint", "User interaction"],
+    outputs: ["Working prototype", "Control behavior", "Test result", "Iteration plan"],
+    modules: ["Embedded Hardware", "Mechanism Design", "Actuator Interface", "Firmware", "Prototype Testing"],
+    outcomes: ["Integrated prototype", "Faster practical learning", "Better design decisions"],
+  },
+  "ai-enabled-smart-device-development": {
+    steps: ["Sensor + Device Inputs", "Device Signal Capture", "Embedded Intelligence", "User Interface / Dashboard", "Smart Product Behavior"],
+    inputs: ["Sensor signal", "Device state", "User input", "Connectivity event"],
+    outputs: ["Smart behavior", "App/dashboard status", "Alert", "Device decision"],
+    modules: ["Device Sensors", "Embedded Intelligence", "Connectivity", "User Interface", "Testing"],
+    outcomes: ["Smarter product behavior", "Connected user visibility", "Deployable device concept"],
+  },
+  "sensor-fusion-system": {
+    steps: ["Multiple Sensors", "Sensor Acquisition", "Data Fusion Logic", "Decision / Control Output", "Improved System Awareness"],
+    inputs: ["IMU", "GPS", "Camera", "Environmental sensor"],
+    outputs: ["Improved detection", "Decision output", "Alert", "Control signal"],
+    modules: ["Multi-Sensor Input", "Filtering", "Fusion Logic", "Validation", "Decision Output"],
+    outcomes: ["Better awareness", "Improved reliability", "More useful decisions"],
+  },
+  "proof-of-concept-to-field-deployment": {
+    steps: ["Idea / Problem", "Prototype Signal / Use-Case Capture", "Lab Test", "Field Trial", "Deployment-Ready System"],
+    inputs: ["Concept", "Prototype data", "Lab result", "Field feedback"],
+    outputs: ["Pilot result", "Deployment plan", "Documentation", "Improved system"],
+    modules: ["Prototype Build", "Lab Testing", "Field Trial", "Documentation", "Deployment Planning"],
+    outcomes: ["Lower deployment risk", "Field-tested direction", "Clear handover path"],
+  },
+};
+
+const category = solution.category ?? solution.area;
+const heroImage = solution.heroImage ?? solution.image;
+const subtitle = solution.subtitle ?? solution.description;
+const flowConfig = flowConfigs[solution.slug] ?? {
+  steps: solution.systemFlow?.map((step) => step.title) ?? ["Input", "Sensing", "Processing", "Dashboard", "Action"],
+  inputs: solution.typicalInputs ?? solution.stack.slice(0, 4),
+  outputs: solution.typicalOutputs ?? solution.features.slice(0, 4),
+  modules: solution.stack.slice(0, 5),
+  outcomes: solution.features.slice(0, 3),
+};
+
+const metaDescription = `${solution.description} Anthra Systems engineers practical physical-world systems across hardware, software, connectivity, automation, and deployment.`;
+
+const iconForStep = (title: string) => {
+  const lower = title.toLowerCase();
+  if (lower.includes("camera") || lower.includes("vision") || lower.includes("ai")) return "aibrain";
+  if (lower.includes("dashboard") || lower.includes("report")) return "dashboard";
+  if (lower.includes("gateway") || lower.includes("connect")) return "iot";
+  if (lower.includes("controller") || lower.includes("edge") || lower.includes("logic") || lower.includes("processing")) return "processor";
+  if (lower.includes("vehicle") || lower.includes("gps") || lower.includes("field")) return "mapPin";
+  if (lower.includes("test") || lower.includes("prototype") || lower.includes("study")) return "sparks";
+  if (lower.includes("action") || lower.includes("alert") || lower.includes("output")) return "verified";
+  return "tools";
+};
+
+const shortList = (items: string[], count = 3) => items.slice(0, count).join(", ");
+
+const makeFlowSteps = (): FlowStep[] => {
+  if (solution.customHowItWorksSteps) return solution.customHowItWorksSteps;
+  if (solution.systemFlow) return solution.systemFlow;
+
+  return flowConfig.steps.map((title, index) => {
+    const isLast = index === flowConfig.steps.length - 1;
+    let text = "Pass the right information to the next layer of the system.";
+
+    if (index === 0) {
+      text = `Start from the real source Anthra connects to for this system, with ${shortList(flowConfig.inputs, 2).toLowerCase()} considered early.`;
+    } else if (index === 1) {
+      text = `Capture useful signals such as ${shortList(flowConfig.inputs).toLowerCase()} without making the site harder to operate.`;
+    } else if (index === 2) {
+      text = "The controller, gateway, or edge device cleans the signal and runs the system logic close to the equipment.";
+    } else if (index === 3 && !isLast) {
+      text = `Turn the processed data into practical outputs like ${shortList(flowConfig.outputs).toLowerCase()}.`;
+    } else if (isLast) {
+      text = `Create the client result: ${shortList(flowConfig.outcomes, 2).toLowerCase()}.`;
+    }
+
+    return {
+      title,
+      text,
+      icon: iconForStep(title),
+    };
+  });
+};
+
+const makeCards = (items: string[], text: (item: string) => string): DetailCard[] =>
+  items.map((item) => ({ title: item, text: text(item) }));
+
+const problemPoints =
+  solution.customProblemPoints ??
+  solution.problemPoints ??
+  makeCards(solution.applications.slice(0, 3), (item) => `Teams managing ${item.toLowerCase()} often need clearer visibility, fewer manual checks, and faster issue response.`);
+
+const outcomePoints =
+  solution.customOutcomePoints ??
+  makeCards(flowConfig.outcomes, (item) => `${item} for the real equipment, site, product, or operation where this system is deployed.`);
+
+const systemFlow = makeFlowSteps();
+const typicalInputs = solution.typicalInputs ?? flowConfig.inputs;
+const typicalOutputs = solution.typicalOutputs ?? flowConfig.outputs;
+const flowStageLabels = ["Source", "Sense / Capture", "Process", "Show / Act", "Outcome"];
+const workflowFlowStageSets: Record<string, string[]> = {
+  "industry-machine-systems": [industrialStage1.src, industrialStage2.src, industrialStage3.src, industrialStage4.src, industrialStage5.src],
+  "water-agriculture-field-systems": [waterFieldStage1.src, waterFieldStage2.src, waterFieldStage3.src, waterFieldStage4.src, waterFieldStage5.src],
+  "mobility-connected-vehicles": [mobilityStage1.src, mobilityStage2.src, mobilityStage3.src, mobilityStage4.src, mobilityStage5.src],
+  "edge-ai-vision-systems": [visionStage1.src, visionStage2.src, visionStage3.src, visionStage4.src, visionStage5.src],
+  "custom-rd-systems": [customRdStage1.src, customRdStage2.src, customRdStage3.src, customRdStage4.src, customRdStage5.src],
+};
+const workflowFlowStageImages = workflowFlowStageSets[solution.areaSlug];
+const workflowFlowImageSrc = workflowFlowStageImages?.[0] ?? heroImage.src;
+
+const workflowVisualKeys = (slug: string) => {
+  if (slug.includes("water")) return ["water-source", "probe", "controller", "dashboard", "quality-result"];
+  if (slug.includes("irrigation")) return ["field-source", "sensor", "controller", "pump-valve", "outcome"];
+  if (slug.includes("aquaculture")) return ["water-source", "probe", "controller", "action", "quality-result"];
+  if (slug.includes("pump")) return ["water-source", "sensor", "controller", "pump-valve", "outcome"];
+  if (slug.includes("vehicle") || slug.includes("fleet") || slug.includes("cold-chain")) return ["vehicle", "gps", "gateway", "dashboard", "outcome"];
+  if (slug.includes("vision") || slug.includes("camera") || slug.includes("detection") || slug.includes("surveillance")) return ["camera", "camera", "edge-ai", "action", "dashboard"];
+  if (slug.includes("tinyml")) return ["sensor", "sensor", "edge-ai", "action", "outcome"];
+  if (slug.includes("prototype") || slug.includes("rd") || slug.includes("proof-of-concept")) return ["idea", "prototype", "controller", "prototype", "outcome"];
+  if (slug.includes("sensor-fusion")) return ["sensor", "sensor", "controller", "action", "outcome"];
+  return ["machine-source", "sensor", "controller", "dashboard", "maintenance"];
+};
+
+const workflowTitleFor = (slug: string) => {
+  const titles: Record<string, string> = {
+    "machine-health-predictive-maintenance": "From Machine Signals to Maintenance Alerts",
+    "industrial-monitoring-control": "From Machine Inputs to Live Control Visibility",
+    "motor-drive-hmi-control": "From Operator Input to Safe Machine Operation",
+    "machine-data-logger-dashboard": "From Machine Data to Operational Insight",
+    "custom-machine-automation": "From Process Requirement to Automated Machine Action",
+    "water-quality-monitoring": "From Water Parameters to Corrective Action",
+    "smart-irrigation-fertigation": "From Field Conditions to Automated Irrigation",
+    "aquaculture-monitoring": "From Pond Conditions to Farm Decisions",
+    "pump-automation-protection": "From Water Level Signals to Protected Pump Control",
+    "remote-field-asset-monitoring": "From Field Assets to Remote Visibility",
+    "connected-vehicle-intelligence": "From Vehicle Data to Fleet Intelligence",
+    "fleet-tracking-telematics": "From Vehicle Movement to Fleet Visibility",
+    "vehicle-iot-gateway": "From Vehicle Signals to Connected Operations",
+    "driver-vehicle-monitoring": "From Driver/Vehicle Signals to Safety Alerts",
+    "cold-chain-transport-monitoring": "From Cargo Conditions to Transport Alerts",
+    "edge-ai-vision-inspection": "From Camera Feed to Edge Decision",
+    "object-detection-counting": "From Visual Input to Counted Objects",
+    "safety-monitoring-camera": "From Site Camera Feed to Safety Action",
+    "smart-surveillance-analytics": "From Camera Events to Operational Alerts",
+    "low-power-tinyml-detection": "From Tiny Sensor Signals to Local Detection",
+    "intelligent-product-rd": "From Product Idea to Tested Engineering Direction",
+    "custom-embedded-mechatronic-prototype": "From Requirement to Tested Prototype",
+    "ai-enabled-smart-device-development": "From Device Signals to Smart Product Behavior",
+    "sensor-fusion-system": "From Multiple Sensor Streams to Better Awareness",
+    "proof-of-concept-to-field-deployment": "From Concept to Field-Ready Trial",
+  };
+
+  return titles[slug] ?? "How This System Works in the Field";
+};
+
+const makeWorkflowSteps = (): WorkflowStep[] => {
+  if (solution.flowSteps) return solution.flowSteps;
+
+  const visualKeys = workflowVisualKeys(solution.slug);
+  const processModule = flowConfig.modules.find((item) => /controller|gateway|edge|logic|processing|logger|model|unit/i.test(item)) ?? "Controller logic";
+  const dashboardModule = flowConfig.modules.find((item) => /dashboard|hmi|alert|report|app|output/i.test(item)) ?? "Dashboard / alerts";
+  const sensorModule = flowConfig.modules.find((item) => /sensor|input|camera|gps|probe|signal/i.test(item)) ?? "Input interface";
+  const sourceContext = solution.applications.slice(0, 2);
+  const actionOutputs = typicalOutputs.slice(0, 4);
+  const capturedSignals = typicalInputs.map((item) => `${item} signal`).slice(0, 4);
+  const processedSignals = actionOutputs.map((item) => `processed ${item.toLowerCase()}`).slice(0, 3);
+
+  const inputsByPhase = [
+    sourceContext.length ? sourceContext : [solution.area ?? category, "Site requirement"],
+    typicalInputs.slice(0, 4),
+    capturedSignals.length ? capturedSignals : typicalInputs.slice(0, 3),
+    [processModule, "alarm condition", "operator need"].filter(Boolean),
+    actionOutputs.length ? actionOutputs.slice(0, 3) : flowConfig.outcomes.slice(0, 3),
+  ];
+  const outputsByPhase = [
+    typicalInputs.slice(0, 2).map((item) => `${item} point`).concat(["deployment context"]).slice(0, 4),
+    capturedSignals,
+    processedSignals.concat(["decision-ready status"]).slice(0, 4),
+    actionOutputs,
+    flowConfig.outcomes.slice(0, 4),
+  ];
+  const configureByPhase = [
+    ["Site context", "Signal points", "Deployment constraints"],
+    [sensorModule, "Sensor choice", "Input wiring", "Sampling plan"],
+    [processModule, "Logic rules", "Connectivity"],
+    [dashboardModule, "Alert behavior", "Control output"],
+    ["Reports", "Action workflow", "Iteration path"],
+  ];
+
+  return systemFlow.slice(0, 5).map((step, index) => ({
+    phase: (flowStageLabels[index] ?? `Step ${index + 1}`) as WorkflowStep["phase"],
+    title: step.title,
+    description: step.text,
+    visualKey: visualKeys[index] ?? "source",
+    imageCropKey: `stage-${index + 1}-snippet`,
+    imageSrc: workflowFlowStageImages?.[index] ?? workflowFlowImageSrc,
+    inputs: inputsByPhase[index] ?? typicalInputs.slice(0, 3),
+    outputs: outputsByPhase[index] ?? typicalOutputs.slice(0, 3),
+    detail: step.text,
+    configures: configureByPhase[index] ?? flowConfig.modules.slice(0, 3),
+  }));
+};
+
+const interactiveFlowSteps = makeWorkflowSteps();
+const workflowTitle = solution.workflowTitle ?? workflowTitleFor(solution.slug);
+const workflowSubtext =
+  solution.workflowSubtitle ??
+  "Select a step to see what is captured, what Anthra configures, and what action the system produces.";
+const modules =
+  solution.modulesBuilt ??
+  solution.anthraBuildsModules ??
+  makeCards(flowConfig.modules, (item) => `${item} selected and configured around the actual deployment requirement.`);
+const customization =
+  solution.customizationOptions?.slice(0, 4) ??
+  makeCards(["Sensor / input choice", "Dashboard views", "Connectivity method", "Control or alert behavior"], (item) => `${item} can be tuned to suit the site, budget, users, and reliability needs.`);
+
+const relatedSolutions =
+  (solution.relatedSolutions
+    ?.map((relatedSlug) => getSolutionBySlug(relatedSlug))
+    .filter(Boolean) as typeof solutions) ??
+  solutions
+    .filter((item) => item.areaSlug === solution.areaSlug && item.slug !== solution.slug)
+    .slice(0, 3);
+
+const ctaText = solution.ctaText ?? "Discuss a Similar System";
+const supportingImagePending = solution.supportingImagePending ?? true;
+---
+
+<MainLayout
+  title={`${solution.title} | Anthra Systems`}
+  customDescription={metaDescription}
+  customOgTitle={`${solution.title} | Anthra Systems`}
+>
+  <section class="solution-hero mx-auto max-w-[92rem] px-4 pb-12 pt-32 sm:px-6 lg:px-8 lg:pb-14 lg:pt-40">
+    <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div data-detail-reveal>
+        <p class="anthra-kicker">{category}</p>
+        <h1 class="anthra-page-title mt-5 max-w-4xl text-balance text-4xl text-white sm:text-5xl lg:text-6xl">
+          {solution.title}
+        </h1>
+        <p class="mt-5 max-w-3xl text-pretty text-base leading-relaxed text-neutral-300 sm:text-lg">
+          {subtitle}
+        </p>
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact" class="anthra-button-primary px-5 py-3 text-center text-sm font-semibold">
+            Discuss This System
+          </a>
+          <a href="/solutions" class="anthra-button-secondary px-5 py-3 text-center text-sm font-semibold">
+            Back to Solutions
+          </a>
+        </div>
+      </div>
+
+      <div class="group relative min-h-[23rem] overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_30px_100px_rgba(0,0,0,0.42)] lg:min-h-[30rem]" data-detail-reveal>
+        <Image
+          src={heroImage}
+          alt={solution.alt}
+          class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
+          loading="eager"
+          format="avif"
+        />
+        <div class="absolute inset-0 bg-linear-to-t from-black/76 via-black/16 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
+          <div class="max-w-xl rounded-xl border border-white/10 bg-black/50 p-4 backdrop-blur">
+            <p class="text-sm font-semibold text-white">Practical system, built around the real deployment.</p>
+            <p class="mt-2 text-xs leading-relaxed text-neutral-300">
+              Inputs, controller logic, dashboard, alerts, and field support planned together.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="solution-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-[0.48fr_0.52fr]">
+      <article class="solution-panel p-5 sm:p-6" data-detail-reveal>
+        <p class="anthra-kicker">Problem</p>
+        <h2 class="anthra-section-title mt-3 text-2xl text-white sm:text-3xl">
+          What this system helps fix.
+        </h2>
+        <div class="mt-5 grid gap-3">
+          {problemPoints.slice(0, 4).map((item) => (
+            <div class="solution-compact-row">
+              <span><Icon name="question" /></span>
+              <div>
+                <h3 class="anthra-card-title text-sm text-white">{item.title}</h3>
+                <p class="mt-1 text-xs leading-relaxed text-neutral-400">{item.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <article class="solution-panel p-5 sm:p-6" data-detail-reveal>
+        <p class="anthra-kicker">Outcome</p>
+        <h2 class="anthra-section-title mt-3 text-2xl text-white sm:text-3xl">
+          What the client gains.
+        </h2>
+        <div class="mt-5 grid gap-3">
+          {outcomePoints.slice(0, 4).map((item) => (
+            <div class="solution-compact-row">
+              <span><Icon name="checkCircle" /></span>
+              <div>
+                <h3 class="anthra-card-title text-sm text-white">{item.title}</h3>
+                <p class="mt-1 text-xs leading-relaxed text-neutral-400">{item.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <InteractiveSolutionFlow
+    steps={interactiveFlowSteps}
+    solutionTitle={solution.title}
+    workflowTitle={workflowTitle}
+    workflowSubtext={workflowSubtext}
+    visualImageSrc={heroImage.src}
+  />
+
+  <section class="solution-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-7 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
+      <div data-detail-reveal>
+        <p class="anthra-kicker">What Anthra Builds</p>
+        <h2 class="anthra-section-title mt-3 text-3xl text-white sm:text-4xl">
+          Key modules, selected for this system.
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-neutral-400">
+          These are not generic parts lists. They are the practical building blocks Anthra combines for the actual site, machine, vehicle, camera point, or prototype.
+        </p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {modules.slice(0, 6).map((item) => (
+          <article class="solution-card p-5" data-detail-reveal>
+            <div class="solution-mini-icon"><Icon name="tools" /></div>
+            <h3 class="anthra-card-title mt-4 text-base text-white">{item.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-neutral-400">{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="solution-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-[0.42fr_0.58fr] lg:items-center">
+      <div data-detail-reveal>
+        <p class="anthra-kicker">Implementation View</p>
+        <h2 class="anthra-section-title mt-3 text-3xl text-white sm:text-4xl">
+          A practical look at the setup behind this solution.
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-neutral-400">
+          This space is part of the reusable layout so a future solution-specific implementation image can be added without redesigning the page.
+        </p>
+      </div>
+      <div class="solution-supporting-slot" data-detail-reveal data-pending={supportingImagePending ? "true" : "false"}>
+        {
+          solution.supportingImage && !supportingImagePending ? (
+            <Image
+              src={solution.supportingImage}
+              alt={solution.supportingImageAlt ?? `${solution.title} implementation support visual.`}
+              class="h-full w-full object-cover"
+              loading="lazy"
+              format="avif"
+            />
+          ) : (
+            <div class="solution-supporting-pending">
+              <p class="anthra-kicker">Second Image Pending</p>
+              <h3 class="anthra-card-title mt-3 text-xl text-neutral-950">Future implementation image slot</h3>
+              <p class="mt-3 max-w-xl text-sm leading-relaxed text-neutral-600">
+                No placeholder or stock image is used. This slot is reserved for a clean, realistic, deployment-focused visual for this exact solution.
+              </p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="solution-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <article class="solution-panel p-5 sm:p-6" data-detail-reveal>
+        <p class="anthra-kicker">Applications</p>
+        <h2 class="anthra-section-title mt-3 text-2xl text-white sm:text-3xl">
+          Where it can be used.
+        </h2>
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          {solution.applications.slice(0, 6).map((item) => (
+            <div class="solution-pill-row">
+              <Icon name="mapPin" />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <article class="solution-panel p-5 sm:p-6" data-detail-reveal>
+        <p class="anthra-kicker">Customization</p>
+        <h2 class="anthra-section-title mt-3 text-2xl text-white sm:text-3xl">
+          How it is tuned to the site.
+        </h2>
+        <div class="mt-5 grid gap-3">
+          {customization.map((item) => (
+            <div class="solution-compact-row">
+              <span><Icon name="verified" /></span>
+              <div>
+                <h3 class="anthra-card-title text-sm text-white">{item.title}</h3>
+                <p class="mt-1 text-xs leading-relaxed text-neutral-400">{item.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="solution-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between" data-detail-reveal>
+      <div>
+        <p class="anthra-kicker">Related Solutions</p>
+        <h2 class="anthra-section-title mt-3 text-3xl text-white sm:text-4xl">Systems often discussed together.</h2>
+      </div>
+      <a href="/solutions" class="anthra-button-secondary px-5 py-3 text-center text-sm font-semibold">View All Solutions</a>
+    </div>
+    <div class="grid gap-5 md:grid-cols-3">
+      {relatedSolutions.slice(0, 3).map((item) => (
+        <a href={`/solutions/${item.slug}`} class="group overflow-hidden rounded-2xl border border-white/10 bg-black/35 transition duration-300 hover:-translate-y-1 hover:border-orange-300/45" data-detail-reveal>
+          <div class="relative h-40 overflow-hidden">
+            <Image src={item.image} alt={item.alt} class="h-full w-full object-cover transition duration-700 group-hover:scale-105" format="avif" />
+            <div class="absolute inset-0 bg-linear-to-t from-black/72 to-transparent"></div>
+          </div>
+          <div class="p-5">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-orange-300">{item.area}</p>
+            <h3 class="anthra-card-title mt-3 text-lg text-white">{item.title}</h3>
+            <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-neutral-400">{item.description}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[92rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div class="solution-cta p-7 sm:p-10 lg:p-12" data-detail-reveal>
+      <p class="anthra-kicker">Start With Your Site</p>
+      <div class="mt-4 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div>
+          <h2 class="anthra-display-title text-balance text-3xl text-white sm:text-4xl">
+            {ctaText}
+          </h2>
+          <p class="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-300 sm:text-base">
+            Share the machine, site, vehicle, camera point, water source, or product idea. Anthra can map the right inputs, control logic, dashboard, alerts, and deployment path.
+          </p>
+        </div>
+        <a href="/contact" class="anthra-button-primary px-5 py-3 text-center text-sm font-semibold">
+          Talk to Anthra About This Solution
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .solution-hero {
+    background:
+      radial-gradient(circle at 12% 22%, rgba(249, 115, 22, 0.1), transparent 27rem),
+      radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.045), transparent 26rem);
+  }
+
+  .solution-section {
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .solution-card,
+  .solution-panel {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.038), rgba(255, 255, 255, 0.008)),
+      rgba(10, 10, 10, 0.72);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(16px);
+  }
+
+  .solution-card,
+  .solution-panel,
+  .solution-cta,
+  .solution-supporting-slot {
+    border-radius: 1.15rem;
+  }
+
+  .solution-card {
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      background 220ms ease;
+  }
+
+  .solution-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(251, 146, 60, 0.4);
+    background: linear-gradient(145deg, rgba(22, 22, 22, 0.9), rgba(8, 8, 8, 0.78));
+  }
+
+  .solution-icon,
+  .solution-mini-icon,
+  .solution-compact-row span {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(251, 146, 60, 0.28);
+    background: rgba(249, 115, 22, 0.1);
+    color: rgb(253, 186, 116);
+  }
+
+  .solution-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1rem;
+  }
+
+  .solution-mini-icon,
+  .solution-compact-row span {
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 0.8rem;
+  }
+
+  .solution-icon :global(svg),
+  .solution-mini-icon :global(svg),
+  .solution-compact-row span :global(svg),
+  .solution-pill-row :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+    max-width: 1.15rem;
+    max-height: 1.15rem;
+  }
+
+  .solution-icon :global(svg) {
+    width: 1.35rem;
+    height: 1.35rem;
+    max-width: 1.35rem;
+    max-height: 1.35rem;
+  }
+
+  .solution-compact-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+    align-items: start;
+    border-radius: 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.24);
+    padding: 0.95rem;
+  }
+
+  .solution-pill-row {
+    border-radius: 999px;
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    background: rgba(248, 250, 252, 0.78);
+    color: #1f2937;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .solution-pill-row {
+    display: flex;
+    min-height: 2.8rem;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.8rem;
+  }
+
+  .solution-pill-row svg {
+    color: rgb(253, 186, 116);
+  }
+
+  .solution-cta {
+    border: 1px solid rgba(251, 146, 60, 0.22);
+    background:
+      linear-gradient(135deg, rgba(249, 115, 22, 0.14), transparent 36%),
+      linear-gradient(145deg, rgba(16, 16, 16, 0.95), rgba(0, 0, 0, 0.9));
+    box-shadow: 0 26px 90px rgba(0, 0, 0, 0.35);
+  }
+
+  .solution-supporting-slot {
+    min-height: 18rem;
+    overflow: hidden;
+    border: 1px dashed rgba(148, 163, 184, 0.5);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 249, 0.92)),
+      #f8fafc;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  }
+
+  .solution-supporting-slot[data-pending="true"] {
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+  }
+
+  .solution-supporting-pending {
+    width: 100%;
+    max-width: 38rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(226, 232, 240, 0.66)),
+      repeating-linear-gradient(135deg, rgba(15, 23, 42, 0.04) 0 1px, transparent 1px 14px);
+    padding: 1.5rem;
+  }
+
+  [data-detail-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 600ms ease,
+      transform 600ms ease;
+  }
+
+  [data-detail-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+</style>
+
+<script>
+  const detailItems = document.querySelectorAll("[data-detail-reveal]");
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.14 },
+  );
+
+  detailItems.forEach((item) => revealObserver.observe(item));
+</script>

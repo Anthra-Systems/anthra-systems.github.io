@@ -1,0 +1,918 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "@/layouts/MainLayout.astro";
+import Icon from "@components/ui/icons/Icon.astro";
+import { getSolutionBySlug } from "@data/solutions";
+
+import capabilityHeroImage from "@images/capabilities-realistic-workbench-hero.png";
+import rdImage from "@images/services/custom-rd-support.png";
+import embeddedImage from "@images/services/embedded-systems.png";
+import automationImage from "@images/automation/automate-existing-process.png";
+import iotImage from "@images/iot-gateway.png";
+import mechatronicsImage from "@images/Anthra-lab.png";
+import edgeAiImage from "@images/use-cases/edge-ai-vision.png";
+import mobilityImage from "@images/products/connected-vehicle-monitoring.png";
+import deploymentImage from "@images/automation/Automate-compare3.png";
+
+const capabilities = [
+  {
+    id: "intelligent-systems-rd",
+    icon: "sparks",
+    title: "Intelligent Systems R&D",
+    text: "Explore, prototype, and test practical system ideas before full development.",
+    tags: ["Feasibility", "Architecture", "Pilot build"],
+    image: rdImage,
+    relatedSlugs: [
+      "intelligent-product-rd",
+      "proof-of-concept-to-field-deployment",
+      "sensor-fusion-system",
+      "custom-embedded-mechatronic-prototype",
+    ],
+  },
+  {
+    id: "embedded-edge-intelligence",
+    icon: "processor",
+    title: "Embedded & Edge Intelligence",
+    text: "Build smart controllers, sensor nodes, gateways, and edge devices.",
+    tags: ["Firmware", "Sensor nodes", "Edge devices"],
+    image: embeddedImage,
+    relatedSlugs: [
+      "low-power-tinyml-detection",
+      "vehicle-iot-gateway",
+      "machine-data-logger-dashboard",
+      "remote-field-asset-monitoring",
+    ],
+  },
+  {
+    id: "automation-control-systems",
+    icon: "tools",
+    title: "Automation & Control Systems",
+    text: "Design machine logic, control panels, motor control, pump control, and HMI workflows.",
+    tags: ["PLC/HMI", "Motor control", "Pump logic"],
+    image: automationImage,
+    relatedSlugs: [
+      "industrial-monitoring-control",
+      "motor-drive-hmi-control",
+      "pump-automation-protection",
+      "custom-machine-automation",
+    ],
+  },
+  {
+    id: "connected-systems-iot",
+    icon: "iot",
+    title: "Connected Systems & IoT",
+    text: "Connect machines, sensors, vehicles, and field assets to dashboards, alerts, and remote monitoring.",
+    tags: ["Telemetry", "Gateways", "Dashboards"],
+    image: iotImage,
+    relatedSlugs: [
+      "machine-data-logger-dashboard",
+      "water-quality-monitoring",
+      "smart-irrigation-fertigation",
+      "fleet-tracking-telematics",
+    ],
+  },
+  {
+    id: "mechanical-mechatronic-design",
+    icon: "hammer",
+    title: "Mechanical & Mechatronic Design",
+    text: "Combine mechanisms, enclosures, actuators, sensors, and embedded control.",
+    tags: ["Mechanisms", "Enclosures", "Actuators"],
+    image: mechatronicsImage,
+    relatedSlugs: [
+      "custom-embedded-mechatronic-prototype",
+      "custom-machine-automation",
+      "ai-enabled-smart-device-development",
+    ],
+  },
+  {
+    id: "ai-ml-edge-devices",
+    icon: "aibrain",
+    title: "AI/ML on Edge Devices",
+    text: "Deploy detection, inspection, prediction, and lightweight intelligence close to the source.",
+    tags: ["Vision", "TinyML", "Inspection"],
+    image: edgeAiImage,
+    relatedSlugs: [
+      "edge-ai-vision-inspection",
+      "object-detection-counting",
+      "safety-monitoring-camera",
+      "low-power-tinyml-detection",
+    ],
+  },
+  {
+    id: "mobility-connected-vehicles",
+    icon: "mapPin",
+    title: "Mobility & Connected Vehicles",
+    text: "Build telemetry, gateways, tracking, monitoring, and vehicle intelligence systems.",
+    tags: ["GPS", "Telematics", "Vehicle gateway"],
+    image: mobilityImage,
+    relatedSlugs: [
+      "connected-vehicle-intelligence",
+      "fleet-tracking-telematics",
+      "vehicle-iot-gateway",
+      "driver-vehicle-monitoring",
+    ],
+  },
+  {
+    id: "field-deployment-productization",
+    icon: "verified",
+    title: "Field Deployment & Productization",
+    text: "Support wiring, enclosures, testing, field trials, deployment, and maintainability.",
+    tags: ["Field trials", "Wiring", "Handover"],
+    image: deploymentImage,
+    relatedSlugs: [
+      "proof-of-concept-to-field-deployment",
+      "remote-field-asset-monitoring",
+      "pump-automation-protection",
+      "water-quality-monitoring",
+    ],
+  },
+];
+
+const outputMap = [
+  {
+    capability: "Embedded & Edge Intelligence",
+    output: ["smart controllers", "sensor nodes", "gateways", "low-power edge devices"],
+    relatedSlugs: [
+      "low-power-tinyml-detection",
+      "vehicle-iot-gateway",
+      "machine-data-logger-dashboard",
+      "remote-field-asset-monitoring",
+    ],
+  },
+  {
+    capability: "Automation & Control Systems",
+    output: ["machine logic", "pump control", "motor control", "HMI workflows", "process automation"],
+    relatedSlugs: [
+      "industrial-monitoring-control",
+      "motor-drive-hmi-control",
+      "pump-automation-protection",
+      "custom-machine-automation",
+    ],
+  },
+  {
+    capability: "Connected Systems & IoT",
+    output: ["dashboards", "alerts", "remote monitoring", "connected field assets", "data logging"],
+    relatedSlugs: [
+      "machine-data-logger-dashboard",
+      "water-quality-monitoring",
+      "smart-irrigation-fertigation",
+      "fleet-tracking-telematics",
+    ],
+  },
+  {
+    capability: "AI/ML on Edge Devices",
+    output: ["detection", "inspection", "counting", "local decisions", "low-power intelligence"],
+    relatedSlugs: [
+      "edge-ai-vision-inspection",
+      "object-detection-counting",
+      "safety-monitoring-camera",
+      "low-power-tinyml-detection",
+    ],
+  },
+  {
+    capability: "Mechanical & Mechatronic Design",
+    output: ["mechanisms", "enclosures", "actuator systems", "embedded-mechanical prototypes"],
+    relatedSlugs: [
+      "custom-embedded-mechatronic-prototype",
+      "custom-machine-automation",
+      "ai-enabled-smart-device-development",
+    ],
+  },
+  {
+    capability: "Mobility & Connected Vehicles",
+    output: ["vehicle telemetry", "tracking", "vehicle gateways", "driver/vehicle monitoring"],
+    relatedSlugs: [
+      "connected-vehicle-intelligence",
+      "fleet-tracking-telematics",
+      "vehicle-iot-gateway",
+      "driver-vehicle-monitoring",
+    ],
+  },
+  {
+    capability: "Intelligent Systems R&D",
+    output: ["feasibility studies", "prototypes", "test benches", "pilot systems", "technical direction"],
+    relatedSlugs: [
+      "intelligent-product-rd",
+      "proof-of-concept-to-field-deployment",
+      "sensor-fusion-system",
+      "custom-embedded-mechatronic-prototype",
+    ],
+  },
+  {
+    capability: "Field Deployment & Productization",
+    output: ["wiring", "enclosures", "field testing", "pilot deployment", "maintainable systems"],
+    relatedSlugs: [
+      "proof-of-concept-to-field-deployment",
+      "remote-field-asset-monitoring",
+      "pump-automation-protection",
+      "water-quality-monitoring",
+    ],
+  },
+];
+
+const integrationLayers = [
+  {
+    title: "Mechanical Layer",
+    icon: "hammer",
+    text: "Mechanism, enclosure, mounting, movement, and site fit.",
+  },
+  {
+    title: "Electronics Layer",
+    icon: "processor",
+    text: "Sensors, boards, I/O, power, wiring, and protection.",
+  },
+  {
+    title: "Firmware Layer",
+    icon: "cpu",
+    text: "Control logic, acquisition, device behavior, and local rules.",
+  },
+  {
+    title: "Connectivity Layer",
+    icon: "iot",
+    text: "Gateway, telemetry, protocols, alerts, and remote access.",
+  },
+  {
+    title: "Dashboard / AI Layer",
+    icon: "dashboard",
+    text: "Operator screens, reports, detection, inspection, and decisions.",
+  },
+  {
+    title: "Field Deployment",
+    icon: "verified",
+    text: "Testing, installation, handover, iteration, and maintainability.",
+  },
+];
+
+const resolveSolutions = (slugs: string[]) =>
+  slugs.map((slug) => getSolutionBySlug(slug)).filter(Boolean) as NonNullable<ReturnType<typeof getSolutionBySlug>>[];
+---
+
+<MainLayout
+  title="Core Engineering Capabilities | Anthra Systems"
+  customDescription="Anthra Systems engineering capabilities across applied R&D, embedded systems, automation, IoT, mechatronics, mobility, edge AI, and field deployment."
+>
+  <section class="capability-hero mx-auto max-w-[92rem] px-4 pb-10 pt-28 sm:px-6 lg:px-8 lg:pb-14 lg:pt-36">
+    <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div data-capability-reveal>
+        <p class="anthra-kicker">Capabilities</p>
+        <h1 class="anthra-page-title mt-5 max-w-4xl text-balance text-4xl text-white sm:text-5xl lg:text-6xl">
+          Core Engineering Capabilities
+        </h1>
+        <p class="mt-6 max-w-3xl text-pretty text-base leading-relaxed text-neutral-300 sm:text-lg">
+          We combine electronics, embedded intelligence, automation, IoT, mechanics, edge AI, and field deployment to build practical systems for real-world machines, infrastructure, vehicles, and devices.
+        </p>
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact" class="anthra-button-primary px-5 py-3 text-center text-sm font-semibold">
+            Discuss Your System
+          </a>
+          <a href="/solutions" class="anthra-button-secondary px-5 py-3 text-center text-sm font-semibold">
+            View Solutions
+          </a>
+        </div>
+      </div>
+
+      <div class="capability-hero-visual group" data-capability-reveal>
+        <Image
+          src={capabilityHeroImage}
+          alt="Engineering workbench with controller hardware, sensors, actuator parts, test board, notebook, and dashboard laptop."
+          class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
+          loading="eager"
+          format="avif"
+        />
+        <div class="capability-hero-overlay"></div>
+        <div class="capability-hero-panel">
+          <p class="text-sm font-semibold text-white">Integrated engineering, not isolated services.</p>
+          <p class="mt-2 text-xs leading-relaxed text-neutral-300">
+            Hardware, software, mechanics, connectivity, testing, and deployment planned as one system.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="mb-7 grid gap-4 lg:grid-cols-[0.62fr_0.38fr] lg:items-end" data-capability-reveal>
+      <div>
+        <p class="anthra-kicker">Engineering Depth</p>
+        <h2 class="anthra-section-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+          Capabilities That Turn Ideas Into Working Systems
+        </h2>
+      </div>
+      <p class="text-sm leading-relaxed text-neutral-400">
+        Large engineering layers become easier to understand when they are tied to real outputs, real equipment, and existing solution paths.
+      </p>
+    </div>
+
+    <div class="capability-card-rail" data-auto-capability data-capability-reveal>
+      {capabilities.map((capability, index) => (
+        <article id={capability.id} class:list={["capability-visual-card", index === 0 && "is-active"]} data-capability-card>
+          <Image
+            src={capability.image}
+            alt={`${capability.title} capability visual.`}
+            class="capability-visual-card__image"
+            loading="lazy"
+            format="avif"
+          />
+          <div class="capability-visual-card__shade"></div>
+          <div class="capability-visual-card__content">
+            <div class="flex items-start justify-between gap-4">
+              <div class="capability-icon">
+                <Icon name={capability.icon} />
+              </div>
+              <span class="capability-index">{String(index + 1).padStart(2, "0")}</span>
+            </div>
+            <h3 class="mt-5 text-xl font-bold text-white">{capability.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-neutral-200">{capability.text}</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              {capability.tags.map((tag) => (
+                <span class="capability-tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="capability-band p-5 sm:p-7 lg:p-9" data-capability-reveal>
+      <div class="mb-7 grid gap-5 lg:grid-cols-[0.45fr_0.55fr] lg:items-end">
+        <div>
+          <p class="anthra-kicker">Capability To Output</p>
+          <h2 class="anthra-section-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+            What Clients Actually Get From These Capabilities
+          </h2>
+        </div>
+        <p class="text-sm leading-relaxed text-neutral-400">
+          This maps capability names to the practical deliverables Anthra can build, then links directly into existing solution detail pages.
+        </p>
+      </div>
+
+      <div class="output-map-grid">
+        {outputMap.map((item) => {
+          const relatedSolutions = resolveSolutions(item.relatedSlugs);
+
+          return (
+            <article class="output-map-card">
+              <p class="output-map-card__label">Capability</p>
+              <h3>{item.capability}</h3>
+              <div class="output-map-card__outputs">
+                {item.output.map((output) => <span>{output}</span>)}
+              </div>
+              <div class="output-map-card__links">
+                {relatedSolutions.map((solution) => (
+                  <a href={`/solutions/${solution.slug}`}>{solution.title}</a>
+                ))}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="mb-7 max-w-3xl" data-capability-reveal>
+      <p class="anthra-kicker">Capabilities That Work Together</p>
+      <h2 class="anthra-section-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+        How Capabilities Combine Into Real Systems
+      </h2>
+      <p class="mt-4 text-sm leading-relaxed text-neutral-400 sm:text-base">
+        Anthra does not treat engineering capabilities as isolated services. We combine them into complete systems that can sense, process, connect, act, and survive real operating conditions.
+      </p>
+    </div>
+
+    <div class="integration-flow" data-auto-flow data-capability-reveal>
+      {integrationLayers.map((layer, index) => (
+        <article class:list={["integration-layer", index === 0 && "is-active"]} data-flow-layer>
+          <span class="integration-layer__number">{String(index + 1).padStart(2, "0")}</span>
+          <div class="capability-icon">
+            <Icon name={layer.icon} />
+          </div>
+          <h3>{layer.title}</h3>
+          <p>{layer.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between" data-capability-reveal>
+      <div>
+        <p class="anthra-kicker">Capability Outputs</p>
+        <h2 class="anthra-section-title mt-3 text-3xl text-white sm:text-4xl">
+          Existing solution paths these capabilities support.
+        </h2>
+      </div>
+      <a href="/solutions" class="anthra-button-secondary px-5 py-3 text-center text-sm font-semibold">View All Solutions</a>
+    </div>
+
+    <div class="capability-link-groups">
+      {capabilities.map((capability) => {
+        const relatedSolutions = resolveSolutions(capability.relatedSlugs).slice(0, 3);
+
+        return (
+          <article class="capability-link-group" data-capability-reveal>
+            <div class="flex items-center gap-3">
+              <div class="capability-mini-icon"><Icon name={capability.icon} /></div>
+              <h3>{capability.title}</h3>
+            </div>
+            <div>
+              {relatedSolutions.map((solution) => (
+                <a href={`/solutions/${solution.slug}`}>{solution.title}</a>
+              ))}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[92rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div class="capability-cta p-7 sm:p-10 lg:p-12" data-capability-reveal>
+      <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div>
+          <p class="anthra-kicker">Build Across Layers</p>
+          <h2 class="anthra-display-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+            Need multiple engineering layers in one system?
+          </h2>
+          <p class="mt-4 max-w-3xl text-sm leading-relaxed text-neutral-300 sm:text-base">
+            Tell us about your machine, product idea, device, field asset, vehicle, or process. We'll help define the right combination of hardware, software, mechanics, connectivity, and intelligence.
+          </p>
+        </div>
+        <a href="/contact" class="anthra-button-primary px-5 py-3 text-center text-sm font-semibold">
+          Discuss Your System
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .capability-hero {
+    background:
+      radial-gradient(circle at 12% 18%, rgba(249, 115, 22, 0.11), transparent 28rem),
+      radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.045), transparent 25rem);
+  }
+
+  .capability-hero-visual {
+    position: relative;
+    min-height: 24rem;
+    overflow: hidden;
+    border-radius: 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #050505;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.42);
+  }
+
+  .capability-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.18) 58%, rgba(0, 0, 0, 0.4)),
+      radial-gradient(circle at 78% 18%, rgba(249, 115, 22, 0.14), transparent 18rem);
+  }
+
+  .capability-hero-panel {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    max-width: 30rem;
+    border-radius: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.58);
+    padding: 1rem;
+    backdrop-filter: blur(16px);
+  }
+
+  .capability-card-rail {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .capability-visual-card {
+    position: relative;
+    min-height: 25rem;
+    overflow: hidden;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #101010;
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.22);
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  .capability-visual-card:hover,
+  .capability-visual-card.is-active {
+    transform: translateY(-4px);
+    border-color: rgba(251, 146, 60, 0.45);
+    box-shadow:
+      0 28px 86px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(251, 146, 60, 0.08);
+  }
+
+  .capability-visual-card__image {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transform: scale(1.04);
+    filter: saturate(0.95) contrast(1.06) brightness(0.82);
+    transition: transform 900ms ease, filter 220ms ease;
+  }
+
+  .capability-visual-card:hover .capability-visual-card__image,
+  .capability-visual-card.is-active .capability-visual-card__image {
+    transform: scale(1.09);
+    filter: saturate(1.03) contrast(1.08) brightness(0.9);
+  }
+
+  .capability-visual-card__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.76)),
+      radial-gradient(circle at 18% 10%, rgba(249, 115, 22, 0.16), transparent 14rem);
+  }
+
+  .capability-visual-card__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 25rem;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.15rem;
+  }
+
+  .capability-index {
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.42);
+    padding: 0.32rem 0.55rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .capability-tag {
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.32rem 0.62rem;
+    color: rgb(245, 245, 245);
+    font-size: 0.74rem;
+    font-weight: 650;
+    backdrop-filter: blur(10px);
+  }
+
+  .capability-band,
+  .capability-cta,
+  .output-map-card,
+  .integration-layer,
+  .capability-link-group {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+      rgba(7, 7, 7, 0.76);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(16px);
+  }
+
+  .capability-band,
+  .capability-cta {
+    border-radius: 1.15rem;
+  }
+
+  .output-map-grid {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .output-map-card {
+    border-radius: 0.95rem;
+    padding: 1rem;
+  }
+
+  .output-map-card__label {
+    color: rgb(253, 186, 116);
+    font-size: 0.68rem;
+    font-weight: 850;
+    text-transform: uppercase;
+  }
+
+  .output-map-card h3,
+  .capability-link-group h3,
+  .integration-layer h3 {
+    color: white;
+    font-weight: 800;
+  }
+
+  .output-map-card h3 {
+    margin-top: 0.35rem;
+    font-size: 1rem;
+  }
+
+  .output-map-card__outputs {
+    margin-top: 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .output-map-card__outputs span {
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.055);
+    padding: 0.32rem 0.55rem;
+    color: rgb(229, 229, 229);
+    font-size: 0.75rem;
+  }
+
+  .output-map-card__links,
+  .capability-link-group > div:last-child {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .output-map-card__links a,
+  .capability-link-group a {
+    border-radius: 0.7rem;
+    border: 1px solid rgba(251, 146, 60, 0.18);
+    background: rgba(249, 115, 22, 0.06);
+    padding: 0.55rem 0.7rem;
+    color: rgb(254, 215, 170);
+    font-size: 0.78rem;
+    font-weight: 650;
+    line-height: 1.35;
+    transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+
+  .output-map-card__links a:hover,
+  .capability-link-group a:hover {
+    transform: translateX(2px);
+    border-color: rgba(251, 146, 60, 0.48);
+    background: rgba(249, 115, 22, 0.12);
+  }
+
+  .integration-flow {
+    position: relative;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .integration-flow::before {
+    content: "";
+    position: absolute;
+    left: 1.7rem;
+    top: 2rem;
+    bottom: 2rem;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(251, 146, 60, 0.1), rgba(251, 146, 60, 0.8), rgba(251, 146, 60, 0.1));
+    animation: capabilityFlow 3.6s ease-in-out infinite;
+  }
+
+  .integration-layer {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      background 220ms ease;
+  }
+
+  .integration-layer:hover,
+  .integration-layer.is-active {
+    transform: translateY(-3px);
+    border-color: rgba(251, 146, 60, 0.42);
+    background:
+      linear-gradient(145deg, rgba(249, 115, 22, 0.1), rgba(255, 255, 255, 0.025)),
+      rgba(10, 10, 10, 0.84);
+  }
+
+  .integration-layer__number {
+    grid-column: 1 / -1;
+    color: rgba(255, 255, 255, 0.36);
+    font-size: 0.72rem;
+    font-weight: 900;
+  }
+
+  .integration-layer p {
+    margin-top: 0.25rem;
+    color: rgb(163, 163, 163);
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+
+  .capability-link-groups {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .capability-link-group {
+    border-radius: 0.95rem;
+    padding: 1rem;
+  }
+
+  .capability-icon,
+  .capability-mini-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(251, 146, 60, 0.28);
+    background: rgba(249, 115, 22, 0.1);
+    color: rgb(253, 186, 116);
+    box-shadow: 0 0 28px rgba(249, 115, 22, 0.08);
+  }
+
+  .capability-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1rem;
+  }
+
+  .capability-mini-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.85rem;
+  }
+
+  .capability-icon :global(svg),
+  .capability-mini-icon :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+    max-width: 1.15rem;
+    max-height: 1.15rem;
+  }
+
+  .capability-cta {
+    background:
+      linear-gradient(135deg, rgba(249, 115, 22, 0.14), transparent 36%),
+      linear-gradient(145deg, rgba(16, 16, 16, 0.95), rgba(0, 0, 0, 0.9));
+    box-shadow: 0 26px 90px rgba(0, 0, 0, 0.35);
+  }
+
+  [data-capability-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 600ms ease,
+      transform 600ms ease;
+  }
+
+  [data-capability-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes capabilityFlow {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scaleY(0.72);
+    }
+    50% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  @media (min-width: 640px) {
+    .capability-card-rail,
+    .output-map-grid,
+    .capability-link-groups {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .capability-hero-visual {
+      min-height: 31rem;
+    }
+
+    .capability-card-rail {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .output-map-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .integration-flow {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .integration-flow::before {
+      left: 4rem;
+      right: 4rem;
+      top: 3.3rem;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+      transform-origin: left;
+      animation-name: capabilityFlowHorizontal;
+    }
+
+    .integration-layer {
+      grid-template-columns: 1fr;
+      min-height: 14rem;
+    }
+
+    .capability-link-groups {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .integration-flow::before,
+    .capability-visual-card__image {
+      animation: none;
+      transition: none;
+    }
+  }
+
+  @keyframes capabilityFlowHorizontal {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scaleX(0.72);
+    }
+    50% {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+</style>
+
+<script>
+  const capabilityItems = document.querySelectorAll("[data-capability-reveal]");
+  const capabilityObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          capabilityObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.14 },
+  );
+
+  capabilityItems.forEach((item) => capabilityObserver.observe(item));
+
+  const setupAutoCycle = (selector: string, itemSelector: string, activeClass = "is-active") => {
+    document.querySelectorAll<HTMLElement>(selector).forEach((root) => {
+      const items = Array.from(root.querySelectorAll<HTMLElement>(itemSelector));
+      if (items.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      let index = 0;
+      let isPaused = false;
+
+      const setActive = (nextIndex: number) => {
+        index = nextIndex % items.length;
+        items.forEach((item, itemIndex) => item.classList.toggle(activeClass, itemIndex === index));
+      };
+
+      const timer = window.setInterval(() => {
+        if (!isPaused) setActive(index + 1);
+      }, 4600);
+
+      root.addEventListener("mouseenter", () => {
+        isPaused = true;
+      });
+      root.addEventListener("mouseleave", () => {
+        isPaused = false;
+      });
+      root.addEventListener("focusin", () => {
+        isPaused = true;
+      });
+      root.addEventListener("focusout", () => {
+        isPaused = false;
+      });
+      root.addEventListener("click", (event) => {
+        const target = (event.target as HTMLElement).closest<HTMLElement>(itemSelector);
+        if (!target) return;
+        setActive(items.indexOf(target));
+        isPaused = true;
+        window.setTimeout(() => {
+          isPaused = false;
+        }, 5200);
+      });
+
+      window.addEventListener("beforeunload", () => window.clearInterval(timer), { once: true });
+    });
+  };
+
+  setupAutoCycle("[data-auto-capability]", "[data-capability-card]");
+  setupAutoCycle("[data-auto-flow]", "[data-flow-layer]");
+</script>

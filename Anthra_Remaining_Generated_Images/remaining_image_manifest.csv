@@ -1,0 +1,52 @@
+Folder,Filename,Original Source,Note
+01_Dashboard_App_Screens,01_machine-monitoring-dashboard-context__cnc-machine-monitoring-screen.png,industrial_workstation_with_cnc_dashboard.png,Dashboard context image: CNC/machine monitoring screen in industrial setup
+01_Dashboard_App_Screens,02_water-pump-dashboard-context__pump-room-laptop-monitoring.png,industrial_control_room_with_laptop_display.png,Dashboard context image: pump/utility monitoring laptop near pump room
+01_Dashboard_App_Screens,03_cold-chain-mobile-app-context__phone-reefer-truck-cargo.png,logistics_app_in_action_at_warehouse.png,Mobile app context image: cold-chain vehicle/cargo monitoring
+01_Dashboard_App_Screens,04_machine-monitoring-dashboard-detailed-ss__full-ui-overview.png,industrial_machine_monitoring_dashboard_overview.png,Detailed UI screenshot: industrial machine monitoring dashboard
+01_Dashboard_App_Screens,05_water-treatment-dashboard-detailed-ss__tank-pump-flow-alerts.png,industrial_water_treatment_dashboard_interface.png,Detailed UI screenshot: water/pump/tank utility dashboard
+01_Dashboard_App_Screens,06_cold-chain-mobile-app-detailed-ss__vehicle-temperature-route-alerts.png,cold_chain_fleet_tracking_dashboard.png,"Detailed mobile app screenshot: cold-chain vehicle temperature, route, alerts"
+02_Careers_Page,01_careers-engineering-team__prototype-hardware-collaboration.png,engineers_collaborating_on_robotics_project.png,Careers page image: engineers collaborating around a hardware/prototype system
+02_Careers_Page,02_careers-alternative__electronics-project-in-progress.png,collaborative_electronics_project_in_progress.png,Careers alternative: hands-on electronics/prototype project in progress
+03_Contact_Page,01_contact-engineering-workspace__edge-device-laptop-notebook.png,focused_engineering_workspace_with_tech_tools.png,"Contact page image: practical engineering desk with device, laptop, notebook and tools"
+03_Contact_Page,02_contact-alternative__hardware-design-workspace-device-tools.png,modern_tech_workspace_with_focus_on_design.png,Contact alternative: engineering design workspace with device and tools
+04_Extra_Usable_Alternatives/01_Connected_Mobility,connected-vehicle-alt__industrial-warehouse-vehicle-tech-setup.png,industrial_warehouse_with_tech_setup.png,Alternative connected vehicle / industrial tech setup
+04_Extra_Usable_Alternatives/01_Connected_Mobility,vehicle-gateway-alt__truck-cabin-electronics-driver-context.png,truck_cabin_with_mounted_electronics_and_driver.png,Alternative vehicle gateway/cabin electronics context
+04_Extra_Usable_Alternatives/01_Connected_Mobility,driver-monitoring-alt__cabin-camera-dashboard.png,driver_s_view_with_monitoring_camera.png,Alternative driver monitoring cabin camera image
+04_Extra_Usable_Alternatives/01_Connected_Mobility,driver-monitoring-alt__road-view-camera-module.png,on_the_road_ahead.png,Alternative driver/vehicle monitoring road context
+04_Extra_Usable_Alternatives/01_Connected_Mobility,connected-vehicle-alt__wide-industrial-vehicle-scene.png,a_wide_well_lit_industrial_warehouse_scene_a_clo.png,Alternative wide connected/industrial vehicle scene
+04_Extra_Usable_Alternatives/02_Cold_Chain,cold-chain-alt__warehouse-logistics-sensor-device.png,cold_chain_logistics_in_action.png,Alternative cold-chain logistics monitoring image
+04_Extra_Usable_Alternatives/02_Cold_Chain,cold-chain-alt__cargo-sensor-detail.png,refrigerated_cargo_with_sensor_device_details.png,Alternative cold-chain cargo sensor/detail image
+04_Extra_Usable_Alternatives/03_Edge_AI_Vision,object-detection-alt__conveyor-inspection-station.png,industrial_conveyor_inspection_station.png,Alternative object detection / conveyor inspection image
+04_Extra_Usable_Alternatives/03_Edge_AI_Vision,vision-inspection-alt__camera-system-in-action.png,industrial_vision_system_in_action.png,Alternative industrial vision system image
+04_Extra_Usable_Alternatives/03_Edge_AI_Vision,inspection-alt__factory-automation-close-up.png,automated_factory_inspection_setup_close_up.png,Alternative factory inspection / automation setup
+04_Extra_Usable_Alternatives/04_Surveillance,surveillance-alt__warehouse-entrance-camera.png,industrial_security_at_warehouse_entrance.png,Alternative warehouse entrance surveillance image
+04_Extra_Usable_Alternatives/04_Surveillance,surveillance-alt__gated-facility-camera.png,gated_facility_entrance_with_surveillance_setup.png,Alternative gated facility surveillance image
+04_Extra_Usable_Alternatives/05_TinyML_Device,tinyml-alt__pump-sensor-device.png,industrial_sensor_and_pump_assembly.png,Alternative TinyML/sensor device near pump or machine
+04_Extra_Usable_Alternatives/05_TinyML_Device,tinyml-alt__sensor-machinery-backdrop.png,industrial_sensor_with_machinery_backdrop.png,Alternative TinyML/sensor with machinery backdrop
+04_Extra_Usable_Alternatives/05_TinyML_Device,tinyml-alt__blue-machine-mounted-sensor.png,industrial_sensor_on_blue_machine.png,Alternative machine-mounted sensor/TinyML device image
+04_Extra_Usable_Alternatives/05_TinyML_Device,smart-device-alt__mounted-sensor-warehouse.png,mounted_sensor_in_industrial_warehouse_setting.png,Alternative smart device mounted in warehouse
+04_Extra_Usable_Alternatives/05_TinyML_Device,smart-device-alt__factory-wall-sensor.png,industrial_sensor_mounted_on_factory_wall.png,Alternative factory wall-mounted sensor device
+04_Extra_Usable_Alternatives/06_RnD_Mechatronics,mechatronic-alt__industrial-test-rig.png,industrial_test_rig_in_lab_environment.png,Alternative industrial mechatronic test rig image
+04_Extra_Usable_Alternatives/06_RnD_Mechatronics,mechatronic-alt__automation-workshop-machinery-detail.png,industrial_automation_workshop_with_machinery_deta.png,Alternative automation/mechatronic machinery detail image
+04_Extra_Usable_Alternatives/06_RnD_Mechatronics,ai-device-alt__warehouse-mounted-device.png,industrial_warehouse_with_mounted_sensor_device.png,Alternative AI-enabled smart device in warehouse
+04_Extra_Usable_Alternatives/06_RnD_Mechatronics,ai-device-alt__industrial-surveillance-device.png,industrial_surveillance_in_action.png,Alternative smart surveillance/device image
+04_Extra_Usable_Alternatives/06_RnD_Mechatronics,tinyml-detail-alt__clean-hardware-engineering-workbench.png,a_clean_well_lit_close_up_hardware_engineering_wo.png,Alternative clean hardware engineering close-up
+04_Extra_Usable_Alternatives/06_RnD_Mechatronics,prototype-alt__clean-lab-bench-mechatronic-closeup.png,a_clean_well_lit_lab_bench_close_up_scene_in_a_wo.png,Alternative mechatronic/prototype lab-bench close-up
+04_Extra_Usable_Alternatives/07_Reference_Examples,reference-example__machine-health-pump-room-sensors-gateway.png,industrial_pump_room_with_technician_inspecting_sy.png,Reference example that matched the later rule better: asset + sensors + gateway + technician/context
+05_Rejected_Not_Final,rejected-collage__combined-round-2-portfolio-grid.png,a_clean_bright_professional_marketing_portfolio.png,"Rejected: collage/grid, not separate images"
+05_Rejected_Not_Final,rejected-contact__fake-branding-engineering-office.png,a_clean_modern_office_engineering_workspace_scene.png,Rejected: visible fake branding/text and too staged
+05_Rejected_Not_Final,rejected-contact__generic-contact-form-workspace.png,focused_engineer_in_modern_tech_workspace.png,Rejected: generic contact-form/support feel
+05_Rejected_Not_Final,rejected-example__machine-health-product-not-clear.png,a_wide_well_lit_industrial_factory_plant_scene_sh.png,Rejected/example only: application was real but Anthra solution role not clear enough
+05_Rejected_Not_Final,rejected-wrong-context__greenhouse-device-generated-during-round3.png,wide_outdoor_industrial_scene_a_close_up_of_a_whi.png,Rejected: wrong context for requested dashboard/contact round
+05_Rejected_Not_Final,rejected-wrong-batch3__aquaculture-field-deployment-tablet.png,a_realistic_outdoor_field_deployment_tech_scene_a.png,"Rejected: wrong Batch 3 output, aquaculture/field instead of Custom R&D"
+05_Rejected_Not_Final,rejected-wrong-batch3__solar-aquaculture-monitoring-station.png,a_wide_outdoor_industrial_field_scene_a_solar_pow.png,"Rejected: wrong Batch 3 output, aquaculture/field instead of Custom R&D"
+05_Rejected_Not_Final,rejected-wrong-batch3__lakeside-pond-monitoring-tablet.png,a_wide_outdoor_daytime_scene_showing_a_lakeside_p.png,"Rejected: wrong Batch 3 output, aquaculture/field instead of Custom R&D"
+05_Rejected_Not_Final,rejected-old-style__moody-connected-vehicle-night.png,driving_through_a_moody_city_night.png,Rejected: old dark/moody style
+05_Rejected_Not_Final,rejected-old-style__cold-storage-dark-tech.png,cold_storage_tech_and_sensors.png,Rejected: old dark/moody style
+05_Rejected_Not_Final,rejected-old-style__dashboard-camera-dark-interior.png,dashboard_camera_in_moody_interior_setting.png,Rejected: old dark/moody style
+05_Rejected_Not_Final,rejected-old-style__industrial-refrigerated-cargo-dark.png,industrial_refrigerated_cargo_interior_scene.png,Rejected: old dark/moody style
+05_Rejected_Not_Final,rejected-old-style__industrial-security-at-dusk.png,industrial_security_at_dusk.png,Rejected: old dark/moody style
+05_Rejected_Not_Final,rejected-old-style__industrial-surveillance-dim-lighting.png,industrial_surveillance_in_dim_lighting.png,Rejected: old dark/moody style
+05_Rejected_Not_Final,rejected-old-style__industrial-conveyor-dark-monitoring.png,industrial_conveyor_and_monitoring_system.png,Rejected: old dark/moody style
+05_Rejected_Not_Final,rejected-old-style__vehicle-cockpit-tech-dark.png,tech_laden_vehicle_cockpit_details.png,Rejected: old dark/moody style
+05_Rejected_Not_Final,rejected-old-style__urban-fleet-monitoring-dark.png,urban_fleet_monitoring_and_diagnostics.png,Rejected: old dark/moody style

@@ -1,0 +1,29 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="iconGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="100" fill="#0a0a0a"/>
+
+  <!-- Line and glow placed horizontally between the two text lines -->
+  <g transform="translate(456, 255)">
+    <!-- Left neutral segment -->
+    <path d="M-400 0 H-20" stroke="#444" stroke-width="4" />
+    <!-- Right glowing segment -->
+    <path d="M20 0 H156" stroke="#ff5a00" stroke-width="4" opacity="0.75" filter="url(#iconGlow)" />
+    <!-- Center glow (between ANTHRA and SYSTEMS) -->
+    <circle cx="0" cy="0" r="12" fill="#ff5a00" filter="url(#iconGlow)">
+      <animate attributeName="opacity" values="0.2;1;0.2" dur="1.6s" repeatCount="indefinite" />
+      <animate attributeName="r" values="8;14;8" dur="1.6s" repeatCount="indefinite" />
+    </circle>
+  </g>
+
+  <text x="50%" y="220" text-anchor="middle" fill="#e5e5e5" font-family="sans-serif" font-size="70" font-weight="800" style="letter-spacing: 0.3em;">ANTHRA</text>
+  <text x="50%" y="320" text-anchor="middle" fill="#ff5a00" font-family="sans-serif" font-size="55" font-weight="300" style="letter-spacing: 0.5em;">SYSTEMS</text>
+</svg>

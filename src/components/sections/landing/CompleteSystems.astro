@@ -1,0 +1,81 @@
+---
+import Icon from "@components/ui/icons/Icon.astro";
+
+const steps = [
+  {
+    title: "Understand",
+    description:
+      "We study your process, equipment, site conditions, pain points, and automation goal before recommending a system.",
+    icon: "question",
+  },
+  {
+    title: "Design",
+    description:
+      "We define the sensors, control logic, electronics, connectivity, dashboard, enclosure, and wiring requirements.",
+    icon: "tools",
+  },
+  {
+    title: "Develop",
+    description:
+      "We build the hardware, firmware, dashboard, app interface, control logic, and integration layer.",
+    icon: "processor",
+  },
+  {
+    title: "Deploy",
+    description:
+      "We test, install, commission, and tune the system so it performs reliably in the real environment.",
+    icon: "rocket",
+  },
+  {
+    title: "Support",
+    description:
+      "We help with updates, maintenance, scaling, future improvements, and long-term system reliability.",
+    icon: "verified",
+  },
+];
+---
+
+<section
+  class="mx-auto max-w-[85rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-12 2xl:max-w-full"
+>
+  <div class="mx-auto max-w-3xl text-center">
+    <h2
+      class="anthra-section-title text-balance text-3xl text-neutral-800 dark:text-neutral-200 sm:text-4xl"
+    >
+      How We Build Your Automation System
+    </h2>
+    <p class="mt-4 text-pretty text-neutral-600 dark:text-neutral-400 sm:text-lg">
+      From first discussion to field deployment, our process keeps the project
+      practical, testable, and aligned with the way your equipment actually
+      works.
+    </p>
+  </div>
+
+  <div class="mt-10 grid gap-4 md:grid-cols-5 lg:mt-12">
+    {
+      steps.map((step, index) => (
+        <article class="relative rounded-lg border border-neutral-300 bg-neutral-100 p-5 dark:border-neutral-700 dark:bg-white/[.075]">
+          <div class="mb-5 flex items-center justify-between gap-3">
+            <div class="flex size-12 items-center justify-center rounded-full border border-neutral-300 bg-neutral-200 text-[#ff5a00] dark:border-neutral-700 dark:bg-neutral-900">
+              <Icon name={step.icon} />
+            </div>
+            <span class="text-sm font-semibold text-neutral-500 dark:text-neutral-500">
+              0{index + 1}
+            </span>
+          </div>
+          <h3 class="anthra-card-title text-lg text-neutral-800 dark:text-neutral-200">
+            {step.title}
+          </h3>
+          <p class="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+            {step.description}
+          </p>
+          {
+            index < steps.length - 1 ? (
+              <div class="pointer-events-none absolute -right-4 top-1/2 hidden h-px w-8 bg-[#ff5a00] md:block" />
+            ) : null
+          }
+        </article>
+      ))
+    }
+  </div>
+</section>

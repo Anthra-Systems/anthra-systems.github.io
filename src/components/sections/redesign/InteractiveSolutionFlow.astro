@@ -1,0 +1,882 @@
+---
+import Icon from "@components/ui/icons/Icon.astro";
+
+export interface WorkflowStep {
+  phase: "Source" | "Sense / Capture" | "Process" | "Show / Act" | "Outcome";
+  title: string;
+  description: string;
+  visualKey: string;
+  imageCropKey?: string;
+  imageSrc?: string;
+  inputs: string[];
+  outputs: string[];
+  detail: string;
+  configures?: string[];
+}
+
+interface Props {
+  steps: WorkflowStep[];
+  solutionTitle: string;
+  workflowTitle?: string;
+  workflowSubtext?: string;
+  visualImageSrc?: string;
+}
+
+const {
+  steps,
+  solutionTitle,
+  workflowTitle = "How This System Works in the Field",
+  workflowSubtext = "Select a step to see what is captured, what Anthra configures, and what action the system produces.",
+  visualImageSrc,
+} = Astro.props as Props;
+
+const iconForVisual = (visualKey: string) => {
+  const key = visualKey.toLowerCase();
+  if (key.includes("camera") || key.includes("vision") || key.includes("ai")) return "aibrain";
+  if (key.includes("dashboard") || key.includes("hmi") || key.includes("report")) return "dashboard";
+  if (key.includes("gateway") || key.includes("gps") || key.includes("vehicle") || key.includes("telemetry")) return "iot";
+  if (key.includes("controller") || key.includes("edge") || key.includes("logger") || key.includes("model")) return "processor";
+  if (key.includes("outcome") || key.includes("maintenance") || key.includes("quality") || key.includes("safe")) return "verified";
+  if (key.includes("prototype") || key.includes("idea") || key.includes("field")) return "sparks";
+  return "tools";
+};
+
+const cropForStep = (step: WorkflowStep, index: number) => {
+  const key = (step.imageCropKey ?? step.visualKey).toLowerCase();
+  if (key.includes("snippet")) return "50% 50%";
+  if (key.includes("stage-1")) return "9% 50%";
+  if (key.includes("stage-2")) return "30% 50%";
+  if (key.includes("stage-3")) return "50% 50%";
+  if (key.includes("stage-4")) return "70% 50%";
+  if (key.includes("stage-5")) return "91% 50%";
+  if (key.includes("source") || key.includes("idea")) return "18% 48%";
+  if (key.includes("sensor") || key.includes("probe") || key.includes("gps") || key.includes("camera")) return "38% 48%";
+  if (key.includes("controller") || key.includes("gateway") || key.includes("edge") || key.includes("logger")) return "56% 50%";
+  if (key.includes("dashboard") || key.includes("hmi") || key.includes("action") || key.includes("pump")) return "72% 48%";
+  if (key.includes("outcome") || key.includes("maintenance") || key.includes("quality")) return "88% 50%";
+  return ["18% 48%", "38% 48%", "56% 50%", "72% 48%", "88% 50%"][index] ?? "50% 50%";
+};
+
+const zoomForStep = (step: WorkflowStep, target: "thumb" | "preview") => {
+  const key = (step.imageCropKey ?? "").toLowerCase();
+  if (key.includes("snippet")) return target === "preview" ? "1.04" : "1.04";
+  const isGeneratedFlowSheet = key.includes("stage-");
+  if (isGeneratedFlowSheet) return target === "preview" ? "1.66" : "1.48";
+  return target === "preview" ? "1.12" : "1.18";
+};
+
+const hoverZoomForStep = (step: WorkflowStep, target: "thumb" | "preview") => {
+  const key = (step.imageCropKey ?? "").toLowerCase();
+  if (key.includes("snippet")) return target === "preview" ? "1.02" : "1.02";
+  const isGeneratedFlowSheet = key.includes("stage-");
+  if (isGeneratedFlowSheet) return target === "preview" ? "1.58" : "1.4";
+  return target === "preview" ? "1.08" : "1.08";
+};
+
+const visualLabelFor = (visualKey: string) => {
+  const key = visualKey.toLowerCase();
+  if (key.includes("water") || key.includes("probe")) return "probe line";
+  if (key.includes("vehicle") || key.includes("gps")) return "telematics";
+  if (key.includes("camera") || key.includes("vision")) return "camera view";
+  if (key.includes("edge") || key.includes("model")) return "edge compute";
+  if (key.includes("pump") || key.includes("valve")) return "field output";
+  if (key.includes("dashboard") || key.includes("hmi")) return "operator layer";
+  if (key.includes("maintenance")) return "service action";
+  if (key.includes("prototype") || key.includes("idea")) return "prototype loop";
+  if (key.includes("sensor")) return "signal point";
+  return "system stage";
+};
+---
+
+<section class="solution-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+  <div class="interactive-flow" data-interactive-flow data-detail-reveal>
+    <div class="interactive-flow__header">
+      <div>
+        <p class="anthra-kicker">Implementation Storyboard</p>
+        <h2 class="anthra-section-title mt-3 text-3xl sm:text-4xl">
+          {workflowTitle}
+        </h2>
+      </div>
+      <p>{workflowSubtext}</p>
+    </div>
+
+    <div class="interactive-flow__workspace">
+      <div class="interactive-flow__selector" role="tablist" aria-label={`${solutionTitle} workflow steps`}>
+        {steps.map((step, index) => {
+          const stepImageSrc = step.imageSrc ?? visualImageSrc;
+          const crop = cropForStep(step, index);
+          const thumbZoom = zoomForStep(step, "thumb");
+          const thumbHoverZoom = hoverZoomForStep(step, "thumb");
+
+          return (
+            <button
+              type="button"
+              class:list={["interactive-flow__step", index === 0 && "is-active"]}
+              data-flow-step
+              data-flow-index={index}
+              role="tab"
+              aria-selected={index === 0 ? "true" : "false"}
+              aria-controls={`flow-panel-${index}`}
+            >
+              <span class="interactive-flow__step-number">{String(index + 1).padStart(2, "0")}</span>
+              <span class="interactive-flow__thumb" aria-hidden="true">
+                {stepImageSrc ? (
+                  <img
+                    src={stepImageSrc}
+                    alt=""
+                    style={`object-position: ${crop}; --snippet-zoom: ${thumbZoom}; --snippet-hover-zoom: ${thumbHoverZoom};`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <span class="interactive-flow__thumb-fallback"></span>
+                )}
+                <span class:list={["interactive-flow__thumb-icon", `visual-${step.visualKey}`]}>
+                  <Icon name={iconForVisual(step.visualKey)} />
+                </span>
+              </span>
+              <span class="interactive-flow__step-copy">
+                <span class="interactive-flow__phase">{step.phase}</span>
+                <span class="interactive-flow__title">{step.title}</span>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div class="interactive-flow__panel-shell">
+        {steps.map((step, index) => {
+          const stepImageSrc = step.imageSrc ?? visualImageSrc;
+          const crop = cropForStep(step, index);
+          const previewZoom = zoomForStep(step, "preview");
+          const previewHoverZoom = hoverZoomForStep(step, "preview");
+
+          return (
+            <article
+              id={`flow-panel-${index}`}
+              class:list={["interactive-flow__panel", index === 0 && "is-active"]}
+              data-flow-panel
+              data-flow-index={index}
+              role="tabpanel"
+              aria-hidden={index === 0 ? "false" : "true"}
+            >
+              <div
+                class:list={["interactive-flow__preview", `visual-${step.visualKey}`]}
+                style={stepImageSrc ? `--preview-bg: url(${stepImageSrc}); --preview-position: ${crop};` : ""}
+              >
+                {stepImageSrc ? (
+                  <img
+                    src={stepImageSrc}
+                    alt=""
+                    class="interactive-flow__preview-image"
+                    style={`object-position: ${crop}; --snippet-zoom: ${previewZoom}; --snippet-hover-zoom: ${previewHoverZoom};`}
+                    loading="lazy"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <div class="interactive-flow__preview-image" aria-hidden="true"></div>
+                )}
+
+                <div class="interactive-flow__image-focus">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{visualLabelFor(step.visualKey)}</strong>
+                </div>
+
+                <div class="interactive-flow__signal-strip" aria-hidden="true">
+                  {steps.map((item, itemIndex) => (
+                    <>
+                      <span class:list={["interactive-flow__signal-node", itemIndex === index && "is-current"]}>
+                        <Icon name={iconForVisual(item.visualKey)} />
+                      </span>
+                      {itemIndex < steps.length - 1 && <span class="interactive-flow__signal-link"></span>}
+                    </>
+                  ))}
+                </div>
+              </div>
+
+              <div class="interactive-flow__copy">
+                <p class="interactive-flow__eyebrow">{step.phase}</p>
+                <h3>{step.title}</h3>
+                <p>{step.detail}</p>
+              </div>
+
+              <div class="interactive-flow__detail-grid">
+                <div>
+                  <p>Typical Inputs</p>
+                  <div>
+                    {step.inputs.slice(0, 4).map((item) => <span>{item}</span>)}
+                  </div>
+                </div>
+                <div>
+                  <p>Outputs / Actions</p>
+                  <div>
+                    {step.outputs.slice(0, 4).map((item) => <span>{item}</span>)}
+                  </div>
+                </div>
+                <div>
+                  <p>Anthra Configures</p>
+                  <div>
+                    {(step.configures ?? []).slice(0, 4).map((item) => <span>{item}</span>)}
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .interactive-flow {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(224, 229, 232, 0.12);
+    border-radius: 1.45rem;
+    background:
+      radial-gradient(circle at 7% 8%, rgba(255, 120, 48, 0.12), transparent 18rem),
+      radial-gradient(circle at 78% 12%, rgba(135, 158, 172, 0.08), transparent 28rem),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+      linear-gradient(145deg, #0f1214 0%, #0a0c0e 52%, #050607 100%);
+    background-size: auto, auto, 2.3rem 2.3rem, 2.3rem 2.3rem, auto;
+    color: #f4f1eb;
+    padding: clamp(1.1rem, 2.6vw, 2.45rem);
+    box-shadow:
+      0 34px 110px rgba(0, 0, 0, 0.62),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .interactive-flow::before,
+  .interactive-flow::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .interactive-flow::before {
+    inset: 0;
+    background:
+      linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent 27%),
+      linear-gradient(180deg, transparent 58%, rgba(0, 0, 0, 0.28));
+  }
+
+  .interactive-flow::after {
+    inset: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.045);
+    border-radius: 1.1rem;
+  }
+
+  .interactive-flow > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .interactive-flow .anthra-kicker {
+    color: #ffc29c;
+    text-shadow: 0 0 18px rgba(255, 112, 38, 0.14);
+  }
+
+  .interactive-flow .anthra-section-title {
+    color: #fbf8f2;
+    letter-spacing: 0;
+  }
+
+  .interactive-flow__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.42fr);
+    gap: 1.25rem;
+    align-items: end;
+  }
+
+  .interactive-flow__header > p {
+    color: #cbd5da;
+    font-size: 0.96rem;
+    line-height: 1.78;
+    font-weight: 480;
+  }
+
+  .interactive-flow__workspace {
+    margin-top: clamp(1.4rem, 2.6vw, 2.2rem);
+    display: grid;
+    grid-template-columns: minmax(16rem, 20rem) minmax(0, 1fr);
+    gap: clamp(1rem, 2vw, 1.35rem);
+    align-items: stretch;
+  }
+
+  .interactive-flow__selector {
+    position: relative;
+    display: grid;
+    gap: 0.72rem;
+    align-content: start;
+  }
+
+  .interactive-flow__selector::before {
+    content: "";
+    position: absolute;
+    left: 1.32rem;
+    top: 1rem;
+    bottom: 1rem;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(255, 119, 49, 0.18), rgba(224, 229, 232, 0.16), rgba(255, 119, 49, 0.18));
+  }
+
+  .interactive-flow__step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.65rem minmax(4.8rem, 6.5rem) minmax(0, 1fr);
+    gap: 0.72rem;
+    align-items: center;
+    min-height: 6.2rem;
+    border: 1px solid rgba(224, 229, 232, 0.1);
+    border-radius: 1rem;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+      rgba(18, 22, 25, 0.74);
+    padding: 0.72rem;
+    text-align: left;
+    opacity: 0.72;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+    transition:
+      transform 200ms ease,
+      opacity 200ms ease,
+      border-color 200ms ease,
+      background 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .interactive-flow__step:hover,
+  .interactive-flow__step:focus-visible,
+  .interactive-flow__step.is-active {
+    transform: translateX(0.2rem);
+    border-color: rgba(255, 137, 72, 0.64);
+    background:
+      linear-gradient(135deg, rgba(255, 122, 45, 0.13), rgba(255, 255, 255, 0.065) 48%, rgba(125, 144, 157, 0.07)),
+      rgba(27, 32, 36, 0.92);
+    opacity: 1;
+    outline: none;
+    box-shadow:
+      0 18px 46px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.095);
+  }
+
+  .interactive-flow__step-number {
+    position: relative;
+    display: grid;
+    width: 2.65rem;
+    height: 2.65rem;
+    place-items: center;
+    border: 1px solid rgba(224, 229, 232, 0.14);
+    border-radius: 999px;
+    background: #11161a;
+    color: #b5bdc2;
+    font-size: 0.7rem;
+    font-weight: 900;
+  }
+
+  .interactive-flow__step.is-active .interactive-flow__step-number {
+    border-color: rgba(255, 132, 58, 0.9);
+    background: #ff7830;
+    color: #fffaf5;
+    box-shadow: 0 0 0 0.35rem rgba(255, 120, 48, 0.13);
+  }
+
+  .interactive-flow__thumb {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1.25;
+    border: 1px solid rgba(224, 229, 232, 0.1);
+    border-radius: 0.78rem;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+      #101418;
+  }
+
+  .interactive-flow__thumb img,
+  .interactive-flow__preview-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .interactive-flow__thumb img {
+    filter: saturate(1.06) contrast(1.04) brightness(1.08);
+    transform: scale(var(--snippet-zoom, 1.18));
+    transition: transform 260ms ease, filter 260ms ease;
+  }
+
+  .interactive-flow__step.is-active .interactive-flow__thumb img,
+  .interactive-flow__step:hover .interactive-flow__thumb img {
+    filter: saturate(1.14) contrast(1.05) brightness(1.14);
+    transform: scale(var(--snippet-hover-zoom, 1.08));
+  }
+
+  .interactive-flow__thumb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 20%, rgba(5, 8, 10, 0.56));
+  }
+
+  .interactive-flow__thumb-fallback {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 38% 28%, rgba(255, 255, 255, 0.13), transparent 34%),
+      linear-gradient(135deg, #263039, #11161a);
+  }
+
+  .interactive-flow__thumb-icon {
+    position: absolute;
+    right: 0.44rem;
+    bottom: 0.44rem;
+    z-index: 1;
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(8, 11, 13, 0.72);
+    color: #f8f5ef;
+    backdrop-filter: blur(10px);
+  }
+
+  .interactive-flow__thumb-icon svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .interactive-flow__phase {
+    display: block;
+    color: #ffbf99;
+    font-size: 0.62rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .interactive-flow__title {
+    display: block;
+    margin-top: 0.2rem;
+    color: #f7f4ee;
+    font-size: 0.84rem;
+    font-weight: 850;
+    line-height: 1.22;
+  }
+
+  .interactive-flow__panel-shell {
+    min-width: 0;
+  }
+
+  .interactive-flow__panel {
+    display: none;
+    min-height: 100%;
+    grid-template-columns: minmax(20rem, 1.02fr) minmax(0, 0.8fr);
+    grid-template-rows: auto 1fr;
+    gap: clamp(1rem, 2vw, 1.35rem);
+    align-items: stretch;
+    border: 1px solid rgba(224, 229, 232, 0.08);
+    border-radius: 1.2rem;
+    background:
+      radial-gradient(circle at 16% 5%, rgba(255, 128, 60, 0.09), transparent 18rem),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008)),
+      rgba(8, 10, 12, 0.96);
+    padding: clamp(0.9rem, 2vw, 1.25rem);
+    box-shadow:
+      0 24px 72px rgba(0, 0, 0, 0.48),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .interactive-flow__panel.is-active {
+    display: grid;
+    animation: panelIn 260ms ease both;
+  }
+
+  .interactive-flow__preview {
+    position: relative;
+    min-height: clamp(21rem, 34vw, 31rem);
+    overflow: hidden;
+    border: 1px solid rgba(224, 229, 232, 0.13);
+    border-radius: 1rem;
+    background:
+      linear-gradient(135deg, #25303a, #101417);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.045),
+      0 26px 62px rgba(0, 0, 0, 0.26);
+  }
+
+  .interactive-flow__preview-image {
+    filter: saturate(1.08) contrast(1.04) brightness(1.08);
+    transform: scale(var(--snippet-zoom, 1.12));
+  }
+
+  div.interactive-flow__preview-image {
+    background:
+      linear-gradient(135deg, #27333c, #11161a),
+      var(--preview-bg);
+    background-position: var(--preview-position, 50% 50%);
+    background-size: 135%;
+  }
+
+  .interactive-flow__panel.is-active .interactive-flow__preview-image {
+    animation: previewPan 520ms ease both;
+  }
+
+  .interactive-flow__preview::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.16), transparent 11rem),
+      linear-gradient(90deg, rgba(6, 9, 12, 0.04), rgba(6, 9, 12, 0.12) 46%, rgba(6, 9, 12, 0.42)),
+      linear-gradient(180deg, transparent 42%, rgba(5, 7, 9, 0.38));
+  }
+
+  .interactive-flow__image-focus {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(11, 14, 17, 0.72);
+    color: #f9f5ef;
+    padding: 0.45rem 0.72rem 0.45rem 0.45rem;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(14px);
+  }
+
+  .interactive-flow__image-focus span {
+    display: grid;
+    width: 1.9rem;
+    height: 1.9rem;
+    place-items: center;
+    border-radius: 999px;
+    background: #ff7830;
+    color: #fffaf5;
+    font-size: 0.68rem;
+    font-weight: 900;
+  }
+
+  .interactive-flow__image-focus strong {
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .interactive-flow__signal-strip {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr auto 1fr auto;
+    align-items: center;
+    gap: 0.42rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    background: rgba(8, 11, 13, 0.68);
+    padding: 0.55rem;
+    backdrop-filter: blur(14px);
+  }
+
+  .interactive-flow__signal-node {
+    display: grid;
+    width: 2.35rem;
+    height: 2.35rem;
+    place-items: center;
+    border: 1px solid rgba(224, 229, 232, 0.16);
+    border-radius: 999px;
+    background: rgba(24, 29, 33, 0.88);
+    color: #dce2e4;
+  }
+
+  .interactive-flow__signal-node svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .interactive-flow__signal-node.is-current {
+    border-color: rgba(255, 137, 72, 0.9);
+    background: rgba(255, 120, 48, 0.18);
+    color: #ffc49f;
+    box-shadow: 0 0 0 0.32rem rgba(255, 120, 48, 0.1);
+  }
+
+  .interactive-flow__signal-link {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(224, 229, 232, 0.2), rgba(255, 120, 48, 0.55), rgba(224, 229, 232, 0.2));
+  }
+
+  .interactive-flow__copy {
+    align-self: center;
+    padding: clamp(0.25rem, 1vw, 0.5rem) clamp(0.2rem, 1vw, 0.65rem);
+  }
+
+  .interactive-flow__eyebrow {
+    color: #ffc9a3;
+    font-size: 0.72rem;
+    font-weight: 920;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .interactive-flow__copy h3 {
+    margin-top: 0.55rem;
+    color: #fbf8f2;
+    font-size: clamp(1.8rem, 3.2vw, 2.85rem);
+    font-weight: 920;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+
+  .interactive-flow__copy h3 + p {
+    margin-top: 0.85rem;
+    color: #cbd4d8;
+    font-size: 1.02rem;
+    font-weight: 480;
+    line-height: 1.84;
+    letter-spacing: 0.01em;
+  }
+
+  .interactive-flow__detail-grid {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .interactive-flow__detail-grid > div {
+    border: 1px solid rgba(224, 229, 232, 0.08);
+    border-radius: 0.9rem;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008)),
+      rgba(6, 8, 10, 0.88);
+    padding: 0.88rem;
+  }
+
+  .interactive-flow__detail-grid p {
+    color: #ffc9a3;
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .interactive-flow__detail-grid div div {
+    margin-top: 0.58rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.42rem;
+  }
+
+  .interactive-flow__detail-grid span {
+    border: 1px solid rgba(255, 120, 48, 0.42);
+    border-radius: 999px;
+    background:
+      linear-gradient(180deg, rgba(255, 120, 48, 0.15), rgba(255, 95, 30, 0.08));
+    color: #ffd4b3;
+    padding: 0.34rem 0.58rem;
+    font-size: 0.78rem;
+    font-weight: 780;
+    animation: chipIn 220ms ease both;
+  }
+
+  .visual-water-source,
+  .visual-probe,
+  .visual-quality-result {
+    --stage-tint: 134, 197, 218;
+  }
+
+  .visual-vehicle,
+  .visual-gps,
+  .visual-gateway {
+    --stage-tint: 154, 184, 215;
+  }
+
+  .visual-camera,
+  .visual-edge-ai {
+    --stage-tint: 181, 210, 232;
+  }
+
+  .visual-pump-valve,
+  .visual-action,
+  .visual-maintenance {
+    --stage-tint: 255, 180, 138;
+  }
+
+  .visual-source,
+  .visual-water-source,
+  .visual-machine-source,
+  .visual-field-source {
+    color: #f8f5ef;
+  }
+
+  .visual-sensor,
+  .visual-camera,
+  .visual-gps,
+  .visual-probe {
+    color: #b9d9e8;
+  }
+
+  .visual-controller,
+  .visual-gateway,
+  .visual-edge-ai,
+  .visual-data-logger {
+    color: #d9e0e3;
+  }
+
+  .visual-action,
+  .visual-dashboard,
+  .visual-hmi,
+  .visual-pump-valve,
+  .visual-outcome,
+  .visual-maintenance,
+  .visual-quality-result {
+    color: #ffc19a;
+  }
+
+  @keyframes panelIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes previewPan {
+    from {
+      transform: scale(calc(var(--snippet-zoom, 1.12) + 0.05));
+    }
+    to {
+      transform: scale(var(--snippet-zoom, 1.12));
+    }
+  }
+
+  @keyframes chipIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .interactive-flow__workspace {
+      grid-template-columns: 1fr;
+    }
+
+    .interactive-flow__selector {
+      grid-template-columns: repeat(5, minmax(14rem, 1fr));
+      overflow-x: auto;
+      padding-bottom: 0.35rem;
+      scroll-snap-type: x proximity;
+    }
+
+    .interactive-flow__selector::before {
+      display: none;
+    }
+
+    .interactive-flow__step {
+      grid-template-columns: 2.45rem minmax(4.5rem, 5.8rem) minmax(0, 1fr);
+      scroll-snap-align: start;
+    }
+
+    .interactive-flow__step:hover,
+    .interactive-flow__step:focus-visible,
+    .interactive-flow__step.is-active {
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .interactive-flow__header,
+    .interactive-flow__panel {
+      grid-template-columns: 1fr;
+    }
+
+    .interactive-flow__copy {
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .interactive-flow {
+      border-radius: 1.1rem;
+    }
+
+    .interactive-flow__selector {
+      grid-template-columns: repeat(5, minmax(15rem, 82vw));
+    }
+
+    .interactive-flow__step {
+      min-height: 5.7rem;
+    }
+
+    .interactive-flow__preview {
+      min-height: 19rem;
+    }
+
+    .interactive-flow__signal-strip {
+      grid-template-columns: repeat(5, auto);
+      justify-content: space-between;
+      border-radius: 1rem;
+    }
+
+    .interactive-flow__signal-link {
+      display: none;
+    }
+
+    .interactive-flow__detail-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll("[data-interactive-flow]").forEach((flow) => {
+    const steps = Array.from(flow.querySelectorAll<HTMLElement>("[data-flow-step]"));
+    const panels = Array.from(flow.querySelectorAll<HTMLElement>("[data-flow-panel]"));
+
+    const setActive = (index: number) => {
+      steps.forEach((step, stepIndex) => {
+        const isActive = stepIndex === index;
+        step.classList.toggle("is-active", isActive);
+        step.setAttribute("aria-selected", String(isActive));
+      });
+
+      panels.forEach((panel, panelIndex) => {
+        const isActive = panelIndex === index;
+        panel.classList.toggle("is-active", isActive);
+        panel.setAttribute("aria-hidden", String(!isActive));
+      });
+    };
+
+    steps.forEach((step, index) => {
+      step.addEventListener("click", () => setActive(index));
+      step.addEventListener("mouseenter", () => setActive(index));
+      step.addEventListener("focus", () => setActive(index));
+      step.addEventListener("keydown", (event) => {
+        const keyboardEvent = event as KeyboardEvent;
+        if (keyboardEvent.key !== "ArrowRight" && keyboardEvent.key !== "ArrowLeft") return;
+        event.preventDefault();
+        const direction = keyboardEvent.key === "ArrowRight" ? 1 : -1;
+        const nextIndex = (index + direction + steps.length) % steps.length;
+        steps[nextIndex].focus();
+        setActive(nextIndex);
+      });
+    });
+  });
+</script>

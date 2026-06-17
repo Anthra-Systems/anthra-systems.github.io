@@ -1,0 +1,179 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "@/layouts/MainLayout.astro";
+import Icon from "@components/ui/icons/Icon.astro";
+import { solutionAreas } from "@data/solutions";
+
+const metaDescription =
+  "Explore the intelligent systems Anthra builds across industry, infrastructure, mobility, field operations, edge AI, and custom R&D.";
+---
+
+<MainLayout
+  title="Solutions | Anthra Systems"
+  customDescription={metaDescription}
+  customOgTitle="Solutions | Anthra Systems"
+>
+  <section class="mx-auto max-w-[92rem] px-4 pb-12 pt-32 sm:px-6 lg:px-8 lg:pt-40">
+    <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+      <div>
+        <p class="anthra-kicker">Solutions</p>
+        <h1 class="anthra-page-title mt-5 text-balance text-4xl text-white sm:text-5xl lg:text-6xl">
+          Solutions
+        </h1>
+      </div>
+      <p class="max-w-3xl text-pretty text-base leading-relaxed text-neutral-400 sm:text-lg">
+        Explore the intelligent systems Anthra builds across industry,
+        infrastructure, mobility, field operations, edge AI, and custom R&D.
+      </p>
+    </div>
+  </section>
+
+  {
+    solutionAreas.map((area, areaIndex) => (
+      <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+        <div class="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div class="max-w-3xl">
+            <p class="anthra-kicker">{area.accent}</p>
+            <h2 class="anthra-section-title mt-4 text-balance text-3xl text-white sm:text-4xl">
+              {area.title}
+            </h2>
+            <p class="mt-4 max-w-3xl text-pretty text-base leading-relaxed text-neutral-400">
+              {area.description}
+            </p>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="pointer-events-none absolute inset-y-0 left-0 z-20 flex items-center">
+            <button
+              class="solution-arrow pointer-events-auto ml-1 grid size-11 place-items-center rounded-full border border-white/10 bg-black/70 text-neutral-200 shadow-[0_14px_40px_rgba(0,0,0,0.38)] backdrop-blur transition hover:border-[var(--anthra-orange)]/60 hover:text-[var(--anthra-orange)] sm:ml-3"
+              type="button"
+              data-solution-prev={area.slug}
+              aria-label={`Previous ${area.title} solutions`}
+            >
+              <span class="rotate-180"><Icon name="arrowRightStatic" /></span>
+            </button>
+          </div>
+          <div class="pointer-events-none absolute inset-y-0 right-0 z-20 flex items-center">
+            <button
+              class="solution-arrow pointer-events-auto mr-1 grid size-11 place-items-center rounded-full border border-white/10 bg-black/70 text-neutral-200 shadow-[0_14px_40px_rgba(0,0,0,0.38)] backdrop-blur transition hover:border-[var(--anthra-orange)]/60 hover:text-[var(--anthra-orange)] sm:mr-3"
+              type="button"
+              data-solution-next={area.slug}
+              aria-label={`Next ${area.title} solutions`}
+            >
+              <Icon name="arrowRightStatic" />
+            </button>
+          </div>
+
+          <div
+            class="solution-row -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-5 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+            aria-label={`${area.title} solution cards`}
+            data-solution-row={area.slug}
+          >
+            {area.solutions.map((solution, solutionIndex) => (
+              <article class="group relative min-h-[29rem] w-[min(86vw,25rem)] shrink-0 snap-start overflow-hidden rounded-xl border border-white/10 bg-neutral-950 shadow-[0_24px_80px_rgba(0,0,0,0.32)] transition duration-300 hover:-translate-y-1 hover:border-[var(--anthra-orange)]/40 hover:shadow-[0_30px_100px_rgba(255,90,0,0.09)]">
+                <div class="relative h-56 overflow-hidden">
+                  <Image
+                    src={solution.image}
+                    alt={solution.alt}
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                    loading={areaIndex === 0 && solutionIndex < 2 ? "eager" : "lazy"}
+                    format="avif"
+                  />
+                  <div class="absolute inset-0 bg-linear-to-t from-neutral-950 via-black/22 to-transparent" />
+                </div>
+                <div class="p-5 sm:p-6">
+                  <p class="text-xs font-bold uppercase tracking-[0.18em] text-[var(--anthra-orange)]">
+                    {String(solutionIndex + 1).padStart(2, "0")}
+                  </p>
+                  <h3 class="anthra-card-title mt-3 text-2xl text-white">
+                    {solution.title}
+                  </h3>
+                  <p class="mt-4 text-sm leading-relaxed text-neutral-300">
+                    {solution.description}
+                  </p>
+                  <a
+                    href={`/solutions/${solution.slug}`}
+                    class="mt-6 inline-flex rounded-lg border border-white/10 bg-black/45 px-4 py-2.5 text-sm font-bold text-white transition hover:border-[var(--anthra-orange)]/50 hover:bg-[var(--anthra-orange)] hover:text-white"
+                  >
+                    View Solution
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="mx-auto max-w-[92rem] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-black via-neutral-950 to-black p-6 shadow-[0_28px_90px_rgba(0,0,0,0.34)] sm:p-10 lg:p-12">
+      <p class="anthra-kicker">Project Inquiry</p>
+      <div class="mt-4 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div>
+          <h2 class="anthra-display-title text-balance text-3xl text-white sm:text-4xl">
+            Need a system that is not listed here?
+          </h2>
+          <p class="mt-5 max-w-2xl text-base leading-relaxed text-neutral-400 sm:text-lg">
+            The list is designed to expand. If your machine, device, field
+            asset, vehicle, or prototype does not fit a neat category, Anthra
+            can study the problem and define the engineering path.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 sm:flex-row lg:justify-end">
+          <a href="/contact" class="anthra-button-primary px-5 py-3 text-center text-sm font-bold">
+            Discuss Your Project
+          </a>
+          <a href="/capabilities" class="anthra-button-secondary px-5 py-3 text-center text-sm font-bold">
+            View Capabilities
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .solution-row {
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    background: linear-gradient(to right, 
+      rgba(0, 0, 0, 0.7) 0%, 
+      transparent 5%, 
+      transparent 95%, 
+      rgba(0, 0, 0, 0.7) 100%);
+  }
+
+  .solution-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .solution-arrow {
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+
+  .solution-arrow:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-solution-row]").forEach((row) => {
+    const slug = row.dataset.solutionRow;
+    const previous = document.querySelector<HTMLButtonElement>(`[data-solution-prev="${slug}"]`);
+    const next = document.querySelector<HTMLButtonElement>(`[data-solution-next="${slug}"]`);
+
+    const scrollByCard = (direction: number) => {
+      const firstCard = row.querySelector<HTMLElement>("article");
+      const gap = 20;
+      const amount = firstCard ? firstCard.offsetWidth + gap : row.clientWidth * 0.8;
+      row.scrollBy({ left: amount * direction, behavior: "smooth" });
+    };
+
+    previous?.addEventListener("click", () => scrollByCard(-1));
+    next?.addEventListener("click", () => scrollByCard(1));
+  });
+</script>

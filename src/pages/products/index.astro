@@ -1,0 +1,88 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import CardSmall from "@components/ui/cards/CardSmall.astro";
+import CardWide from "@components/ui/cards/CardWide.astro";
+import FeaturesStatsAlt from "@components/sections/features/FeaturesStatsAlt.astro";
+import MultiProducts from "@images/Multi-products.png";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "@data/constants";
+
+const product: CollectionEntry<"products">[] = (
+  await getCollection("products", ({ id }) => id.startsWith("en/"))
+).sort(
+  (a: CollectionEntry<"products">, b: CollectionEntry<"products">) =>
+    a.data.main.id - b.data.main.id
+);
+
+const title = "Products";
+const subTitle =
+  "Explore Anthra Systems' field-ready automation, IoT, water, agriculture, aquaculture, edge vision, connected vehicle, HMI, and industrial monitoring solutions.";
+
+const pageTitle = `Products | ${SITE.title}`;
+const metaDescription =
+  "Explore Anthra Systems products and solution platforms for industrial automation, IoT monitoring, water and pump automation, agriculture, aquaculture, edge vision, connected vehicle IoT, motor control, and smart control panels.";
+const ogTitle = "Products | Anthra Systems";
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://anthrasystems.com/products",
+    url: "https://anthrasystems.com/products",
+    name: "Products | Anthra Systems",
+    description: metaDescription,
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://anthrasystems.com",
+      name: "Anthra Systems",
+      description: SITE.description,
+    },
+    inLanguage: "en-US",
+  }}
+>
+  <div
+    class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
+  >
+    <div class="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
+      <div class="flex items-center gap-12">
+        <h1
+          class="text-balance text-2xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200 md:text-4xl md:leading-tight"
+        >
+          {title}
+        </h1>
+        <p class="hidden max-w-(--breakpoint-sm) text-pretty text-neutral-600 dark:text-neutral-400 md:block">
+          {subTitle}
+        </p>
+      </div>
+    </div>
+
+    <section class="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
+      {
+        product.map((product, index) => {
+          const position = index % 4;
+          return position === 0 || position === 3 ? (
+            <CardSmall product={product} />
+          ) : (
+            <CardWide product={product} />
+          );
+        })
+      }
+    </section>
+  </div>
+
+  <FeaturesStatsAlt
+    title="Why Choose Anthra Systems?"
+    subTitle="We don't just build products. We solve real industrial problems with practical, cost-effective automation and IoT solutions that are easy to deploy and maintain."
+    benefits={[
+      "Application-focused systems for machines, water, farms, vehicles, and industrial sites.",
+      "Hardware, firmware, dashboards, wiring, enclosure, testing, and deployment from one team.",
+      "Customizable designs that can fit existing equipment instead of forcing full replacement.",
+    ]}
+    image={MultiProducts}
+  />
+</MainLayout>

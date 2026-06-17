@@ -1,0 +1,978 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "@/layouts/MainLayout.astro";
+import Icon from "@components/ui/icons/Icon.astro";
+
+import rndHeroImage from "@images/rnd-realistic-prototype-testing-hero.png";
+import labImage from "@images/rnd-mechatronic-lab.png";
+import embeddedImage from "@images/services/embedded-systems.png";
+import edgeAiImage from "@images/use-cases/edge-ai-vision.png";
+import vehicleImage from "@images/products/connected-vehicle-monitoring.png";
+import waterImage from "@images/use-cases/smart-water-pump.png";
+import pcbImage from "@images/pcb-orangedge.webp";
+import deploymentImage from "@images/automation/Automate-compare3.png";
+
+const explorationAreas = [
+  {
+    icon: "processor",
+    title: "Edge Intelligence for Machines",
+    text: "Local intelligence for monitoring, detecting, and improving machine behavior.",
+    output: "condition logic, controller behavior, edge alerts",
+    image: embeddedImage,
+    tags: ["Monitoring", "Edge logic", "Machine data"],
+  },
+  {
+    icon: "aibrain",
+    title: "Computer Vision for Inspection & Monitoring",
+    text: "Camera-based systems for inspection, detection, counting, and safety monitoring.",
+    output: "inspection prototype, camera pipeline, alert logic",
+    image: edgeAiImage,
+    tags: ["Vision", "Detection", "Safety"],
+  },
+  {
+    icon: "mapPin",
+    title: "Connected Vehicles & Mobile Assets",
+    text: "Vehicle gateways, telemetry, diagnostics, and mobility intelligence.",
+    output: "vehicle module, telemetry trial, gateway test",
+    image: vehicleImage,
+    tags: ["Gateway", "GPS", "Telemetry"],
+  },
+  {
+    icon: "iot",
+    title: "Water, Agriculture & Remote Infrastructure",
+    text: "Monitoring and automation for field systems, water assets, farms, and remote sites.",
+    output: "field sensing trial, pump logic, remote alert path",
+    image: waterImage,
+    tags: ["Field", "Water", "Remote site"],
+  },
+  {
+    icon: "hammer",
+    title: "Embedded, Mechatronic & Sensor-Fusion Prototypes",
+    text: "Integrated systems combining electronics, sensing, mechanics, and embedded control.",
+    output: "test bench, mechanism, sensor-fusion prototype",
+    image: labImage,
+    tags: ["Mechanism", "Sensors", "Firmware"],
+  },
+  {
+    icon: "cpu",
+    title: "Low-Resource AI/ML Deployment",
+    text: "Lightweight intelligence on compact, low-power, and edge devices.",
+    output: "TinyML test, power study, compact firmware build",
+    image: pcbImage,
+    tags: ["TinyML", "Low power", "Compact device"],
+  },
+];
+
+const neededReasons = [
+  {
+    title: "No ready-made product exists",
+    text: "The idea needs technical exploration before a real product direction is clear.",
+    icon: "sparks",
+  },
+  {
+    title: "Machine/site conditions are unique",
+    text: "The environment, signals, users, or constraints cannot be handled by a generic system.",
+    icon: "mapPin",
+  },
+  {
+    title: "AI, sensing, or automation needs testing first",
+    text: "The team needs proof that the signal, model, logic, or control behavior will work.",
+    icon: "aibrain",
+  },
+  {
+    title: "Prototype is needed before full investment",
+    text: "A smaller test build can reduce technical risk before a complete development cycle.",
+    icon: "processor",
+  },
+  {
+    title: "Hardware, software, mechanics, and data must work together",
+    text: "The challenge sits across engineering layers, not inside a single isolated discipline.",
+    icon: "tools",
+  },
+  {
+    title: "Reliability in real operating conditions matters",
+    text: "The system has to survive field behavior, installation realities, faults, and users.",
+    icon: "verified",
+  },
+];
+
+const approach = [
+  {
+    step: "Problem Study",
+    text: "Understand the real-world challenge, constraints, users, site, machine, or operating environment.",
+    icon: "question",
+  },
+  {
+    step: "Feasibility",
+    text: "Explore what is technically possible, practical, and worth building.",
+    icon: "sparks",
+  },
+  {
+    step: "Prototype",
+    text: "Build a testable first version using suitable hardware, software, mechanics, or AI.",
+    icon: "processor",
+  },
+  {
+    step: "Testing",
+    text: "Validate performance, reliability, limitations, and failure points.",
+    icon: "cpu",
+  },
+  {
+    step: "Field Trial",
+    text: "Test the prototype in practical operating conditions.",
+    icon: "mapPin",
+  },
+  {
+    step: "Productization",
+    text: "Move toward a deployable, maintainable, and scalable system.",
+    icon: "verified",
+  },
+];
+
+const prototypeAreas = [
+  {
+    icon: "processor",
+    title: "Embedded Intelligence Prototypes",
+    text: "Controllers, gateways, sensor nodes, and local intelligence.",
+    output: "proof-of-concept controller or sensor node",
+    image: embeddedImage,
+  },
+  {
+    icon: "hammer",
+    title: "Mechatronic System Builds",
+    text: "Mechanisms, actuators, enclosures, and embedded-machine integration.",
+    output: "test bench or integrated mechanism",
+    image: labImage,
+  },
+  {
+    icon: "aibrain",
+    title: "Edge AI & Vision Prototypes",
+    text: "Camera systems, detection pipelines, low-power AI, and inspection concepts.",
+    output: "inspection or detection prototype",
+    image: edgeAiImage,
+  },
+  {
+    icon: "verified",
+    title: "Field Trial & Pilot Systems",
+    text: "Real-world trial systems for machines, field sites, water assets, or mobility use cases.",
+    output: "pilot system or field-ready prototype",
+    image: deploymentImage,
+  },
+];
+
+const systemFlow = [
+  ["Idea / Problem", "Define the unknown."],
+  ["Research", "Study options and constraints."],
+  ["Prototype", "Build something testable."],
+  ["Test", "Find limits and failures."],
+  ["Pilot", "Try it in context."],
+  ["Deployable System", "Move toward a usable build."],
+];
+
+const examples = [
+  { title: "Edge AI inspection prototype", icon: "aibrain" },
+  { title: "Smart sensor node", icon: "processor" },
+  { title: "Connected vehicle module", icon: "mapPin" },
+  { title: "Water quality anomaly detection", icon: "iot" },
+  { title: "Mechatronic control system", icon: "hammer" },
+  { title: "Low-power monitoring device", icon: "cpu" },
+];
+---
+
+<MainLayout
+  title="Research & Development | Anthra Systems"
+  customDescription="Anthra Systems explores applied R&D for intelligent physical-world systems, practical prototypes, field trials, and productization."
+>
+  <section class="rnd-hero mx-auto max-w-[92rem] px-4 pb-10 pt-28 sm:px-6 lg:px-8 lg:pb-14 lg:pt-36">
+    <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div data-rnd-reveal>
+        <p class="anthra-kicker">Research & Development</p>
+        <h1 class="anthra-page-title mt-5 max-w-4xl text-balance text-4xl text-white sm:text-5xl lg:text-6xl">
+          Applied R&D for Real-World Engineering Challenges
+        </h1>
+        <p class="mt-6 max-w-3xl text-pretty text-base leading-relaxed text-neutral-300 sm:text-lg">
+          Anthra studies real-world problems, explores technical paths, builds testable prototypes, and moves toward systems that survive practical operating conditions.
+        </p>
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact" class="anthra-button-primary px-5 py-3 text-center text-sm font-semibold">
+            Discuss an R&D Challenge
+          </a>
+          <a href="/capabilities" class="anthra-button-secondary px-5 py-3 text-center text-sm font-semibold">
+            View Capabilities
+          </a>
+        </div>
+        <div class="mt-7 grid max-w-2xl gap-3 sm:grid-cols-3">
+          {["Applied Engineering", "Prototype Testing", "Field-Ready Systems"].map((badge) => (
+            <div class="rnd-badge">{badge}</div>
+          ))}
+        </div>
+      </div>
+
+      <div class="rnd-hero-visual group" data-rnd-reveal>
+        <Image
+          src={rndHeroImage}
+          alt="Applied R&D prototype testing bench with embedded controller, sensors, actuator, test instruments, notebook, and dashboard laptop."
+          class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
+          loading="eager"
+          format="avif"
+        />
+        <div class="rnd-hero-overlay"></div>
+        <div class="rnd-hero-panel">
+          <p class="text-sm font-semibold text-white">Study, prototype, test, then build.</p>
+          <p class="mt-2 text-xs leading-relaxed text-neutral-300">
+            R&D reduces uncertainty before full engineering commitment.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[92rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+    <article class="rnd-quote-card p-7 sm:p-10 lg:p-12" data-rnd-reveal>
+      <div class="flex items-center gap-3">
+        <span class="rnd-quote-mark">"</span>
+        <p class="anthra-kicker">Anthra R&D Philosophy</p>
+      </div>
+      <blockquote class="anthra-display-title mt-6 max-w-6xl text-balance text-2xl text-white sm:text-3xl lg:text-4xl">
+        <span class="quote-line">We are not just a development or manufacturing partner.</span>
+        <span class="quote-line">Anthra Systems works like an <strong>applied engineering lab</strong>, studying <strong>real-world problems</strong>,</span>
+        <span class="quote-line">experimenting with technical approaches, building prototypes, and <strong>testing in practical conditions</strong>,</span>
+        <span class="quote-line">then moving toward <strong>smarter, more reliable machines and systems</strong>.</span>
+      </blockquote>
+      <p class="mt-6 text-sm font-semibold text-orange-200">-- Anthra Systems</p>
+    </article>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="mb-7 grid gap-4 lg:grid-cols-[0.42fr_0.58fr] lg:items-end" data-rnd-reveal>
+      <div>
+        <p class="anthra-kicker">What We Explore</p>
+        <h2 class="anthra-section-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+          Applied directions Anthra can study, prototype, and validate.
+        </h2>
+      </div>
+      <p class="text-sm leading-relaxed text-neutral-400">
+        R&D at Anthra focuses on intelligent systems that combine sensing, control, connectivity, edge intelligence, and practical deployment.
+      </p>
+    </div>
+
+    <div class="rnd-explore-grid" data-rnd-reveal>
+      {explorationAreas.map((item) => (
+        <article class="rnd-explore-card">
+          <Image src={item.image} alt={`${item.title} exploration visual.`} class="rnd-explore-card__image" loading="lazy" format="avif" />
+          <div class="rnd-card-shade"></div>
+          <div class="rnd-explore-card__content">
+            <div class="rnd-icon"><Icon name={item.icon} /></div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+            <div class="rnd-reveal-output">
+              <span>What this can become</span>
+              <strong>{item.output}</strong>
+            </div>
+            <div class="rnd-tag-row">
+              {item.tags.map((tag) => <span>{tag}</span>)}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="rnd-band p-5 sm:p-7 lg:p-9" data-rnd-reveal>
+      <div class="mb-7 max-w-3xl">
+        <p class="anthra-kicker">When R&D Is Useful</p>
+        <h2 class="anthra-section-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+          R&D is useful when the answer is not obvious.
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-neutral-400">
+          The system needs to be studied, tested, and shaped before full development.
+        </p>
+      </div>
+
+      <div class="rnd-scenario-grid" data-rnd-scenarios>
+        {neededReasons.map((reason, index) => (
+          <button type="button" class:list={["rnd-scenario-card", index === 0 && "is-active"]} data-rnd-scenario>
+            <Icon name={reason.icon} />
+            <span>{reason.title}</span>
+            <small>{reason.text}</small>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="mb-7 max-w-3xl" data-rnd-reveal>
+      <p class="anthra-kicker">R&D Approach</p>
+      <h2 class="anthra-section-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+        From Uncertainty to a Tested Direction
+      </h2>
+    </div>
+
+    <div class="rnd-approach" data-rnd-approach data-rnd-reveal>
+      {approach.map((item, index) => (
+        <article class:list={["rnd-flow-card", index === 0 && "is-active"]} data-rnd-step>
+          <span class="rnd-step-number">{String(index + 1).padStart(2, "0")}</span>
+          <div class="rnd-icon"><Icon name={item.icon} /></div>
+          <h3>{item.step}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="mb-7 grid gap-4 lg:grid-cols-[0.42fr_0.58fr] lg:items-end" data-rnd-reveal>
+      <div>
+        <p class="anthra-kicker">Prototype Areas</p>
+        <h2 class="anthra-section-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+          Practical Prototype Work, Not Product-Card Promises
+        </h2>
+      </div>
+      <p class="text-sm leading-relaxed text-neutral-400">
+        Prototype work is where assumptions meet hardware, wiring, users, field behavior, and test results.
+      </p>
+    </div>
+
+    <div class="rnd-prototype-grid">
+      {prototypeAreas.map((area) => (
+        <article class="rnd-prototype-card" data-rnd-reveal>
+          <Image src={area.image} alt={`${area.title} prototype visual.`} class="rnd-prototype-card__image" loading="lazy" format="avif" />
+          <div class="rnd-card-shade"></div>
+          <div class="rnd-prototype-card__content">
+            <div class="rnd-icon"><Icon name={area.icon} /></div>
+            <h3>{area.title}</h3>
+            <p>{area.text}</p>
+            <div>
+              <span>Possible output</span>
+              <strong>{area.output}</strong>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="rnd-band p-5 sm:p-7 lg:p-9" data-rnd-reveal>
+      <div class="mb-7 max-w-3xl">
+        <p class="anthra-kicker">From Question To Working System</p>
+        <h2 class="anthra-section-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+          A Simple Path from Idea to Deployable System
+        </h2>
+      </div>
+      <div class="rnd-simple-flow">
+        {systemFlow.map(([step, text], index) => (
+          <article class="rnd-simple-card">
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <h3>{step}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+      <p class="mt-6 max-w-3xl text-sm leading-relaxed text-neutral-400">
+        Not every R&D effort becomes a final product immediately. The goal is to reduce uncertainty, test the right direction, and build only what makes practical sense.
+      </p>
+    </div>
+  </section>
+
+  <section class="anthra-section mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-8 lg:grid-cols-[0.38fr_0.62fr] lg:items-start">
+      <div data-rnd-reveal>
+        <p class="anthra-kicker">Example R&D Directions</p>
+        <h2 class="anthra-section-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+          Explorations, not fixed catalog products.
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-neutral-400">
+          These are example areas Anthra can explore through applied engineering, prototyping, and field validation.
+        </p>
+      </div>
+      <div class="rnd-example-grid" data-rnd-reveal>
+        {examples.map((example) => (
+          <article class="rnd-example">
+            <Icon name={example.icon} />
+            <span>R&D direction</span>
+            <strong>{example.title}</strong>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[92rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div class="rnd-cta p-7 sm:p-10 lg:p-12" data-rnd-reveal>
+      <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div>
+          <p class="anthra-kicker">Start With The Challenge</p>
+          <h2 class="anthra-display-title mt-3 text-balance text-3xl text-white sm:text-4xl">
+            Have a technical problem without a ready-made answer?
+          </h2>
+          <p class="mt-4 max-w-3xl text-sm leading-relaxed text-neutral-300 sm:text-base">
+            Share your machine, device, site, process, or product idea. We'll help explore what can be studied, prototyped, tested, and built.
+          </p>
+        </div>
+        <a href="/contact" class="anthra-button-primary px-5 py-3 text-center text-sm font-semibold">
+          Discuss an R&D Challenge
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .rnd-hero {
+    background:
+      radial-gradient(circle at 14% 18%, rgba(249, 115, 22, 0.12), transparent 28rem),
+      radial-gradient(circle at 86% 16%, rgba(255, 255, 255, 0.05), transparent 25rem);
+  }
+
+  .rnd-hero-visual {
+    position: relative;
+    min-height: 24rem;
+    overflow: hidden;
+    border-radius: 1.1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #050505;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.42);
+  }
+
+  .rnd-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.12) 56%, rgba(0, 0, 0, 0.38)),
+      radial-gradient(circle at 78% 18%, rgba(249, 115, 22, 0.14), transparent 18rem);
+  }
+
+  .rnd-hero-panel {
+    position: absolute;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    max-width: 30rem;
+    border-radius: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.58);
+    padding: 1rem;
+    backdrop-filter: blur(16px);
+  }
+
+  .rnd-badge,
+  .rnd-band,
+  .rnd-quote-card,
+  .rnd-flow-card,
+  .rnd-simple-card,
+  .rnd-example,
+  .rnd-cta {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+      rgba(7, 7, 7, 0.76);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(16px);
+  }
+
+  .rnd-badge {
+    border-radius: 0.85rem;
+    padding: 0.85rem 1rem;
+    color: rgb(229, 229, 229);
+    font-size: 0.8rem;
+    font-weight: 650;
+  }
+
+  .rnd-band,
+  .rnd-quote-card,
+  .rnd-cta {
+    border-radius: 1.15rem;
+  }
+
+  .rnd-quote-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rnd-quote-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: linear-gradient(180deg, rgba(251, 146, 60, 0.9), rgba(251, 146, 60, 0.08));
+  }
+
+  .rnd-quote-mark {
+    color: rgb(253, 186, 116);
+    font-size: 4rem;
+    line-height: 0.65;
+  }
+
+  .quote-line {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 520ms ease,
+      transform 520ms ease;
+  }
+
+  .js .quote-line {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .is-visible .quote-line {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .is-visible .quote-line:nth-child(2) {
+    transition-delay: 120ms;
+  }
+
+  .is-visible .quote-line:nth-child(3) {
+    transition-delay: 240ms;
+  }
+
+  .is-visible .quote-line:nth-child(4) {
+    transition-delay: 360ms;
+  }
+
+  .rnd-quote-card strong {
+    color: rgb(253, 186, 116);
+    font-weight: 650;
+  }
+
+  .rnd-explore-grid,
+  .rnd-prototype-grid,
+  .rnd-example-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .rnd-explore-card,
+  .rnd-prototype-card {
+    position: relative;
+    min-height: 24rem;
+    overflow: hidden;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #101010;
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.22);
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  .rnd-explore-card:hover,
+  .rnd-prototype-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(251, 146, 60, 0.42);
+    box-shadow: 0 28px 86px rgba(0, 0, 0, 0.34);
+  }
+
+  .rnd-explore-card__image,
+  .rnd-prototype-card__image {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transform: scale(1.04);
+    filter: saturate(0.95) contrast(1.05) brightness(0.78);
+    transition: transform 800ms ease, filter 220ms ease;
+  }
+
+  .rnd-explore-card:hover .rnd-explore-card__image,
+  .rnd-prototype-card:hover .rnd-prototype-card__image {
+    transform: scale(1.09);
+    filter: saturate(1.03) contrast(1.08) brightness(0.88);
+  }
+
+  .rnd-card-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.78)),
+      radial-gradient(circle at 18% 10%, rgba(249, 115, 22, 0.16), transparent 14rem);
+  }
+
+  .rnd-explore-card__content,
+  .rnd-prototype-card__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 24rem;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.15rem;
+  }
+
+  .rnd-explore-card h3,
+  .rnd-prototype-card h3 {
+    margin-top: 1rem;
+    color: white;
+    font-size: 1.12rem;
+    font-weight: 800;
+  }
+
+  .rnd-explore-card p,
+  .rnd-prototype-card p {
+    margin-top: 0.65rem;
+    color: rgb(229, 229, 229);
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .rnd-reveal-output,
+  .rnd-prototype-card__content > div:last-child {
+    margin-top: 1rem;
+    border-radius: 0.85rem;
+    border: 1px solid rgba(251, 146, 60, 0.18);
+    background: rgba(0, 0, 0, 0.42);
+    padding: 0.8rem;
+    backdrop-filter: blur(12px);
+  }
+
+  .rnd-reveal-output span,
+  .rnd-prototype-card__content > div:last-child span {
+    display: block;
+    color: rgb(253, 186, 116);
+    font-size: 0.68rem;
+    font-weight: 850;
+    text-transform: uppercase;
+  }
+
+  .rnd-reveal-output strong,
+  .rnd-prototype-card__content > div:last-child strong {
+    display: block;
+    margin-top: 0.22rem;
+    color: white;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .rnd-tag-row {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.38rem;
+  }
+
+  .rnd-tag-row span {
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.28rem 0.55rem;
+    color: rgb(245, 245, 245);
+    font-size: 0.7rem;
+  }
+
+  .rnd-scenario-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .rnd-scenario-card {
+    display: grid;
+    gap: 0.5rem;
+    border-radius: 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: rgba(0, 0, 0, 0.28);
+    padding: 1rem;
+    text-align: left;
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      background 220ms ease;
+  }
+
+  .rnd-scenario-card:hover,
+  .rnd-scenario-card.is-active {
+    transform: translateY(-3px);
+    border-color: rgba(251, 146, 60, 0.42);
+    background:
+      linear-gradient(145deg, rgba(249, 115, 22, 0.1), rgba(255, 255, 255, 0.025)),
+      rgba(10, 10, 10, 0.84);
+  }
+
+  .rnd-scenario-card svg,
+  .rnd-example svg {
+    color: rgb(253, 186, 116);
+  }
+
+  .rnd-scenario-card span {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .rnd-scenario-card small {
+    color: rgb(163, 163, 163);
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+
+  .rnd-approach,
+  .rnd-simple-flow {
+    position: relative;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .rnd-approach::before,
+  .rnd-simple-flow::before {
+    content: "";
+    position: absolute;
+    left: 1.7rem;
+    top: 2rem;
+    bottom: 2rem;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(251, 146, 60, 0.1), rgba(251, 146, 60, 0.82), rgba(251, 146, 60, 0.1));
+    animation: rndFlow 3.6s ease-in-out infinite;
+  }
+
+  .rnd-flow-card,
+  .rnd-simple-card,
+  .rnd-example {
+    position: relative;
+    border-radius: 1rem;
+    padding: 1rem;
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      background 220ms ease;
+  }
+
+  .rnd-flow-card:hover,
+  .rnd-flow-card.is-active,
+  .rnd-simple-card:hover,
+  .rnd-example:hover {
+    transform: translateY(-3px);
+    border-color: rgba(251, 146, 60, 0.42);
+    background:
+      linear-gradient(145deg, rgba(249, 115, 22, 0.1), rgba(255, 255, 255, 0.025)),
+      rgba(10, 10, 10, 0.84);
+  }
+
+  .rnd-step-number,
+  .rnd-simple-card span {
+    color: rgba(255, 255, 255, 0.34);
+    font-size: 0.72rem;
+    font-weight: 900;
+  }
+
+  .rnd-flow-card h3,
+  .rnd-simple-card h3 {
+    margin-top: 0.75rem;
+    color: white;
+    font-weight: 850;
+  }
+
+  .rnd-flow-card p,
+  .rnd-simple-card p {
+    margin-top: 0.45rem;
+    color: rgb(163, 163, 163);
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+
+  .rnd-example {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .rnd-example span {
+    color: rgb(253, 186, 116);
+    font-size: 0.68rem;
+    font-weight: 850;
+    text-transform: uppercase;
+  }
+
+  .rnd-example strong {
+    color: white;
+    font-size: 0.95rem;
+  }
+
+  .rnd-icon {
+    display: inline-flex;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    border: 1px solid rgba(251, 146, 60, 0.28);
+    background: rgba(249, 115, 22, 0.1);
+    color: rgb(253, 186, 116);
+    box-shadow: 0 0 28px rgba(249, 115, 22, 0.08);
+  }
+
+  .rnd-icon :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+    max-width: 1.15rem;
+    max-height: 1.15rem;
+  }
+
+  .rnd-cta {
+    border-color: rgba(251, 146, 60, 0.22);
+    background:
+      linear-gradient(135deg, rgba(249, 115, 22, 0.14), transparent 36%),
+      linear-gradient(145deg, rgba(16, 16, 16, 0.95), rgba(0, 0, 0, 0.9));
+    box-shadow: 0 26px 90px rgba(0, 0, 0, 0.35);
+  }
+
+  [data-rnd-reveal] {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 600ms ease,
+      transform 600ms ease;
+  }
+
+  .js [data-rnd-reveal] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  [data-rnd-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes rndFlow {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scaleY(0.72);
+    }
+    50% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes rndFlowHorizontal {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: scaleX(0.72);
+    }
+    50% {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  @media (min-width: 640px) {
+    .rnd-explore-grid,
+    .rnd-prototype-grid,
+    .rnd-scenario-grid,
+    .rnd-example-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .rnd-hero-visual {
+      min-height: 31rem;
+    }
+
+    .rnd-explore-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .rnd-scenario-grid,
+    .rnd-prototype-grid,
+    .rnd-example-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .rnd-approach,
+    .rnd-simple-flow {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .rnd-approach::before,
+    .rnd-simple-flow::before {
+      left: 4rem;
+      right: 4rem;
+      top: 3.3rem;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+      transform-origin: left;
+      animation-name: rndFlowHorizontal;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rnd-approach::before,
+    .rnd-simple-flow::before,
+    .rnd-explore-card__image,
+    .rnd-prototype-card__image {
+      animation: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  document.documentElement.classList.add("js");
+
+  const rndItems = document.querySelectorAll("[data-rnd-reveal]");
+  const rndObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          rndObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.14 },
+  );
+
+  rndItems.forEach((item) => rndObserver.observe(item));
+
+  const cycleItems = (rootSelector: string, itemSelector: string) => {
+    document.querySelectorAll<HTMLElement>(rootSelector).forEach((root) => {
+      const items = Array.from(root.querySelectorAll<HTMLElement>(itemSelector));
+      if (items.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      let index = 0;
+      let paused = false;
+
+      const setActive = (nextIndex: number) => {
+        index = nextIndex % items.length;
+        items.forEach((item, itemIndex) => item.classList.toggle("is-active", itemIndex === index));
+      };
+
+      const timer = window.setInterval(() => {
+        if (!paused) setActive(index + 1);
+      }, 4800);
+
+      root.addEventListener("mouseenter", () => {
+        paused = true;
+      });
+      root.addEventListener("mouseleave", () => {
+        paused = false;
+      });
+      root.addEventListener("click", (event: MouseEvent) => {
+        const eventTarget = event.target;
+        if (!(eventTarget instanceof Element)) return;
+        const target = eventTarget.closest<HTMLElement>(itemSelector);
+        if (!target) return;
+        setActive(items.indexOf(target));
+        paused = true;
+        window.setTimeout(() => {
+          paused = false;
+        }, 5200);
+      });
+
+      window.addEventListener("beforeunload", () => window.clearInterval(timer), { once: true });
+    });
+  };
+
+  cycleItems("[data-rnd-approach]", "[data-rnd-step]");
+  cycleItems("[data-rnd-scenarios]", "[data-rnd-scenario]");
+</script>

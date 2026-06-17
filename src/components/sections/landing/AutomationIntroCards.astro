@@ -1,0 +1,89 @@
+---
+import { Image } from "astro:assets";
+import automateCompareOne from "@images/automation/Automate-compare1.png";
+import automateCompareTwo from "@images/automation/Automate-compare2.png";
+import automateCompareThree from "@images/automation/Automate-compare3.png";
+
+const automationCards = [
+  {
+    eyebrow: "01 / Existing Process",
+    title: "We Automate Your Existing Process",
+    description:
+      "Tell us your manual workflow. We design the sensors, control logic, electronics, and actuator system to automate it reliably.",
+    image: automateCompareOne,
+    alt: "Manual workflow converted into an automated process with sensors, control electronics, and actuator hardware.",
+    featured: true,
+  },
+  {
+    eyebrow: "02 / Smart Equipment",
+    title: "We Make Your Equipment Smart",
+    description:
+      "Add live monitoring, alerts, app control, usage logs, and remote access to machines, pumps, rooms, panels, and industrial devices.",
+    image: automateCompareTwo,
+    alt: "Existing industrial equipment upgraded with IoT monitoring, alerts, and remote dashboard control.",
+  },
+  {
+    eyebrow: "03 / Complete Solution",
+    title: "We Build End-to-End Solutions",
+    description:
+      "From hardware design and firmware to dashboards, enclosure, wiring, installation, and testing, one team handles the full system.",
+    image: automateCompareThree,
+    alt: "Complete automation solution with electronics, firmware, enclosure, wiring, dashboard, and testing setup.",
+  },
+];
+---
+
+<section class="mx-auto max-w-[85rem] px-4 py-8 sm:px-6 lg:px-8 lg:py-12 2xl:max-w-full">
+  <div class="mb-8 max-w-3xl">
+    <h2
+      class="anthra-section-title text-balance text-3xl text-neutral-800 dark:text-neutral-200 sm:text-4xl"
+    >
+      Have a Machine, Process, or Device You Want to <span class="text-[#ff5a00]">Automate?</span>
+    </h2>
+    <p class="mt-4 text-pretty text-neutral-600 dark:text-neutral-400 sm:text-lg">
+      Anthra Systems helps you convert manual operations into smart, connected,
+      and controllable systems using custom electronics, IoT, dashboards, and
+      automation engineering.
+    </p>
+  </div>
+
+  <div class="grid gap-4 lg:grid-cols-2 lg:grid-rows-2 lg:gap-5">
+    {
+      automationCards.map((card) => (
+        <article
+          class:list={[
+            "group relative isolate min-h-[20rem] overflow-hidden rounded-xl border border-neutral-300 bg-neutral-900 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-neutral-700",
+            card.featured ? "lg:row-span-2 lg:min-h-[32rem]" : "lg:min-h-0",
+          ]}
+        >
+          <Image
+            class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            src={card.image}
+            alt={card.alt}
+            draggable={"false"}
+            format={"avif"}
+          />
+          <div class="absolute inset-0 bg-linear-to-t from-neutral-950 via-neutral-950/45 to-neutral-950/5 transition duration-300 group-hover:via-neutral-950/65" />
+
+          <div class="absolute inset-x-0 bottom-0 z-10 p-5 sm:p-6">
+            <div class="max-w-xl">
+              <p class="text-xs font-semibold uppercase tracking-[0.14em] text-[#ff5a00] sm:text-sm">
+                {card.eyebrow}
+              </p>
+              <h3 class="anthra-card-title mt-2 text-2xl text-white sm:text-3xl">
+                {card.title}
+              </h3>
+              <p class="mt-3 max-w-lg text-sm leading-relaxed text-neutral-200 sm:text-base lg:max-h-0 lg:overflow-hidden lg:opacity-0 lg:transition-all lg:duration-300 lg:group-hover:max-h-32 lg:group-hover:opacity-100">
+                {card.description}
+              </p>
+            </div>
+
+            <div class="mt-5 flex size-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-xl text-white backdrop-blur transition group-hover:border-[#ff5a00] group-hover:bg-[#ff5a00]">
+              <span aria-hidden="true">&rsaquo;</span>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,272 @@
+---
+import { Image } from "astro:assets";
+import industrialAutomation from "@images/use-cases/industrial-automation.png";
+import smartWaterPump from "@images/use-cases/smart-water-pump.png";
+import agricultureIrrigation from "@images/use-cases/agriculture-irrigation.png";
+import edgeAiVision from "@images/use-cases/edge-ai-vision.png";
+import connectedVehicle from "@images/products/connected-vehicle-monitoring.png";
+import customRdSupport from "@images/services/custom-rd-support.png";
+
+const useCases = [
+  {
+    title: "Smart Industry",
+    description:
+      "Systems that help machines, production lines, and industrial assets become smarter, monitored, and easier to control.",
+    image: industrialAutomation,
+    alt: "Smart industrial automation system with control panel, HMI, machine monitoring, and connected equipment.",
+  },
+  {
+    title: "Connected Infrastructure",
+    description:
+      "Technology for monitoring and managing pumps, utilities, buildings, water systems, and field infrastructure.",
+    image: smartWaterPump,
+    alt: "Connected infrastructure system with pump control, water tank monitoring, sensors, and dashboard visibility.",
+  },
+  {
+    title: "Water, Agriculture & Field Systems",
+    description:
+      "Smart monitoring and automation for farms, water quality, irrigation, aquaculture, and remote field assets.",
+    image: agricultureIrrigation,
+    alt: "Agriculture and field automation system with irrigation, farm sensors, pump control, and remote monitoring.",
+  },
+  {
+    title: "Mobility & Vehicle Systems",
+    description:
+      "Connected systems for vehicles, fleets, tracking, telemetry, diagnostics, and mobile assets.",
+    image: connectedVehicle,
+    alt: "Connected vehicle intelligence system with fleet telemetry, dashboard, tracking, and mobile asset monitoring.",
+  },
+  {
+    title: "Edge AI & Vision",
+    description:
+      "Camera and AI-based systems that detect, inspect, count, monitor, and support faster decisions at the edge.",
+    image: edgeAiVision,
+    alt: "Edge AI vision system with camera-based inspection, detection overlays, and industrial monitoring.",
+  },
+  {
+    title: "Custom R&D Systems",
+    description:
+      "New product ideas, prototypes, and engineered systems built for unique real-world problems.",
+    image: customRdSupport,
+    alt: "Custom R&D engineering setup with prototype hardware, system design, and applied development workflow.",
+  },
+];
+---
+
+<section
+  class="mx-auto w-full px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
+  data-use-case-root
+>
+  <div class="mx-auto mb-5 max-w-[92rem] lg:mb-6">
+    <h2
+      class="anthra-section-title text-balance text-3xl text-white sm:text-4xl lg:text-5xl"
+    >
+      Systems We Build for <span class="text-[#ff5a00]">Real-World Applications</span>
+    </h2>
+    <p class="mt-3 text-pretty text-neutral-400 sm:text-lg">
+      A quick look at the real-world areas where Anthra Systems can turn
+      machines, sites, assets, and ideas into intelligent working systems.
+    </p>
+  </div>
+
+  <div
+    class="systems-slider-card relative mx-auto overflow-hidden rounded-xl border border-white/10 bg-[#151515] shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+  >
+    <div class="systems-slider-viewport relative">
+      {
+        useCases.map((item, index) => (
+          <div
+            class:list={[
+              "use-case-slide absolute inset-0 bg-[#151515] transition duration-500",
+              index === 0 ? "opacity-100" : "opacity-0",
+            ]}
+            data-use-case-slide
+            data-index={index}
+            aria-hidden={index === 0 ? "false" : "true"}
+          >
+            <Image
+              class="h-full w-full object-cover lg:object-cover"
+              src={item.image}
+              alt={item.alt}
+              draggable={"false"}
+              format={"avif"}
+            />
+            <div class="absolute inset-0 bg-linear-to-t from-neutral-950 via-neutral-950/45 to-transparent" />
+          </div>
+        ))
+      }
+
+      <button
+        type="button"
+        class="absolute left-3 top-1/2 z-20 grid size-9 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-neutral-950/65 text-xl leading-none text-white backdrop-blur transition hover:bg-neutral-950/80 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--anthra-orange)] sm:left-5 sm:size-11 sm:text-2xl"
+        aria-label="Previous use case"
+        data-use-case-prev
+      >
+        <span aria-hidden="true">&lsaquo;</span>
+      </button>
+
+      <button
+        type="button"
+        class="absolute right-3 top-1/2 z-20 grid size-9 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-neutral-950/65 text-xl leading-none text-white backdrop-blur transition hover:bg-neutral-950/80 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--anthra-orange)] sm:right-5 sm:size-11 sm:text-2xl"
+        aria-label="Next use case"
+        data-use-case-next
+      >
+        <span aria-hidden="true">&rsaquo;</span>
+      </button>
+
+      <div class="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-6 lg:p-8">
+        <div class="relative min-h-[8.75rem] sm:min-h-[9.25rem]">
+          {
+            useCases.map((item, index) => (
+              <div
+                class:list={[
+                  "use-case-copy absolute inset-x-0 bottom-0 max-w-3xl transition duration-500",
+                  index === 0 ? "opacity-100" : "pointer-events-none opacity-0",
+                ]}
+                data-use-case-copy
+                data-index={index}
+              >
+                <p class="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--anthra-orange)] sm:text-sm sm:tracking-[0.16em]">
+                  {String(index + 1).padStart(2, "0")} / Application
+                </p>
+                <h3 class="anthra-card-title mt-2 text-xl text-white sm:text-3xl lg:text-4xl">
+                  {item.title}
+                </h3>
+                <p class="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-200 sm:mt-3 sm:text-base">
+                  {item.description}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+          {
+            useCases.map((item, index) => (
+              <button
+                type="button"
+                class:list={[
+                  "use-case-dot h-2 rounded-full transition-all focus:outline-hidden focus-visible:ring-2 focus-visible:ring-[#ff5a00]",
+                  index === 0 ? "w-8 bg-[var(--anthra-orange)]" : "w-2.5 bg-white/55 hover:bg-white",
+                ]}
+                aria-label={`Show ${item.title}`}
+                data-use-case-dot
+                data-index={index}
+              />
+            ))
+          }
+        </div>
+      </div>
+            </div>
+  </div>
+</section>
+
+<style>
+  .systems-slider-card {
+    width: 100%;
+  }
+
+  .systems-slider-viewport {
+    height: clamp(31rem, 80svh, 54rem);
+  }
+
+  @media (min-width: 640px) {
+    .systems-slider-viewport {
+      height: clamp(34rem, 82svh, 58rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .systems-slider-viewport {
+      height: clamp(38rem, 84svh, 62rem);
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .systems-slider-viewport {
+      height: clamp(40rem, 84svh, 66rem);
+    }
+  }
+
+  @media (max-height: 760px) {
+    .systems-slider-viewport {
+      height: clamp(29rem, 90svh, 46rem);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .systems-slider-card {
+      width: 100%;
+    }
+
+    .systems-slider-viewport {
+      height: clamp(24rem, 68svh, 34rem);
+    }
+  }
+</style>
+
+<script>
+  const roots = document.querySelectorAll("[data-use-case-root]");
+
+  roots.forEach((root) => {
+    const slides = Array.from(root.querySelectorAll("[data-use-case-slide]"));
+    const copies = Array.from(root.querySelectorAll("[data-use-case-copy]"));
+    const dots = Array.from(root.querySelectorAll("[data-use-case-dot]"));
+    const prev = root.querySelector("[data-use-case-prev]");
+    const next = root.querySelector("[data-use-case-next]");
+    let activeIndex = 0;
+    let timer: number | undefined;
+
+    const setActive = (index: number) => {
+      activeIndex = (index + slides.length) % slides.length;
+
+      slides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === activeIndex;
+        slide.classList.toggle("opacity-100", isActive);
+        slide.classList.toggle("opacity-0", !isActive);
+        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+      });
+
+      copies.forEach((copy, copyIndex) => {
+        const isActive = copyIndex === activeIndex;
+        copy.classList.toggle("opacity-100", isActive);
+        copy.classList.toggle("opacity-0", !isActive);
+        copy.classList.toggle("pointer-events-none", !isActive);
+      });
+
+      dots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === activeIndex;
+        dot.classList.toggle("w-8", isActive);
+        dot.classList.toggle("w-2.5", !isActive);
+      dot.classList.toggle("bg-[var(--anthra-orange)]", isActive);
+        dot.classList.toggle("bg-white/55", !isActive);
+      });
+    };
+
+    const startTimer = () => {
+      window.clearInterval(timer);
+      timer = window.setInterval(() => {
+        setActive(activeIndex + 1);
+      }, 5000);
+    };
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        setActive(index);
+        startTimer();
+      });
+    });
+
+    prev?.addEventListener("click", () => {
+      setActive(activeIndex - 1);
+      startTimer();
+    });
+
+    next?.addEventListener("click", () => {
+      setActive(activeIndex + 1);
+      startTimer();
+    });
+
+    startTimer();
+  });
+</script>

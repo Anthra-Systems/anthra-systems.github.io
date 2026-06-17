@@ -1,0 +1,153 @@
+---
+import Logo from "@components/logo.astro";
+import strings from "@utils/navigation.ts";
+
+const mainLinks = strings.navBarLinks;
+const solutionLinks = strings.solutionLinks;
+const capabilityLinks = strings.capabilityLinks;
+---
+
+<div class="fixed inset-x-0 top-0 z-40 h-20" data-navbar-hover-zone aria-hidden="true"></div>
+
+<header
+  class="fixed inset-x-0 top-3 z-50 flex w-full flex-wrap px-3 text-sm transition duration-300 ease-in-out md:flex-nowrap md:justify-start"
+  data-main-navbar
+>
+  <nav
+    class="relative mx-auto flex w-full max-w-[92rem] items-center justify-between rounded-2xl border border-neutral-300/30 bg-neutral-300/90 px-4 py-3 shadow-xl shadow-black/5 backdrop-blur-xl dark:border-neutral-800/80 dark:bg-neutral-900/90 dark:shadow-black/30 md:px-5 md:py-6 lg:px-6"
+    aria-label="Primary navigation"
+  >
+    <a href="/" class="block w-72 shrink-0 overflow-visible md:w-82 lg:w-92" aria-label="Anthra Systems home">
+      <Logo class="h-auto w-auto overflow-visible" />
+    </a>
+
+    <button
+      type="button"
+      class="inline-flex size-10 items-center justify-center rounded-full text-neutral-400 transition hover:bg-neutral-800 md:hidden"
+      data-menu-toggle
+      aria-expanded="false"
+      aria-controls="anthra-mobile-menu"
+      aria-label="Open navigation"
+    >
+      <span class="block h-0.5 w-5 bg-current shadow-[0_7px_0_current,0_-7px_0_current]"></span>
+    </button>
+
+    <div class="hidden items-center gap-x-4 md:flex lg:gap-x-8">
+      {
+        mainLinks.map((link) => {
+          const isSolutions = link.name === "Solutions";
+          const isCapabilities = link.name === "Capabilities";
+          const dropdownLinks = isSolutions ? solutionLinks : isCapabilities ? capabilityLinks : [];
+
+          return dropdownLinks.length ? (
+            <div class="group relative">
+              <a
+                href={link.url}
+                class="inline-flex items-center rounded-lg px-1 py-2 font-medium text-neutral-500 transition duration-300 hover:text-[#ff5a00] dark:text-neutral-400 dark:hover:text-neutral-200"
+              >
+                {link.name}
+                <span class="ml-1 text-[var(--anthra-orange)]">+</span>
+              </a>
+              <div class="pointer-events-none absolute left-0 top-full w-72 translate-y-3 rounded-2xl border border-neutral-800/80 bg-neutral-950/95 p-2 opacity-0 shadow-2xl shadow-black/40 backdrop-blur-xl transition group-hover:pointer-events-auto group-hover:translate-y-1 group-hover:opacity-100">
+                {dropdownLinks.map((item) => (
+                  <a
+                    href={item.url}
+                    class="block rounded-lg px-4 py-3 text-sm text-neutral-300 transition hover:bg-white/5 hover:text-white"
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a
+              href={link.url}
+              class="rounded-lg px-1 py-2 font-medium text-neutral-500 transition duration-300 hover:text-[#ff5a00] dark:text-neutral-400 dark:hover:text-neutral-200"
+            >
+              {link.name}
+            </a>
+          );
+        })
+      }
+      <a
+        href="/contact"
+        class="anthra-button-primary ml-2 px-4 py-2 text-sm font-bold"
+      >
+        Discuss a Project
+      </a>
+    </div>
+  </nav>
+
+  <div
+    id="anthra-mobile-menu"
+    class="mx-auto mt-2 hidden max-w-[85rem] rounded-2xl border border-neutral-800/80 bg-neutral-950/95 p-3 shadow-2xl shadow-black/40 backdrop-blur-xl md:hidden"
+    data-mobile-menu
+  >
+    {
+      mainLinks.map((link) => (
+        <a href={link.url} class="block rounded-lg px-3 py-3 text-sm font-semibold text-neutral-200">
+          {link.name}
+        </a>
+      ))
+    }
+    <a
+      href="/contact"
+      class="anthra-button-primary mt-2 flex px-3 py-3 text-center text-sm font-bold"
+    >
+      Discuss a Project
+    </a>
+  </div>
+</header>
+
+<script is:inline>
+  (() => {
+    const navbar = document.querySelector("[data-main-navbar]");
+    const hoverZone = document.querySelector("[data-navbar-hover-zone]");
+    const toggle = document.querySelector("[data-menu-toggle]");
+    const menu = document.querySelector("[data-mobile-menu]");
+    if (!navbar) return;
+    let isNearTop = false;
+
+    const syncNavbar = () => {
+      const shouldShow = window.scrollY <= 24 || isNearTop;
+      navbar.classList.toggle("anthra-navbar-hidden", !shouldShow);
+      if (!shouldShow && menu && toggle) {
+        menu.classList.add("hidden");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    };
+
+    toggle?.addEventListener("click", () => {
+      menu?.classList.toggle("hidden");
+      toggle.setAttribute("aria-expanded", menu?.classList.contains("hidden") ? "false" : "true");
+    });
+
+    window.addEventListener("scroll", syncNavbar, { passive: true });
+    window.addEventListener("mousemove", (event) => {
+      isNearTop = event.clientY <= 84;
+      syncNavbar();
+    }, { passive: true });
+    hoverZone?.addEventListener("mouseenter", () => {
+      isNearTop = true;
+      syncNavbar();
+    });
+    navbar.addEventListener("mouseenter", () => {
+      isNearTop = true;
+      syncNavbar();
+    });
+    navbar.addEventListener("mouseleave", (event) => {
+      const mouseEvent = event;
+      isNearTop = mouseEvent.clientY <= 84;
+      syncNavbar();
+    });
+    syncNavbar();
+  })();
+</script>
+
+<style>
+  .anthra-navbar-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-120%);
+  }
+</style>

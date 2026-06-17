@@ -1,0 +1,182 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import MainSection from "@components/ui/blocks/MainSection.astro";
+import LeftSection from "@components/ui/blocks/LeftSection.astro";
+import RightSection from "@components/ui/blocks/RightSection.astro";
+import FeaturesStats from "@components/sections/features/FeaturesStats.astro";
+
+import embeddedSystems from "@images/services/embedded-systems.png";
+import pcbPrototyping from "@images/services/pcb-prototyping.png";
+import industrialIot from "@images/services/industrial-iot.png";
+import edgeComputing from "@images/services/edge-computing.png";
+import hmiAutomation from "@images/services/hmi-automation.png";
+import customRdSupport from "@images/services/custom-rd-support.png";
+import connectedVehicle from "@images/products/connected-vehicle-monitoring.png";
+import { SITE } from "@data/constants";
+
+interface Article {
+  isRightSection: boolean;
+  title: string;
+  subTitle: string;
+  btnExists?: boolean;
+  btnTitle?: string;
+  btnURL?: string;
+  img?: any;
+  imgAlt?: string;
+  imgOne?: any;
+  imgOneAlt?: string;
+}
+
+const articles: Article[] = [
+  {
+    isRightSection: false,
+    title: "Embedded Systems Development",
+    subTitle:
+      "We design and develop firmware, microcontroller-based systems, sensor interfaces, control logic, and hardware-software integration for reliable industrial and product applications.",
+    img: embeddedSystems,
+    imgAlt:
+      "Electronics workbench with microcontroller board, wiring, oscilloscope, and firmware development tools.",
+  },
+  {
+    isRightSection: true,
+    title: "PCB Design & Hardware Prototyping",
+    subTitle:
+      "From schematic design and component selection to PCB layout, board bring-up, testing, and prototype refinement, we help convert ideas into manufacturable hardware.",
+    imgOne: pcbPrototyping,
+    imgOneAlt:
+      "Printed circuit board prototype being inspected with electronics tools and schematic pages nearby.",
+  },
+  {
+    isRightSection: false,
+    title: "Industrial IoT Solutions",
+    subTitle:
+      "We build connected systems for machine monitoring, data logging, remote dashboards, alerts, gateway integration, and secure device communication across industrial environments.",
+    img: industrialIot,
+    imgAlt:
+      "Industrial IoT gateway installed inside a control cabinet with wiring and DIN rail modules.",
+  },
+  {
+    isRightSection: true,
+    title: "Edge AI & Edge Computing",
+    subTitle:
+      "We deploy local computing near machines and sensors so systems can respond faster, reduce cloud dependency, and make better decisions close to the source of data.",
+    imgOne: edgeComputing,
+    imgOneAlt:
+      "Rugged edge computing device installed near an industrial camera and machine station.",
+  },
+  {
+    isRightSection: false,
+    title: "HMI, Automation & Control Systems",
+    subTitle:
+      "We create operator interfaces, control panels, monitoring screens, automation workflows, and machine-control integrations that make industrial systems easier to operate and maintain.",
+    img: hmiAutomation,
+    imgAlt:
+      "Industrial HMI control panel with touchscreen, push buttons, and cabinet wiring.",
+  },
+  {
+    isRightSection: true,
+    title: "Connected Vehicle & Fleet IoT Systems",
+    subTitle:
+      "We build vehicle-mounted IoT systems for GPS tracking, telemetry, CAN or OBD diagnostics, sensor monitoring, alerts, route history, and fleet dashboards for mobile assets and industrial vehicles.",
+    imgOne: connectedVehicle,
+    imgOneAlt:
+      "Connected vehicle IoT gateway with wiring harness and fleet monitoring dashboard.",
+    btnExists: true,
+    btnTitle: "Explore Vehicle IoT",
+    btnURL: "/products/connected-vehicle-fleet-iot",
+  },
+  {
+    isRightSection: false,
+    title: "Product R&D and Custom Engineering",
+    subTitle:
+      "For new products, retrofits, and unusual engineering challenges, we support system architecture, proof-of-concept development, integration, debugging, and technical consultation.",
+    img: customRdSupport,
+    imgAlt:
+      "Engineering project table with prototype enclosure, PCB modules, wiring harness, test leads, and mechanical parts.",
+    btnExists: true,
+    btnTitle: "Discuss a Project",
+    btnURL: "/contact",
+  },
+];
+
+const pageTitle: string = `Services | ${SITE.title}`;
+const metaDescription =
+  "Anthra Systems provides embedded systems development, PCB design, industrial IoT, edge computing, HMI automation, connected vehicle IoT, and custom engineering services.";
+const ogTitle = "Engineering Services | Anthra Systems";
+---
+
+<MainLayout
+  title={pageTitle}
+  customDescription={metaDescription}
+  customOgTitle={ogTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://anthrasystems.com/services",
+    url: "https://anthrasystems.com/services",
+    name: "Engineering Services | Anthra Systems",
+    description: metaDescription,
+    isPartOf: {
+      "@type": "WebSite",
+      url: "https://anthrasystems.com",
+      name: "Anthra Systems",
+    },
+    inLanguage: "en-US",
+  }}
+>
+  <MainSection
+    title="Engineering Services for Embedded, IoT, and Edge Systems"
+    subTitle="Anthra Systems helps teams design, prototype, connect, and deploy practical technology for industrial products and field-ready systems."
+    btnExists={true}
+    btnTitle="Discuss a Project"
+    btnURL="/contact"
+  />
+
+  {
+    articles.map((article) => {
+      return article.isRightSection ? (
+        <RightSection
+          title={article.title}
+          subTitle={article.subTitle}
+          single={true}
+          imgOne={article.imgOne}
+          imgOneAlt={article.imgOneAlt}
+          btnExists={article.btnExists}
+          btnTitle={article.btnTitle}
+          btnURL={article.btnURL}
+        />
+      ) : (
+        <LeftSection
+          title={article.title}
+          subTitle={article.subTitle}
+          img={article.img}
+          imgAlt={article.imgAlt}
+          btnExists={article.btnExists}
+          btnTitle={article.btnTitle}
+          btnURL={article.btnURL}
+        />
+      );
+    })
+  }
+
+  <FeaturesStats
+    title="Built for Practical Deployment"
+    subTitle="Our service work is shaped around real engineering constraints: reliability, integration effort, maintainability, and field performance."
+    mainStatTitle="R&D"
+    mainStatSubTitle="driven engineering across hardware, firmware, IoT, and edge systems"
+    stats={[
+      {
+        stat: "PCB",
+        description: "design, prototyping, and testing",
+      },
+      {
+        stat: "IoT",
+        description: "gateways, dashboards, and telemetry",
+      },
+      {
+        stat: "Edge",
+        description: "local compute for faster decisions",
+      },
+    ]}
+  />
+</MainLayout>
