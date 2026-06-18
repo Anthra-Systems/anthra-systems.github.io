@@ -1,29 +1,29 @@
 {
-  "subTitle": "Posez-nous toutes vos questions sur notre marque et nos produits, et obtenez des réponses factuelles.",
+  "subTitle": "Questions about Anthra's engineering work, project fit, and custom system planning.",
   "faqs": [
     {
-      "question": "Quels types d'outils sont inclus dans le Kit de Démarrage?",
-      "answer": "Le Kit de Démarrage comprend des outils à main et électriques essentiels pour différents projets de bricolage, notamment des marteaux, des perceuses, des tournevis et une variété de fixations. C'est une sélection soigneusement élaborée pour aider les débutants et les bricoleurs expérimentés à aborder la plupart des tâches d'amélioration de l'habitat."
+      "question": "What types of projects does Anthra Systems take on?",
+      "answer": "Anthra works on custom electronics, embedded systems, industrial IoT, automation, smart devices, connected vehicles, edge AI, mechatronics, and applied R&D for real machines, products, and field sites."
     },
     {
-      "question": "Puis-je passer du Kit de Démarrage à la Boîte à Outils Professionnelle?",
-      "answer": "Absolument ! Vous pouvez passer à la Boîte à Outils Professionnelle à tout moment pour accéder à une gamme plus large d'outils de haute qualité, bénéficier d'un support client prioritaire et recevoir un contenu exclusif. Contactez notre équipe de support pour une transition sans problème."
+      "question": "Can Anthra help if the requirement is not fully defined yet?",
+      "answer": "Yes. Anthra can begin with problem study, feasibility, architecture, and prototyping so the right technical direction becomes clear before a full build."
     },
     {
-      "question": "Quels sont les rabais disponibles pour les commandes en gros via le plan Boîte à Outils Professionnelle?",
-      "answer": "Les membres de la Boîte à Outils Professionnelle ont droit à des rabais exclusifs sur les commandes en gros, dont le pourcentage peut varier en fonction du volume de la commande. Contactez-nous pour discuter de vos besoins, et nous vous fournirons une structure de rabais personnalisée."
+      "question": "Does Anthra build only software or complete systems?",
+      "answer": "Anthra focuses on complete physical-world systems, combining hardware, firmware, software, dashboards, connectivity, automation logic, sensors, actuators, enclosures, and deployment support where required."
     },
     {
-      "question": "À quoi puis-je m'attendre en termes de support client?",
-      "answer": "Tous nos clients bénéficient d'un support par e-mail dédié. Avec le Kit de Démarrage, vous recevrez notre support standard, tandis que le plan Boîte à Outils Professionnelle vous mettra à niveau vers un support prioritaire, ce qui signifie des temps de réponse plus rapides et une assistance spécialisée."
+      "question": "What kind of project support can I expect?",
+      "answer": "Support depends on the project scope and can include requirements discussion, design, prototyping, testing, field validation, documentation, iteration, and deployment assistance."
     },
     {
-      "question": "À quelle fréquence sont mises à jour les ressources en ligne et les tutoriels?",
-      "answer": "Nous mettons régulièrement à jour nos ressources en ligne et nos tutoriels pour refléter les dernières tendances en matière de bricolage et de construction, ainsi que les introductions de nouveaux outils et techniques. Notre matériel vise à être complet et convivial pour tous les niveaux de compétence."
+      "question": "Can Anthra work with existing machines or field equipment?",
+      "answer": "Yes. Many Anthra solutions are designed around existing machines, vehicles, water systems, farms, cameras, and field assets so clients can improve visibility, control, automation, or intelligence without starting from scratch."
     },
     {
-      "question": "Anthra Systems propose-t-il des services pour les grands projets?",
-      "answer": "Oui, nos Solutions Entreprise sont conçues pour les grandes entreprises ayant besoin de services complets. Nous fournissons des consultations, de la planification et du déploiement de systèmes intelligents et d'équipements, ainsi que des solutions d'intégration pour les besoins importants des entreprises. Contactez-nous pour un devis personnalisé."
+      "question": "Does Anthra Systems support larger deployments?",
+      "answer": "Yes. Anthra can help plan pilot systems, field trials, and scalable deployment paths for teams that need reliable connected systems across multiple machines, sites, vehicles, or devices."
     }
   ]
 }

@@ -21,29 +21,40 @@ const subTitle =
 
 const pageTitle = `Products | ${SITE.title}`;
 const metaDescription =
-  "Explore Anthra Systems products and solution platforms for industrial automation, IoT monitoring, water and pump automation, agriculture, aquaculture, edge vision, connected vehicle IoT, motor control, and smart control panels.";
-const ogTitle = "Products | Anthra Systems";
+  "Explore Anthra Systems product platforms for industrial automation, IoT monitoring, embedded controllers, water and pump automation, agriculture, aquaculture, edge vision, connected vehicle IoT, motor control, and smart control panels.";
+const ogTitle = "Industrial IoT, Automation & Smart Device Products | Anthra Systems";
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${SITE.url}/products#webpage`,
+    url: `${SITE.url}/products`,
+    name: ogTitle,
+    description: metaDescription,
+    isPartOf: {
+      "@id": `${SITE.url}#website`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Anthra Systems products and solution platforms",
+    itemListElement: product.map((entry, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${SITE.url}/products/${entry.id.replace(/^en\//, "")}`,
+      name: entry.data.title,
+      description: entry.data.description,
+    })),
+  },
+];
 ---
 
 <MainLayout
   title={pageTitle}
   customDescription={metaDescription}
   customOgTitle={ogTitle}
-  structuredData={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://anthrasystems.com/products",
-    url: "https://anthrasystems.com/products",
-    name: "Products | Anthra Systems",
-    description: metaDescription,
-    isPartOf: {
-      "@type": "WebSite",
-      url: "https://anthrasystems.com",
-      name: "Anthra Systems",
-      description: SITE.description,
-    },
-    inLanguage: "en-US",
-  }}
+  structuredData={structuredData}
 >
   <div
     class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"

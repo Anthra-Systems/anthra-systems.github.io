@@ -14,6 +14,9 @@ const {
   lang = "en",
   customDescription = null,
   customOgTitle = null,
+  customOgImageAlt = SITE.title,
+  keywords,
+  robots,
 } = Astro.props;
 
 // Interface to type-check the properties
@@ -24,6 +27,9 @@ interface Props {
   lang?: string;
   customDescription?: string | null;
   customOgTitle?: string | null;
+  customOgImageAlt?: string;
+  keywords?: string;
+  robots?: string;
 }
 ---
 
@@ -31,10 +37,14 @@ interface Props {
   <head>
     {/* Adding metadata to the HTML document */}
     <Meta
+      title={title}
       meta={meta}
       structuredData={structuredData}
       customDescription={customDescription}
       customOgTitle={customOgTitle}
+      customOgImageAlt={customOgImageAlt}
+      keywords={keywords}
+      robots={robots}
     />
     {/* Define the title of the page */}
     <title>{title}</title>

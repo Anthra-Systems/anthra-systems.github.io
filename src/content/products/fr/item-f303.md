@@ -1,55 +1,69 @@
 ---
-title: "SF-FN F303"
-description: "Boulons hexagonaux"
+title: "Industrial IoT Retrofit Gateway"
+description: "Smart IoT-enabled systems with remote monitoring and control"
+
 main:
   id: 4
   content: |
-    Découvrez les boulons hexagonaux SF-FN F303 – le choix parfait pour les applications de fixation lourdes. Conçus avec précision et durabilité, ces boulons hexagonaux offrent la force et la fiabilité dont vous avez besoin pour vos projets les plus exigeants.
-  imgCard: "@/images/product-image-4.avif"
-  imgMain: "@/images/product-image-main-4.avif"
-  imgAlt: "Maquettes de boîtes de boulons hexagonaux"
+    A compact IoT retrofit gateway for connecting existing machines, sensors, pumps, tanks, and electrical panels to dashboards, alerts, data logging, and remote control without a full equipment replacement.
+  imgCard: "@/images/iot-gateway-card.png"
+  imgMain: "@/images/iot-gateway.png"
+  imgAlt: "Industrial IoT gateway device for machine monitoring and remote control"
+
 tabs:
   - id: "tabs-with-card-item-1"
     dataTab: "#tabs-with-card-1"
     title: "Description"
   - id: "tabs-with-card-item-2"
     dataTab: "#tabs-with-card-2"
-    title: "Spécifications"
+    title: "Specifications"
   - id: "tabs-with-card-item-3"
     dataTab: "#tabs-with-card-3"
-    title: "Plans"
+    title: "Applications"
+
 longDescription:
-  title: "Solutions de fixation robustes"
+  title: "Upgrade Existing Systems to Smart IoT"
   subTitle: |
-    Les boulons hexagonaux SF-FN F303 sont conçus pour relever les défis de fixation les plus difficiles avec aisance. Que vous travailliez sur des projets de construction ou des machines lourdes, ces boulons hexagonaux offrent la force et la fiabilité nécessaires.
-  btnTitle: "Contactez le service commercial pour en savoir plus"
-  btnURL: "#"
+    The gateway collects signals from sensors, PLCs, panels, and control systems, then turns them into useful dashboards, alerts, reports, and remote actions.
+  btnTitle: "Contact sales to learn more"
+  btnURL: "/contact"
+
 descriptionList:
-  - title: "Solidité et durabilité"
-    subTitle: "Fabriqués à partir de matériaux de haute qualité, ces boulons hexagonaux sont conçus pour supporter des charges lourdes et des conditions difficiles."
-  - title: "Ingénierie de précision"
-    subTitle: "Conçus avec des filets coupés avec précision et des spécifications exactes, garantissant un ajustement serré et sécurisé à chaque fois."
-  - title: "Polyvalence"
-    subTitle: "Adaptés à une large gamme d'applications, de la construction aux machines, offrant des solutions de fixation polyvalentes."
+  - title: "Retrofit Integration"
+    subTitle: "Integrates with existing machines, panels, and sensors."
+  - title: "Remote Monitoring"
+    subTitle: "Monitor machine status, parameters, and performance."
+  - title: "Remote Control"
+    subTitle: "Control motors, pumps, and loads when the application allows."
+  - title: "Wireless Connectivity"
+    subTitle: "Supports GSM, WiFi, and optional Ethernet."
+  - title: "Data Logging & Alerts"
+    subTitle: "Stores operational data and sends abnormal-condition alerts."
+
 specificationsLeft:
-  - title: "Matériau"
-    subTitle: "Fabriqués en acier ou en alliage de qualité supérieure, offrant une résistance exceptionnelle et une résistance à la corrosion."
-  - title: "Conception du filetage"
-    subTitle: "Des filets coupés avec précision assurent une adhérence optimale et une fiabilité même dans des environnements à haute contrainte."
-  - title: "Quantité"
-    subTitle: "Chaque ensemble comprend une quantité suffisante de boulons hexagonaux pour divers projets et applications."
-  - title: "Tailles"
-    subTitle: "Disponible dans une gamme de tailles pour répondre aux différentes exigences des projets, garantissant polyvalence et compatibilité."
-specificationsRight:
-  - title: "Finition"
-    subTitle: "Fini avec un revêtement protecteur pour améliorer la résistance à la corrosion et prolonger la durée de vie."
-  - title: "Capacité de charge"
-    subTitle: "Conçus pour répondre ou dépasser les normes industrielles en matière de capacité de charge, garantissant des performances fiables sous des charges lourdes."
-  - title: "Certifications"
-    subTitle: "Conformes aux normes et certifications industrielles pertinentes, garantissant qualité et fiabilité."
-  - title: "Applications"
-    subTitle: "Idéal pour une utilisation dans la construction, les machines, l'automobile et d'autres applications lourdes nécessitant une fixation solide et fiable."
+  - title: "Input Interfaces"
+    subTitle: "Digital inputs and analog inputs"
+  - title: "Output Control"
+    subTitle: "Relay outputs, expandable by design"
+  - title: "Communication"
+    subTitle: "GSM / WiFi / Ethernet / RS485"
+  - title: "Control Interface"
+    subTitle: "Mobile app and web dashboard"
+  - title: "Power Supply"
+    subTitle: "12V / 24V DC"
+  - title: "Mounting"
+    subTitle: "DIN rail or wall mount enclosure"
+
+tableData:
+  - feature: ["Feature", "Capability"]
+    description:
+      - ["Monitoring", "Real-time machine data"]
+      - ["Control", "Remote switching and automation"]
+      - ["Connectivity", "GSM / WiFi"]
+      - ["Protocol Support", "Modbus RTU optional"]
+      - ["Alerts", "SMS or app notifications"]
+      - ["Integration", "Sensors, PLCs, control panels"]
+
 blueprints:
-  first: "@/images/blueprint-1.avif"
-  second: "@/images/blueprint-2.avif"    
+  first: "@/images/iot-gateway.png"
 ---

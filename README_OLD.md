@@ -1,3 +1,3 @@
-# Previous ScrewFast README (archived)
-This file was the original ScrewFast template README before conversion to Anthra Systems website.
-See README.md for current Anthra Systems project information.
+# Archived Template Notes
+
+This archive is intentionally cleared of old template branding. The active project is the Anthra Systems website.

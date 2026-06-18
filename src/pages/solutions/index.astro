@@ -3,15 +3,77 @@ import { Image } from "astro:assets";
 import MainLayout from "@/layouts/MainLayout.astro";
 import Icon from "@components/ui/icons/Icon.astro";
 import { solutionAreas } from "@data/solutions";
+import { SITE } from "@data/constants";
 
 const metaDescription =
-  "Explore the intelligent systems Anthra builds across industry, infrastructure, mobility, field operations, edge AI, and custom R&D.";
+  "Explore Anthra Systems solutions for custom electronics, embedded systems, industrial IoT, automation, smart devices, edge AI, connected vehicles, water systems, agriculture, and applied R&D.";
+const allSolutions = solutionAreas.flatMap((area) =>
+  area.solutions.map((solution) => ({
+    area,
+    solution,
+  })),
+);
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${SITE.url}/solutions#webpage`,
+    url: `${SITE.url}/solutions`,
+    name: "Custom IoT, Embedded & Automation Solutions | Anthra Systems",
+    description: metaDescription,
+    isPartOf: {
+      "@id": `${SITE.url}#website`,
+    },
+    about: {
+      "@id": `${SITE.url}#organization`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Anthra Systems solution areas",
+    itemListElement: allSolutions.map(({ area, solution }, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${SITE.url}/solutions/${solution.slug}`,
+      name: solution.title,
+      description: solution.description,
+      item: {
+        "@type": "Service",
+        name: solution.title,
+        serviceType: area.title,
+        provider: {
+          "@id": `${SITE.url}#organization`,
+        },
+      },
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Solutions",
+        item: `${SITE.url}/solutions`,
+      },
+    ],
+  },
+];
 ---
 
 <MainLayout
-  title="Solutions | Anthra Systems"
+  title="Custom IoT, Embedded & Automation Solutions | Anthra Systems"
   customDescription={metaDescription}
-  customOgTitle="Solutions | Anthra Systems"
+  customOgTitle="Custom IoT, Embedded & Automation Solutions | Anthra Systems"
+  structuredData={structuredData}
 >
   <section class="mx-auto max-w-[92rem] px-4 pb-12 pt-32 sm:px-6 lg:px-8 lg:pt-40">
     <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">

@@ -1,55 +1,68 @@
 ---
-title: "SF-BN B203"
-description: "Ensemble de boulons à vis et écrous"
+title: "Industrial Motor Control Systems"
+description: "Custom motor control solutions for industrial automation"
+
 main:
-  id: 3
+  id: 2
   content: |
-    Découvrez le SF-BN B203 – votre compagnon fiable pour des fixations de qualité professionnelle. Cet ensemble complet comprend une sélection polyvalente de boulons à vis et d'écrous, méticuleusement conçus pour offrir la tenue la plus solide pour vos projets de construction et d'assemblage.
-  imgCard: "@/images/product-image-3.avif"
-  imgMain: "@/images/product-image-main-3.avif"
-  imgAlt: "Maquettes de boîtes d'un ensemble de boulons à vis et écrous"
+    Custom motor control systems for pumps, conveyors, machines, robotics, and automation equipment. Anthra can design control logic, protection behavior, operator interfaces, and integration around the actual motor type and application.
+  imgCard: "@/images/products/motor-control-system.png"
+  imgMain: "@/images/products/motor-control-system.png"
+  imgAlt: "Industrial motor control systems including AC DC BLDC servo and stepper drivers"
+
 tabs:
   - id: "tabs-with-card-item-1"
     dataTab: "#tabs-with-card-1"
     title: "Description"
   - id: "tabs-with-card-item-2"
     dataTab: "#tabs-with-card-2"
-    title: "Spécifications"
+    title: "Specifications"
   - id: "tabs-with-card-item-3"
     dataTab: "#tabs-with-card-3"
-    title: "Plans"
+    title: "Applications"
+
 longDescription:
-  title: "La force rencontre la précision"
+  title: "Versatile Motor Control for Industrial Applications"
   subTitle: |
-    L'ensemble de boulons à vis et écrous SF-BN B203 offre une durabilité robuste et une précision pour les professionnels de la construction, garantissant des performances fiables dans chaque application, de l'encadrement de maisons à l'assemblage de machines.
-  btnTitle: "Contactez le service commercial pour en savoir plus"
-  btnURL: "#"
+    These systems support different motor types and control methods, from relay-based control to VFD, PWM, closed-loop, HMI, and IoT-enabled operation depending on the deployment need.
+  btnTitle: "Contact sales to learn more"
+  btnURL: "/contact"
+
 descriptionList:
-  - title: "Résistance à la corrosion"
-    subTitle: "Le revêtement en zinc offre non seulement un aspect poli, mais protège également contre la corrosion, garantissant une longue durée de vie."
-  - title: "Sécurité améliorée"
-    subTitle: "Un ajustement sécurisé se traduit par des structures plus sûres avec un risque réduit de défaillance des composants."
-  - title: "Praticité"
-    subTitle: "Cet ensemble tout-en-un signifie que vous avez la bonne taille sous la main, réduisant les retards de projet et les allers-retours supplémentaires au magasin de bricolage."
+  - title: "Multi-Motor Compatibility"
+    subTitle: "Supports AC induction, DC, BLDC, servo, and stepper motors."
+  - title: "Custom Control Logic"
+    subTitle: "Designed around application sequences, timing, protection, and operator behavior."
+  - title: "Integrated Protection"
+    subTitle: "Can include overload, thermal, voltage, and dry-run protection."
+  - title: "Flexible Control Interface"
+    subTitle: "Supports manual control, HMI, or IoT-based operation."
+  - title: "Retrofit Friendly"
+    subTitle: "Can be integrated into existing machinery where practical."
+
 specificationsLeft:
-  - title: "Composition du matériau"
-    subTitle: "Fabriqué à partir d'acier de haute qualité, offrant résistance et fiabilité pour des applications exigeantes."
-  - title: "Finition de surface"
-    subTitle: "Protégé par un revêtement de zinc pour offrir une résistance accrue à la corrosion et une longévité."
-  - title: "Quantité par ensemble"
-    subTitle: "L'ensemble comprend une sélection équilibrée de 25 boulons à vis et 25 écrous assortis."
-  - title: "Assortiment de tailles"
-    subTitle: "Comprend une gamme complète de tailles pour répondre à diverses exigences de projet, garantissant compatibilité et polyvalence."
-specificationsRight:
-  - title: "Détails du filetage"
-    subTitle: "Conçu avec des filets coupés avec précision pour un ajustement sécurisé et une installation facile."
-  - title: "Propriétés mécaniques"
-    subTitle: "Chaque boulon et écrou est conçu pour répondre à des indices de charge spécifiques ou à des normes de résistance, adaptés aux applications structurelles."
-  - title: "Normes et certifications"
-    subTitle: "Conforme aux normes et certifications industrielles pertinentes, garantissant une qualité et une sécurité constantes."
-  - title: "Applications adaptées"
-    subTitle: "Idéal pour un large éventail d'utilisations, des environnements de construction aux assemblages mécaniques qui nécessitent des joints solides et sécurisés."
+  - title: "Motor Types Supported"
+    subTitle: "AC induction, DC, BLDC, servo, stepper"
+  - title: "Input Voltage"
+    subTitle: "12V/24V DC, 230V AC, or 415V AC"
+  - title: "Control Methods"
+    subTitle: "PWM / VFD / closed-loop / relay-based"
+  - title: "Communication"
+    subTitle: "Optional GSM / WiFi / RS485 / Modbus"
+  - title: "Protection Features"
+    subTitle: "Overload, thermal, dry run, voltage protection"
+  - title: "Enclosure"
+    subTitle: "Industrial panel or compact module"
+
+tableData:
+  - feature: ["Motor Type", "Typical Application"]
+    description:
+      - ["AC Induction Motor", "Pumps, fans, compressors"]
+      - ["DC Motor", "Low voltage automation"]
+      - ["BLDC Motor", "Energy-efficient systems"]
+      - ["Stepper Motor", "Position control"]
+      - ["Servo Motor", "High precision automation"]
 blueprints:
-  first: "@/images/blueprint-1.avif"
-  second: "@/images/blueprint-2.avif"
+  first: "@/images/products/motor-control-system.png"
+  second: "@/images/services/hmi-automation.png"
 ---

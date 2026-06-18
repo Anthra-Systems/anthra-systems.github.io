@@ -5,30 +5,83 @@ import ogImageSrc from "@images/social.png";
 export const SITE = {
   title: "Anthra Systems",
   tagline: "Engineering Intelligence for the Physical World",
-  description: "Anthra Systems is an applied engineering and R&D company building intelligent systems across embedded technology, automation, IoT, mechatronics, connected vehicles, and edge AI.",
-  description_short: "Applied R&D for intelligent physical-world systems.",
+  description: "Anthra Systems builds custom electronics, embedded systems, IoT solutions, industrial automation, smart devices, connected vehicle systems, edge AI, and applied R&D for real-world machines and field operations.",
+  description_short: "Custom electronics, IoT, embedded systems, automation, smart devices, and applied R&D.",
   url: "https://anthrasystems.com",
   author: "Anthra Systems",
+};
+
+export const companyAddresses = [
+  {
+    "@type": "PostalAddress",
+    streetAddress: "Anthra Office, Bapu Building, Near Urban Bank, Kurundwad",
+    addressLocality: "Kolhapur",
+    addressRegion: "Maharashtra",
+    postalCode: "416106",
+    addressCountry: "IN",
+  },
+  {
+    "@type": "PostalAddress",
+    streetAddress: "Office no 904, 9th floor, Gera Imperium Rise, Wipro Circle, Hinjewadi Phase 2",
+    addressLocality: "Pune",
+    addressRegion: "Maharashtra",
+    postalCode: "411057",
+    addressCountry: "IN",
+  },
+];
+
+export const serviceKeywords = [
+  "Custom electronics solutions",
+  "Embedded systems",
+  "IoT solutions",
+  "Industrial automation",
+  "Smart devices for industry",
+  "Edge AI and vision systems",
+  "Mechatronics",
+  "Connected vehicle systems",
+  "Water and agriculture monitoring",
+  "Applied engineering R&D",
+];
+
+export const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  inLanguage: "en-US",
+  "@id": `${SITE.url}#organization`,
+  url: SITE.url,
+  name: SITE.title,
+  legalName: "Anthra Systems Private Limited",
+  description: SITE.description,
+  slogan: SITE.tagline,
+  email: "info@anthrasystems.com",
+  telephone: "+91 8788532123",
+  address: companyAddresses,
+  sameAs: [
+    "https://www.instagram.com/anthrasystems/",
+    "https://www.linkedin.com/company/anthra-systems/",
+  ],
+  knowsAbout: serviceKeywords,
+};
+
+export const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE.url}#website`,
+  url: SITE.url,
+  name: SITE.title,
+  description: SITE.description,
+  publisher: {
+    "@id": `${SITE.url}#organization`,
+  },
+  inLanguage: "en-US",
 };
 
 export const SEO = {
   title: SITE.title,
   description: SITE.description,
-  structuredData: {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    inLanguage: "en-US",
-    "@id": SITE.url,
-    url: SITE.url,
-    name: SITE.title,
-    description: SITE.description,
-    isPartOf: {
-      "@type": "WebSite",
-      url: SITE.url,
-      name: SITE.title,
-      description: SITE.description,
-    },
-  },
+  keywords:
+    `Anthra Systems, ${serviceKeywords.join(", ")}, connected vehicle IoT, machine monitoring, smart agriculture, water monitoring, pump automation, electronics R&D, embedded product development`,
+  structuredData: [organizationSchema, websiteSchema],
 };
 
 export const OG = {

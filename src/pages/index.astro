@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import MainLayout from "@/layouts/MainLayout.astro";
 import AutomationUseCases from "@components/sections/landing/AutomationUseCases.astro";
-import { partnersData } from "@data/constants";
+import { organizationSchema, partnersData, serviceKeywords, SITE, websiteSchema } from "@data/constants";
 import heroIndustry from "@images/hero/industrial-iot-automation-hero.png";
 import heroAutomation from "@images/use-cases/industrial-automation.png";
 import connectedVehicle from "@images/products/connected-vehicle-monitoring.png";
@@ -13,7 +13,7 @@ import agricultureIrrigation from "@images/use-cases/agriculture-irrigation.png"
 import customRdSupport from "@images/services/custom-rd-support.png";
 
 const metaDescription =
-  "Anthra Systems is an applied engineering and R&D company building intelligent systems across embedded technology, automation, IoT, mechatronics, connected vehicles, and edge AI.";
+  "Anthra Systems builds custom electronics, embedded systems, IoT solutions, industrial automation, smart devices, connected vehicle systems, edge AI, and applied R&D for real-world operations.";
 
 const heroSlides = [
   {
@@ -151,12 +151,41 @@ const whyPoints = [
 ];
 
 const aiUnikaPartnerLogo = partnersData.find((partner) => partner.aiPartner)?.icon ?? "";
+const structuredData = [
+  organizationSchema,
+  websiteSchema,
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${SITE.url}/#webpage`,
+    url: SITE.url,
+    name: "Anthra Systems | Engineering Intelligence for the Physical World",
+    description: metaDescription,
+    isPartOf: {
+      "@id": `${SITE.url}#website`,
+    },
+    about: {
+      "@id": `${SITE.url}#organization`,
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      name: "Anthra Systems engineering focus areas",
+      itemListElement: serviceKeywords.map((name, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name,
+      })),
+    },
+  },
+];
 ---
 
 <MainLayout
   title="Anthra Systems | Engineering Intelligence for the Physical World"
   customDescription={metaDescription}
   customOgTitle="Anthra Systems | Engineering Intelligence for the Physical World"
+  customOgImageAlt="Anthra Systems custom electronics, IoT, automation, embedded systems, and edge AI engineering"
+  structuredData={structuredData}
 >
   <section class="home-hero relative mx-auto flex min-h-[calc(92svh-1.5rem)] max-w-[96rem] items-center overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-[0_30px_100px_rgba(0,0,0,0.42)]" data-hero-root>
     <div class="absolute inset-0">
@@ -410,7 +439,7 @@ const aiUnikaPartnerLogo = partnersData.find((partner) => partner.aiPartner)?.ic
     <div class="overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-neutral-900 via-neutral-950 to-black p-6 shadow-[0_28px_90px_rgba(0,0,0,0.34)] sm:p-10 lg:p-12">
       <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
         <div>
-          <p class="anthra-kicker">Contact CTA</p>
+          <p class="anthra-kicker">Start a Project</p>
           <h2 class="anthra-display-title mt-4 text-balance text-3xl text-white sm:text-4xl">
             Have a real-world engineering challenge?
           </h2>

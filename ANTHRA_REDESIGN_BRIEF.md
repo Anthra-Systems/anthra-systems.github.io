@@ -1,6 +1,6 @@
 You are redesigning the Anthra Systems website.
 
-First, do NOT overwrite the current project. Create/copy the existing current website project into a new working folder named `anthra-redesign-workspace` and work only inside that copied version. Treat the current website as a reference because it is based on a ScrewFast-style template already edited for Anthra.
+First, do NOT overwrite the current project. Create/copy the existing current website project into a new working folder named `anthra-redesign-workspace` and work only inside that copied version. Treat the current website as a reference and complete the conversion into a fully Anthra-specific website.
 
 Before building pages, create one internal project brief file inside the copied project:
 `ANTHRA_REDESIGN_BRIEF.md`
@@ -51,7 +51,7 @@ Pages:
 Home, Solutions, Solution Detail template, Capabilities, R&D, About, Careers, Contact, optional 404.
 
 Homepage structure:
-Hero; Systems We Build for Real-World Applications; Core Engineering Capabilities; How We Build; Featured Solutions; Why Anthra Systems; Contact CTA.
+Hero; Systems We Build for Real-World Applications; Core Engineering Capabilities; How We Build; Featured Solutions; Why Anthra Systems; Project Inquiry section.
 Hero direction: “Engineering Intelligence for the Physical World” or similar. Use rotating keywords like Industry, Infrastructure, Mobility, Agriculture, Smart Machines, Edge AI, Connected Systems.
 Animations: hero keyword/background rotation, systems horizontal slider, soft scroll reveals, subtle hover lift/glow, process flow animation. Avoid excessive typing, bouncing icons, particles, heavy parallax, too many sliders.
 
@@ -131,7 +131,7 @@ The homepage should follow this final order:
 5. How We Build
 6. Partners & Collaborations
 7. Why Anthra Systems
-8. Final Contact CTA
+8. Final Project Inquiry Section
 
 Important:
 The “How We Build” section must come **after Featured Solutions** on the homepage.

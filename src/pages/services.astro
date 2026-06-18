@@ -12,7 +12,7 @@ import edgeComputing from "@images/services/edge-computing.png";
 import hmiAutomation from "@images/services/hmi-automation.png";
 import customRdSupport from "@images/services/custom-rd-support.png";
 import connectedVehicle from "@images/products/connected-vehicle-monitoring.png";
-import { SITE } from "@data/constants";
+import { serviceKeywords, SITE } from "@data/constants";
 
 interface Article {
   isRightSection: boolean;
@@ -101,28 +101,64 @@ const articles: Article[] = [
 
 const pageTitle: string = `Services | ${SITE.title}`;
 const metaDescription =
-  "Anthra Systems provides embedded systems development, PCB design, industrial IoT, edge computing, HMI automation, connected vehicle IoT, and custom engineering services.";
-const ogTitle = "Engineering Services | Anthra Systems";
+  "Anthra Systems provides custom electronics design, embedded systems development, PCB prototyping, industrial IoT solutions, edge computing, HMI automation, connected vehicle IoT, smart device development, and applied engineering services.";
+const ogTitle = "Custom Electronics, IoT & Embedded Engineering Services | Anthra Systems";
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${SITE.url}/services#service`,
+    url: `${SITE.url}/services`,
+    name: "Custom Electronics, IoT & Embedded Engineering Services",
+    description: metaDescription,
+    provider: {
+      "@id": `${SITE.url}#organization`,
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "India",
+    },
+    serviceType: serviceKeywords,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Anthra Systems engineering services",
+      itemListElement: articles.map((article, index) => ({
+        "@type": "Offer",
+        position: index + 1,
+        itemOffered: {
+          "@type": "Service",
+          name: article.title,
+          description: article.subTitle,
+        },
+      })),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Services",
+        item: `${SITE.url}/services`,
+      },
+    ],
+  },
+];
 ---
 
 <MainLayout
   title={pageTitle}
   customDescription={metaDescription}
   customOgTitle={ogTitle}
-  structuredData={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://anthrasystems.com/services",
-    url: "https://anthrasystems.com/services",
-    name: "Engineering Services | Anthra Systems",
-    description: metaDescription,
-    isPartOf: {
-      "@type": "WebSite",
-      url: "https://anthrasystems.com",
-      name: "Anthra Systems",
-    },
-    inLanguage: "en-US",
-  }}
+  structuredData={structuredData}
 >
   <MainSection
     title="Engineering Services for Embedded, IoT, and Edge Systems"

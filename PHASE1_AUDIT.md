@@ -37,8 +37,8 @@ Scope: audit and scaffold only. No final page content build and no image replace
 
 ## Assets Likely Needing Replacement Or Removal
 
-- ScrewFast/Starlight template assets in `src/images/starlight`.
-- Generic construction/template images such as `construction-workers.avif`, `construction-image.avif`, `blueprint-*`, `product-image-*`, and blog avatars.
+- Legacy Starlight/template assets in `src/images/starlight`.
+- Generic legacy images such as `construction-workers.avif`, `construction-image.avif`, `blueprint-*`, `product-image-*`, and blog avatars.
 - Older generic product photos where the image does not directly support Anthra's systems, R&D, edge intelligence, mobility, or deployment story.
 
 ## Phase 1 Structure Added

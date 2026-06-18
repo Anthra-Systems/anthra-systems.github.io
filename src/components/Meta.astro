@@ -12,6 +12,10 @@ const defaultProps = {
   structuredData: SEO.structuredData,
   customDescription: null,
   customOgTitle: null,
+  title: SITE.title,
+  keywords: SEO.keywords,
+  customOgImageAlt: SITE.title,
+  robots: "index, follow, max-image-preview:large",
 };
 
 // Extract props with default values assigned from defaultProps. Values can be overridden when the component is used.
@@ -22,12 +26,16 @@ const {
   structuredData = defaultProps.structuredData,
   customDescription = defaultProps.customDescription,
   customOgTitle = defaultProps.customOgTitle,
+  title = defaultProps.title,
+  keywords = defaultProps.keywords,
+  customOgImageAlt = defaultProps.customOgImageAlt,
+  robots = defaultProps.robots,
 } = Astro.props;
 
 // Use custom description if provided, otherwise use default meta
 const description = customDescription || meta;
 // Use custom OG title if provided, otherwise use default OG title
-const ogTitle = customOgTitle || OG.title;
+const ogTitle = customOgTitle || title || OG.title;
 const ogDescription = customDescription || OG.description;
 
 // Define the metadata for your website and individual pages
@@ -37,7 +45,6 @@ const canonical = new URL(
   Astro.url.pathname,
   Astro.site || Astro.url.origin
 ).href;
-const basePath = Astro.url.pathname;
 const socialImageRes = await getImage({
   src: OG.image,
   width: 1200,
@@ -50,7 +57,7 @@ const languages: { [key: string]: string } = {
   fr: "fr",
 };
 
-function createHref(lang: string, prefix: string, path: string): string {
+function createHref(prefix: string, path: string): string {
   // Remove any existing language prefix
   const cleanPath = path.replace(/^\/(fr|en)\//, "/");
 
@@ -66,7 +73,7 @@ const fullPath: string = Astro.url.pathname;
 const alternateLanguageLinks: string = Object.entries(languages)
   .map(([lang, prefix]: [string, string]) => {
     const cleanPath = fullPath.replace(/^\/(fr|en)\//, "/");
-    const href: string = createHref(lang, prefix, cleanPath);
+    const href: string = createHref(prefix, cleanPath);
 
     return `<link rel="alternate" hreflang="${lang}" href="${href}" />`;
   })
@@ -90,6 +97,7 @@ const appleTouchIcon = await getImage({
      https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data */}{
   structuredData && (
     <script
+      is:inline
       type="application/ld+json"
       set:html={JSON.stringify(structuredData)}
     />
@@ -98,6 +106,8 @@ const appleTouchIcon = await getImage({
 {/* Define the character set, description, author, and viewport settings */}
 <meta charset="utf-8" />
 <meta content={description} name="description" />
+{keywords && <meta name="keywords" content={keywords} />}
+<meta name="robots" content={robots} />
 <meta name="web_author" content={author} />
 <meta
   name="viewport"
@@ -109,23 +119,25 @@ const appleTouchIcon = await getImage({
 
 {/* Facebook Meta Tags */}
 <meta property="og:locale" content="en_US" />
-<meta property="og:url" content={siteURL} />
+<meta property="og:url" content={canonical} />
 <meta property="og:type" content="website" />
 <meta property="og:title" content={ogTitle} />
 <meta property="og:site_name" content={SITE.title} />
 <meta property="og:description" content={ogDescription} />
 <meta property="og:image" content={socialImage} />
+<meta property="og:image:alt" content={customOgImageAlt} />
 <meta content="1200" property="og:image:width" />
 <meta content="600" property="og:image:height" />
-<meta content="image/png" property="og:image:type" />
+<meta content={`image/${socialImageRes.options.format}`} property="og:image:type" />
 
 {/* Twitter Meta Tags */}
 <meta name="twitter:card" content="summary_large_image" />
 <meta property="twitter:domain" content={siteURL} />
-<meta property="twitter:url" content={siteURL} />
+<meta property="twitter:url" content={canonical} />
 <meta name="twitter:title" content={ogTitle} />
 <meta name="twitter:description" content={ogDescription} />
 <meta name="twitter:image" content={socialImage} />
+<meta name="twitter:image:alt" content={customOgImageAlt} />
 
 {/* Links to the webmanifest and sitemap */}
 <link rel="manifest" href="/manifest.json" />
