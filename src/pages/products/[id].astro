@@ -35,6 +35,9 @@ const pageTitle: string = `${product.data.title} | ${SITE.title}`;
 const metaDescription = product.data.description;
 const ogTitle = `${product.data.title} | Anthra Systems`;
 const productSlug = product.id.replace(/^en\//, "");
+const robots = productSlug.startsWith("item-")
+  ? "noindex, follow"
+  : "index, follow, max-image-preview:large";
 const productUrl = `${SITE.url}/products/${productSlug}`;
 const structuredData = [
   {
@@ -90,6 +93,7 @@ const structuredData = [
   customDescription={metaDescription}
   customOgTitle={ogTitle}
   customOgImageAlt={product.data.main.imgAlt}
+  robots={robots}
   structuredData={structuredData}
 >
   <section

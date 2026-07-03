@@ -39,9 +39,7 @@ service cloud.firestore {
 
     function slotIsPublicListable(scheduleId) {
       return isActiveSchedule(scheduleId)
-        && resource.data.status == "available"
-        && resource.data.startAtMs is number
-        && resource.data.startAtMs > request.time.toMillis();
+        && resource.data.status == "available";
     }
 
     function bookingIsPublicSafe(booking) {

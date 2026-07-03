@@ -7,7 +7,7 @@ export const SITE = {
   tagline: "Engineering Intelligence for the Physical World",
   description: "Anthra Systems builds custom electronics, embedded systems, IoT solutions, industrial automation, smart devices, connected vehicle systems, edge AI, and applied R&D for real-world machines and field operations.",
   description_short: "Custom electronics, IoT, embedded systems, automation, smart devices, and applied R&D.",
-  url: "https://anthrasystems.com",
+  url: "https://www.anthrasystems.com",
   author: "Anthra Systems",
 };
 

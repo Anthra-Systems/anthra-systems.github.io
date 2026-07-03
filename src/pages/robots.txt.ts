@@ -4,6 +4,9 @@ import type { APIRoute } from 'astro';
 const robotsTxt = `
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /interview/
+Disallow: /fr/
 
 Sitemap: ${new URL('sitemap-index.xml', import.meta.env.SITE).href}
 `.trim();
