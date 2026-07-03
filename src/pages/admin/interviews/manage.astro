@@ -1,0 +1,23 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import "../../../interview-scheduler/scheduler.css";
+---
+
+<MainLayout title="Manage Interview Schedule | Anthra Systems" robots="noindex,nofollow" showHeader={false}>
+  <section class="scheduler-shell">
+    <div class="scheduler-toolbar">
+      <div><p class="anthra-kicker">Admin Schedule</p><h1 data-manage-title class="anthra-page-title mt-3 text-4xl">Manage Schedule</h1></div>
+      <div class="scheduler-actions"><a class="scheduler-button" href="/admin/interviews">Dashboard</a><a class="scheduler-button" data-bookings-link href="/admin/interviews/bookings">Bookings</a><button class="scheduler-button" data-admin-logout type="button">Logout</button></div>
+    </div>
+    <div class="scheduler-panel mb-4">
+      <label class="scheduler-field">Candidate booking link<div class="scheduler-actions"><input data-share-link class="scheduler-input" readonly /><button class="scheduler-button" data-copy-share type="button">Copy</button></div></label>
+      <p class="anthra-muted mt-3 text-sm">For static hosting, add a rewrite from /interview/* to /interview/index.html, or share /interview?scheduleId=ID while testing.</p>
+    </div>
+    <div data-manage-status class="scheduler-alert">Loading...</div>
+    <div data-manage-root class="mt-4"></div>
+  </section>
+  <script>
+    import "../../../interview-scheduler/pages/manage";
+  </script>
+</MainLayout>
+

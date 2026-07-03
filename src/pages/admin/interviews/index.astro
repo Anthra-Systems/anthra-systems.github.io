@@ -1,0 +1,35 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import "../../../interview-scheduler/scheduler.css";
+---
+
+<MainLayout title="Interview Admin Dashboard | Anthra Systems" robots="noindex,nofollow" showHeader={false}>
+  <section class="scheduler-shell" data-dashboard>
+    <div class="scheduler-toolbar">
+      <div>
+        <p class="anthra-kicker">Anthra Hiring</p>
+        <h1 class="anthra-page-title mt-3 text-4xl sm:text-5xl">Interview Dashboard</h1>
+      </div>
+      <div class="scheduler-actions">
+        <label class="scheduler-button"><input data-include-archived type="checkbox" /> Include archived</label>
+        <a class="scheduler-button" href="/admin/interviews/history">History</a>
+        <a class="scheduler-button primary" href="/admin/interviews/new">New Schedule</a>
+        <button class="scheduler-button" data-admin-logout type="button">Logout</button>
+      </div>
+    </div>
+    <div data-dashboard-status class="scheduler-alert">Preparing dashboard...</div>
+    <details class="scheduler-panel mt-4">
+      <summary class="scheduler-settings-summary">Invite Message Settings</summary>
+      <form data-invite-settings class="scheduler-grid two mt-4">
+        <label class="scheduler-field">Gmail subject<input class="scheduler-input" name="subject" required /></label>
+        <label class="scheduler-field">Placeholders<div class="scheduler-alert">Use &#123;&#123;position&#125;&#125;, &#123;&#123;scheduleLink&#125;&#125;, &#123;&#123;meetingLink&#125;&#125;, &#123;&#123;email&#125;&#125;, &#123;&#123;scheduleTitle&#125;&#125;, &#123;&#123;interviewDate&#125;&#125;. Bold supports **text** or &lt;b&gt;text&lt;/b&gt;.</div></label>
+        <label class="scheduler-field" style="grid-column:1/-1">Message template<textarea class="scheduler-textarea scheduler-message-template" name="template" required></textarea></label>
+        <div><button class="scheduler-button primary" type="submit">Save Settings</button></div>
+      </form>
+    </details>
+    <div data-dashboard-table class="mt-4"></div>
+  </section>
+  <script>
+    import "../../../interview-scheduler/pages/dashboard";
+  </script>
+</MainLayout>

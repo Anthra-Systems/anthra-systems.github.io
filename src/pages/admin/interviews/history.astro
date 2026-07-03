@@ -1,0 +1,18 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import "../../../interview-scheduler/scheduler.css";
+---
+
+<MainLayout title="Interview History | Anthra Systems" robots="noindex,nofollow" showHeader={false}>
+  <section class="scheduler-shell" data-dashboard>
+    <div class="scheduler-toolbar">
+      <div><p class="anthra-kicker">Admin History</p><h1 class="anthra-page-title mt-3 text-4xl">Schedule History</h1><p class="anthra-muted mt-3">Archived, closed, expired, and active schedules remain visible here for hiring decisions.</p></div>
+      <div class="scheduler-actions"><label class="scheduler-button"><input data-include-archived type="checkbox" checked /> Include archived</label><a class="scheduler-button" href="/admin/interviews">Dashboard</a><button class="scheduler-button" data-admin-logout type="button">Logout</button></div>
+    </div>
+    <div data-dashboard-status class="scheduler-alert">Preparing history...</div>
+    <div data-dashboard-table class="mt-4"></div>
+  </section>
+  <script>
+    import "../../../interview-scheduler/pages/dashboard";
+  </script>
+</MainLayout>

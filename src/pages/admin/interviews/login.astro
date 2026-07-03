@@ -1,0 +1,23 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import "../../../interview-scheduler/scheduler.css";
+---
+
+<MainLayout title="Admin Interview Login | Anthra Systems" robots="noindex,nofollow" showHeader={false}>
+  <section class="scheduler-shell mx-auto max-w-xl">
+    <div class="scheduler-panel">
+      <p class="anthra-kicker">Admin Access</p>
+      <h1 class="anthra-page-title mt-3 text-4xl">Interview Scheduler Login</h1>
+      <p class="anthra-muted mt-3">Sign in with the Firebase Authentication admin account configured for Anthra hiring.</p>
+      <div data-admin-login class="scheduler-grid mt-6">
+        <label class="scheduler-field">Email<input class="scheduler-input" type="email" name="email" autocomplete="email" required /></label>
+        <label class="scheduler-field">Password<input class="scheduler-input" type="password" name="password" autocomplete="current-password" required /></label>
+        <button data-login-button class="scheduler-button primary" type="button">Login</button>
+      </div>
+      <p data-login-error class="mt-4 text-sm text-red-300"></p>
+    </div>
+  </section>
+  <script>
+    import "../../../interview-scheduler/pages/login";
+  </script>
+</MainLayout>

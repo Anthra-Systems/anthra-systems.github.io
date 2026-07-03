@@ -1,0 +1,222 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in [
+          "admin@anthrasystems.com"
+        ];
+    }
+
+    function scheduleRef(scheduleId) {
+      return /databases/$(database)/documents/schedules/$(scheduleId);
+    }
+
+    function allowedRef(scheduleId, emailKey) {
+      return /databases/$(database)/documents/schedules/$(scheduleId)/allowedCandidates/$(emailKey);
+    }
+
+    function bookingRef(scheduleId, emailKey) {
+      return /databases/$(database)/documents/schedules/$(scheduleId)/bookings/$(emailKey);
+    }
+
+    function slotRef(scheduleId, slotId) {
+      return /databases/$(database)/documents/schedules/$(scheduleId)/slots/$(slotId);
+    }
+
+    function scheduleIsPublicSafe(schedule) {
+      return !schedule.keys().hasAny(["commonMeetingLink"])
+        || schedule.commonMeetingLink == "";
+    }
+
+    function slotIsPublicSafe(slot) {
+      return (!slot.keys().hasAny(["meetingLink"]) || slot.meetingLink == "")
+        && (!slot.keys().hasAny(["internalNote"]) || slot.internalNote == "")
+        && (!slot.keys().hasAny(["bookedByEmail"]) || slot.bookedByEmail == "")
+        && (!slot.keys().hasAny(["bookingId"]) || slot.bookingId == "");
+    }
+
+    function bookingIsPublicSafe(booking) {
+      return !booking.keys().hasAny(["adminNotes", "overallRating", "candidateStatus", "isSelected"]);
+    }
+
+    function isActiveSchedule(scheduleId) {
+      let schedule = get(scheduleRef(scheduleId)).data;
+      return schedule.status == "active"
+        && schedule.expiryAtMs is number
+        && schedule.expiryAtMs > request.time.toMillis()
+        && scheduleIsPublicSafe(schedule);
+    }
+
+    function allowedBookingFieldsOnly(data) {
+      return data.keys().hasOnly([
+        "scheduleId",
+        "slotId",
+        "slotStartAt",
+        "slotEndAt",
+        "emailKey",
+        "roleAppliedFor",
+        "candidateName",
+        "email",
+        "normalizedEmail",
+        "phone",
+        "resumeLink",
+        "profileLink",
+        "candidateNote",
+        "bookedAt",
+        "bookingStatus",
+        "updatedAt"
+      ]);
+    }
+
+    function validCandidateBooking(scheduleId, emailKey) {
+      let booking = request.resource.data;
+      let candidate = get(allowedRef(scheduleId, emailKey)).data;
+      let slot = get(slotRef(scheduleId, booking.slotId)).data;
+      let finalCandidate = getAfter(allowedRef(scheduleId, emailKey)).data;
+      let finalSlot = getAfter(slotRef(scheduleId, booking.slotId)).data;
+      return isActiveSchedule(scheduleId)
+        && exists(allowedRef(scheduleId, emailKey))
+        && candidate.status == "allowed"
+        && candidate.hasBooked == false
+        && booking.scheduleId == scheduleId
+        && booking.emailKey == emailKey
+        && booking.email == booking.normalizedEmail
+        && booking.normalizedEmail == candidate.normalizedEmail
+        && booking.phone.matches('^[0-9]{10}$')
+        && booking.candidateName is string
+        && booking.candidateName.size() > 0
+        && booking.bookingStatus == "booked"
+        && allowedBookingFieldsOnly(booking)
+        && exists(slotRef(scheduleId, booking.slotId))
+        && slot.status == "available"
+        && slot.startAtMs is number
+        && slot.startAtMs > request.time.toMillis()
+        && booking.slotStartAt == slot.startAt
+        && booking.slotEndAt == slot.endAt
+        && finalCandidate.status == "allowed"
+        && finalCandidate.hasBooked == true
+        && finalCandidate.bookingId == emailKey
+        && finalSlot.status == "booked"
+        && finalSlot.bookingId == emailKey
+        && finalSlot.bookedByEmail == booking.normalizedEmail;
+    }
+
+    function finalBookingStateIsValid(scheduleId, emailKey) {
+      let booking = getAfter(bookingRef(scheduleId, emailKey)).data;
+      let candidate = getAfter(allowedRef(scheduleId, emailKey)).data;
+      let slot = getAfter(slotRef(scheduleId, booking.slotId)).data;
+      return booking.emailKey == emailKey
+        && booking.scheduleId == scheduleId
+        && booking.normalizedEmail == booking.email
+        && booking.normalizedEmail == candidate.normalizedEmail
+        && booking.bookingStatus == "booked"
+        && candidate.status == "allowed"
+        && candidate.hasBooked == true
+        && candidate.bookingId == emailKey
+        && slot.status == "booked"
+        && slot.bookingId == emailKey
+        && slot.bookedByEmail == booking.normalizedEmail;
+    }
+
+    match /schedules/{scheduleId} {
+      allow get: if isAdmin()
+        || (
+          resource.data.status != "deleted"
+          && scheduleIsPublicSafe(resource.data)
+        );
+      allow list: if isAdmin();
+      allow create, update, delete: if isAdmin();
+
+      match /private/{docId} {
+        allow read, write: if isAdmin();
+      }
+
+      match /privateSlotLinks/{slotId} {
+        allow read, write: if isAdmin();
+      }
+
+      match /candidateMeetingLinks/{emailKey} {
+        allow get: if isAdmin()
+          || (
+            exists(allowedRef(scheduleId, emailKey))
+            && get(allowedRef(scheduleId, emailKey)).data.hasBooked == true
+            && get(allowedRef(scheduleId, emailKey)).data.bookingId == emailKey
+            && exists(bookingRef(scheduleId, emailKey))
+            && get(bookingRef(scheduleId, emailKey)).data.bookingStatus == "booked"
+            && get(bookingRef(scheduleId, emailKey)).data.emailKey == emailKey
+          );
+        allow list: if isAdmin();
+        allow write: if isAdmin();
+      }
+
+      match /allowedCandidates/{emailKey} {
+        allow get: if isAdmin()
+          || (
+            isActiveSchedule(scheduleId)
+            && resource.data.status == "allowed"
+            && resource.data.normalizedEmail is string
+          );
+        allow list: if isAdmin();
+        allow create, delete: if isAdmin();
+        allow update: if isAdmin()
+          || (
+            isActiveSchedule(scheduleId)
+            && resource.data.status == "allowed"
+            && resource.data.hasBooked == false
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["hasBooked", "bookingId", "updatedAt"])
+            && request.resource.data.hasBooked == true
+            && request.resource.data.bookingId == emailKey
+            && finalBookingStateIsValid(scheduleId, emailKey)
+          );
+      }
+
+      match /slots/{slotId} {
+        allow get, list: if isAdmin()
+          || (
+            isActiveSchedule(scheduleId)
+            && resource.data.status == "available"
+            && resource.data.startAtMs is number
+            && resource.data.startAtMs > request.time.toMillis()
+            && slotIsPublicSafe(resource.data)
+          );
+        allow create, delete: if isAdmin();
+        allow update: if isAdmin()
+          || (
+            isActiveSchedule(scheduleId)
+            && resource.data.status == "available"
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["status", "bookedByEmail", "bookingId", "updatedAt"])
+            && request.resource.data.status == "booked"
+            && request.resource.data.bookingId is string
+            && getAfter(bookingRef(scheduleId, request.resource.data.bookingId)).data.slotId == slotId
+            && finalBookingStateIsValid(scheduleId, request.resource.data.bookingId)
+          );
+      }
+
+      match /bookings/{emailKey} {
+        allow get: if isAdmin()
+          || (
+            resource.data.emailKey == emailKey
+            && resource.data.bookingStatus == "booked"
+            && bookingIsPublicSafe(resource.data)
+            && exists(allowedRef(scheduleId, emailKey))
+            && get(allowedRef(scheduleId, emailKey)).data.hasBooked == true
+            && get(allowedRef(scheduleId, emailKey)).data.bookingId == emailKey
+          );
+        allow list: if isAdmin();
+        allow create: if validCandidateBooking(scheduleId, emailKey);
+        allow update: if isAdmin();
+        allow delete: if isAdmin();
+
+        match /private/{docId} {
+          allow read, write: if isAdmin();
+        }
+      }
+    }
+
+    match /schedulerSettings/{docId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

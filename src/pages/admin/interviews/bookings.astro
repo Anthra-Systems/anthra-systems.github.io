@@ -1,0 +1,19 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import "../../../interview-scheduler/scheduler.css";
+---
+
+<MainLayout title="Interview Bookings | Anthra Systems" robots="noindex,nofollow" showHeader={false}>
+  <section class="scheduler-shell">
+    <div class="scheduler-toolbar">
+      <div><p class="anthra-kicker">Admin Bookings</p><h1 data-bookings-title class="anthra-page-title mt-3 text-4xl">Interview Bookings</h1></div>
+      <div class="scheduler-actions"><a class="scheduler-button" href="/admin/interviews">Dashboard</a><a class="scheduler-button" data-manage-link href="/admin/interviews/manage">Manage Schedule</a><button class="scheduler-button" data-admin-logout type="button">Logout</button></div>
+    </div>
+    <div data-bookings-status class="scheduler-alert">Loading...</div>
+    <div data-bookings-root class="mt-4"></div>
+  </section>
+  <script>
+    import "../../../interview-scheduler/pages/bookings";
+  </script>
+</MainLayout>
+

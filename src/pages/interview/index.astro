@@ -1,0 +1,14 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import "../../interview-scheduler/scheduler.css";
+---
+
+<MainLayout title="Interview Booking | Anthra Systems" robots="noindex,nofollow" showHeader={false}>
+  <section class="scheduler-shell mx-auto max-w-5xl">
+    <div data-candidate-status class="scheduler-alert">Preparing interview schedule...</div>
+    <div data-candidate-root class="mt-4"></div>
+  </section>
+  <script>
+    import "../../interview-scheduler/pages/candidate";
+  </script>
+</MainLayout>
