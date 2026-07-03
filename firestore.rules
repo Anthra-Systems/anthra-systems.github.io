@@ -197,12 +197,20 @@ service cloud.firestore {
       match /bookings/{emailKey} {
         allow get: if isAdmin()
           || (
-            resource.data.emailKey == emailKey
-            && resource.data.bookingStatus == "booked"
-            && bookingIsPublicSafe(resource.data)
-            && exists(allowedRef(scheduleId, emailKey))
-            && get(allowedRef(scheduleId, emailKey)).data.hasBooked == true
-            && get(allowedRef(scheduleId, emailKey)).data.bookingId == emailKey
+            exists(allowedRef(scheduleId, emailKey))
+            && (
+              (
+                isActiveSchedule(scheduleId)
+                && !exists(bookingRef(scheduleId, emailKey))
+              )
+              || (
+                resource.data.emailKey == emailKey
+                && resource.data.bookingStatus == "booked"
+                && bookingIsPublicSafe(resource.data)
+                && get(allowedRef(scheduleId, emailKey)).data.hasBooked == true
+                && get(allowedRef(scheduleId, emailKey)).data.bookingId == emailKey
+              )
+            )
           );
         allow list: if isAdmin();
         allow create: if validCandidateBooking(scheduleId, emailKey);
