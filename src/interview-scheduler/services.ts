@@ -345,7 +345,7 @@ export async function bookCandidateSlot(input: CandidateBookingInput) {
 
     transaction.set(bookingRef, booking);
     transaction.update(slotRef, { status: "booked", bookedByEmail: normalizedEmail, bookingId: bookingRef.id, updatedAt: stamp });
-    transaction.set(candidateRef, { email: normalizedEmail, normalizedEmail, status: "allowed", hasBooked: true, bookingId: bookingRef.id, updatedAt: stamp }, { merge: true });
+    transaction.update(candidateRef, { hasBooked: true, bookingId: bookingRef.id, updatedAt: stamp });
 
     return { id: bookingRef.id, ...booking };
   });

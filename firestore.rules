@@ -214,7 +214,11 @@ service cloud.firestore {
           );
         allow list: if isAdmin();
         allow create: if validCandidateBooking(scheduleId, emailKey);
-        allow update: if isAdmin();
+        allow update: if isAdmin()
+          || (
+            resource.data.bookingStatus == "cancelled"
+            && validCandidateBooking(scheduleId, emailKey)
+          );
         allow delete: if isAdmin();
 
         match /private/{docId} {

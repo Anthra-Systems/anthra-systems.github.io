@@ -165,7 +165,12 @@ async function submitBooking(form: HTMLFormElement) {
     candidateNote: String(data.get("candidateNote") ?? ""),
   });
   const bookedSlot = availableSlots.find((slot) => slot.id === booking.slotId);
-  const link = await getCandidateMeetingLink(scheduleId, verifiedEmail);
+  let link = "";
+  try {
+    link = await getCandidateMeetingLink(scheduleId, verifiedEmail);
+  } catch {
+    link = "";
+  }
   availableSlots = availableSlots.filter((slot) => slot.id !== booking.slotId);
   updateAvailableCount(availableSlots.length);
   document.querySelector<HTMLElement>("[data-booking-stage]")!.innerHTML = `<div class="scheduler-alert success"><strong>Your interview slot has been booked successfully.</strong><br>Slot: ${formatSlotRange(bookedSlot?.startAt, bookedSlot?.endAt)}<br>Position: ${escapeHtml(booking.roleAppliedFor || verifiedRole)}${meetingLinkHtml(link || booking.meetingLink || "")}</div>`;
