@@ -276,19 +276,41 @@ export async function getCandidateMeetingLink(scheduleId: string, email: string)
 
 export async function verifyCandidate(scheduleId: string, email: string) {
   const normalizedEmail = normalizeEmail(email);
-  const [schedule, candidateSnap, existingBooking] = await Promise.all([
-    getSchedule(scheduleId),
-    getDoc(allowedDoc(scheduleId, normalizedEmail)),
-    getExistingBooking(scheduleId, normalizedEmail),
-  ]);
+  let schedule: InterviewSchedule | null = null;
+  try {
+    schedule = await getSchedule(scheduleId);
+  } catch (error) {
+    throw new Error(`Schedule read failed: ${error instanceof Error ? error.message : "Request failed."}`);
+  }
 
   if (!schedule || schedule.status === "deleted") throw new Error("Schedule not found.");
   if (effectiveScheduleStatus(schedule.status, schedule.expiryAt) !== "active") throw new Error("This interview schedule is no longer accepting bookings.");
+
+  let candidateSnap;
+  try {
+    candidateSnap = await getDoc(allowedDoc(scheduleId, normalizedEmail));
+  } catch (error) {
+    throw new Error(`Candidate allowlist read failed: ${error instanceof Error ? error.message : "Request failed."}`);
+  }
+
   if (!candidateSnap.exists() || (candidateSnap.data() as AllowedCandidate).status === "removed") {
     throw new Error("This email is not authorized for this interview schedule. Please use the same email address where you received the interview invitation.");
   }
 
-  const slots = await listSlots(scheduleId);
+  let existingBooking: InterviewBooking | null = null;
+  try {
+    existingBooking = await getExistingBooking(scheduleId, normalizedEmail);
+  } catch (error) {
+    throw new Error(`Existing booking check failed: ${error instanceof Error ? error.message : "Request failed."}`);
+  }
+
+  let slots: InterviewSlot[] = [];
+  try {
+    slots = await listSlots(scheduleId);
+  } catch (error) {
+    throw new Error(`Available slots read failed: ${error instanceof Error ? error.message : "Request failed."}`);
+  }
+
   const candidate = candidateSnap.data() as AllowedCandidate;
   const activeExistingBooking = candidate.hasBooked && existingBooking?.bookingStatus === "booked" ? existingBooking : null;
   return { schedule, candidate, existingBooking: activeExistingBooking, slots, availableSlots: slots.filter((slot) => slot.status === "available" && new Date(slot.startAt).getTime() > Date.now()) };

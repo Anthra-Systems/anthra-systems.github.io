@@ -37,6 +37,13 @@ service cloud.firestore {
         && (!slot.keys().hasAny(["bookingId"]) || slot.bookingId == "");
     }
 
+    function slotIsPublicListable(scheduleId) {
+      return isActiveSchedule(scheduleId)
+        && resource.data.status == "available"
+        && resource.data.startAtMs is number
+        && resource.data.startAtMs > request.time.toMillis();
+    }
+
     function bookingIsPublicSafe(booking) {
       return !booking.keys().hasAny(["adminNotes", "overallRating", "candidateStatus", "isSelected"]);
     }
@@ -173,14 +180,13 @@ service cloud.firestore {
       }
 
       match /slots/{slotId} {
-        allow get, list: if isAdmin()
+        allow get: if isAdmin()
           || (
-            isActiveSchedule(scheduleId)
-            && resource.data.status == "available"
-            && resource.data.startAtMs is number
-            && resource.data.startAtMs > request.time.toMillis()
+            slotIsPublicListable(scheduleId)
             && slotIsPublicSafe(resource.data)
           );
+        allow list: if isAdmin()
+          || slotIsPublicListable(scheduleId);
         allow create, delete: if isAdmin();
         allow update: if isAdmin()
           || (
