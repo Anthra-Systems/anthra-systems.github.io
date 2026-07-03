@@ -182,7 +182,11 @@ export async function removeAllowedCandidate(scheduleId: string, email: string) 
 
 export async function listSlots(scheduleId: string) {
   const isAdmin = Boolean(getFirebaseClient().auth.currentUser);
-  const snap = await getDocs(isAdmin ? query(slotsCol(scheduleId), orderBy("startAt", "asc")) : query(slotsCol(scheduleId), where("status", "==", "available"), orderBy("startAt", "asc")));
+  const snap = await getDocs(
+    isAdmin
+      ? query(slotsCol(scheduleId), orderBy("startAt", "asc"))
+      : query(slotsCol(scheduleId), where("status", "==", "available"), where("startAtMs", ">", Date.now()), orderBy("startAtMs", "asc")),
+  );
   const slots = snap.docs.map((item) => withId<InterviewSlot>(item));
   if (!isAdmin) return slots;
   return Promise.all(
