@@ -11,10 +11,10 @@ import "../../../interview-scheduler/scheduler.css";
     </div>
     <div data-manage-status class="scheduler-alert">Ready.</div>
     <form data-schedule-form class="scheduler-panel scheduler-grid two mt-4">
-      <label class="scheduler-field">Schedule title<input class="scheduler-input" name="title" required /></label>
-      <label class="scheduler-field">Default opening title<input class="scheduler-input" name="roleName" required /></label>
+      <label class="scheduler-field"><span class="scheduler-label-text">Schedule title <span class="scheduler-required">*</span></span><input class="scheduler-input" name="title" required /></label>
+      <label class="scheduler-field"><span class="scheduler-label-text">Default opening title <span class="scheduler-required">*</span></span><input class="scheduler-input" name="roleName" required /></label>
       <label class="scheduler-field" style="grid-column:1/-1">Opening titles<textarea class="scheduler-textarea" name="openingTitles" placeholder="Embedded Engineer&#10;QA Intern&#10;Firmware Intern"></textarea></label>
-      <label class="scheduler-field">Interview date<input class="scheduler-input" type="date" name="interviewDate" required /></label>
+      <label class="scheduler-field"><span class="scheduler-label-text">Interview date <span class="scheduler-required">*</span></span><input class="scheduler-input" type="date" name="interviewDate" required /></label>
       <div class="scheduler-field"><span>&nbsp;</span><button class="scheduler-button" data-confirm-schedule-date type="button">Confirm date</button></div>
       <input type="hidden" name="expiryAt" />
       <div class="scheduler-field"><span>Auto expiry</span><div class="scheduler-alert" data-expiry-preview>Select interview date.</div></div>

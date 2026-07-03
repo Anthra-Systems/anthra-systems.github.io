@@ -297,11 +297,14 @@ export async function verifyCandidate(scheduleId: string, email: string) {
     throw new Error("This email is not authorized for this interview schedule. Please use the same email address where you received the interview invitation.");
   }
 
+  const candidate = candidateSnap.data() as AllowedCandidate;
   let existingBooking: InterviewBooking | null = null;
-  try {
-    existingBooking = await getExistingBooking(scheduleId, normalizedEmail);
-  } catch (error) {
-    throw new Error(`Existing booking check failed: ${error instanceof Error ? error.message : "Request failed."}`);
+  if (candidate.hasBooked || candidate.bookingId) {
+    try {
+      existingBooking = await getExistingBooking(scheduleId, normalizedEmail);
+    } catch (error) {
+      throw new Error(`Existing booking check failed: ${error instanceof Error ? error.message : "Request failed."}`);
+    }
   }
 
   let slots: InterviewSlot[] = [];
@@ -311,7 +314,6 @@ export async function verifyCandidate(scheduleId: string, email: string) {
     throw new Error(`Available slots read failed: ${error instanceof Error ? error.message : "Request failed."}`);
   }
 
-  const candidate = candidateSnap.data() as AllowedCandidate;
   const activeExistingBooking = candidate.hasBooked && existingBooking?.bookingStatus === "booked" ? existingBooking : null;
   return { schedule, candidate, existingBooking: activeExistingBooking, slots, availableSlots: slots.filter((slot) => slot.status === "available" && new Date(slot.startAt).getTime() > Date.now()) };
 }

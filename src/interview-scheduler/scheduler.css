@@ -19,6 +19,8 @@
 .scheduler-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .scheduler-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .scheduler-field { display: grid; gap: 0.42rem; color: #d4d4d8; font-size: 0.86rem; }
+.scheduler-label-text { display: inline-flex; align-items: center; gap: 0.25rem; }
+.scheduler-required { color: #fb923c; font-weight: 800; }
 .scheduler-input,
 .scheduler-select,
 .scheduler-textarea {
