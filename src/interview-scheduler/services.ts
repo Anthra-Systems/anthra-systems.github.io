@@ -253,7 +253,12 @@ export async function listBookings(scheduleId: string) {
     bookings.map(async (booking) => {
       try {
         const privateSnap = await getDoc(bookingPrivateDoc(scheduleId, booking.id));
-        return privateSnap.exists() ? { ...booking, ...(privateSnap.data() as Partial<InterviewBooking>) } : booking;
+        if (!privateSnap.exists()) return booking;
+        const privateData = privateSnap.data() as Partial<InterviewBooking>;
+        const privateUpdatedAt = privateData.updatedAt ? new Date(privateData.updatedAt).getTime() : 0;
+        const bookedAt = booking.bookedAt ? new Date(booking.bookedAt).getTime() : 0;
+        if (booking.bookingStatus === "booked" && privateUpdatedAt > 0 && bookedAt > privateUpdatedAt) return booking;
+        return { ...booking, ...privateData };
       } catch {
         return booking;
       }
